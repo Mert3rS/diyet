@@ -6,7 +6,11 @@ import { siteConfig } from "@/config/site";
 
 export function MotionShell({ children }: { children: ReactNode }) {
   useEffect(() => {
-    if (!siteConfig.smoothScroll) return;
+    if (
+      !siteConfig.smoothScroll ||
+      new URLSearchParams(location.search).get("editor") === "1"
+    )
+      return;
     let dispose: (() => void) | undefined;
     let cancelled = false;
     const media = window.matchMedia(

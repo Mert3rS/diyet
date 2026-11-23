@@ -60,7 +60,7 @@ export async function ContactSection({
             <span>
               Bir telefon kadar yakın
               <small>
-                {contact.phone}
+                <span data-contact-field="phone">{contact.phone}</span>
                 {contact.isMock ? " · örnek" : ""}
               </small>
             </span>
@@ -70,7 +70,7 @@ export async function ContactSection({
             <span>
               Bir e-posta bırak
               <small>
-                {contact.email}
+                <span data-contact-field="email">{contact.email}</span>
                 {contact.isMock ? " · örnek" : ""}
               </small>
             </span>

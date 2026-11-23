@@ -33,6 +33,7 @@ export default buildConfig({
   csrf: origins,
   i18n: { fallbackLanguage: "tr", supportedLanguages: { tr } },
   admin: {
+    theme: "light",
     user: "users",
     importMap: {
       baseDir: root,
@@ -41,7 +42,18 @@ export default buildConfig({
     },
     meta: { titleSuffix: "· Günay Turan yönetim", robots: "noindex,nofollow" },
     components: {
-      beforeDashboard: ["/components/admin/dashboard#AdminDashboard"],
+      afterNavLinks: ["/components/admin/visual-editor-link#VisualEditorLink"],
+      beforeLogin: ["/components/admin/login#AdminLoginIntro"],
+      afterLogin: ["/components/admin/login#AdminLoginFooter"],
+      views: {
+        visualEditor: {
+          Component: "/components/admin/visual-editor-view#VisualEditorView",
+          path: "/visual-editor",
+          exact: true,
+          meta: { title: "Görsel düzenleyici" },
+        },
+        dashboard: { Component: "/components/admin/dashboard#AdminDashboard" },
+      },
       graphics: {
         Logo: "/components/admin/logo#AdminLogo",
         Icon: "/components/admin/logo#AdminIcon",

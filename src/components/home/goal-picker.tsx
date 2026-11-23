@@ -75,11 +75,15 @@ export function GoalPicker({
             </button>
           ))}
         </div>
-        <div id="hedef-detay" className="goal-detail">
+        <div
+          id="hedef-detay"
+          className="goal-detail"
+          data-goal-index={goals.findIndex((item) => item.id === goal.id)}
+        >
           <div>
             <p className="eyebrow">İlk mesajın hazır</p>
             <p className="goal-message" aria-live="polite">
-              “{goal.message}”
+              “<span data-goal-message>{goal.message}</span>”
             </p>
             <p className="small-note">
               {whatsappBase

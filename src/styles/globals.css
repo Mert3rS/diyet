@@ -748,7 +748,7 @@ svg {
   color: var(--forest) !important;
   font-weight: 600;
 }
-.identity-line > span {
+.identity-line > span:not(.identity-title):not(.identity-name) {
   display: block;
   font-weight: 400;
   font-size: 0.75rem;

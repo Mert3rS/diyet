@@ -17,6 +17,15 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "DENY" },
         ],
       },
+      {
+        source: "/",
+        has: [{ type: "query", key: "editor", value: "1" }],
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+          { key: "Cache-Control", value: "private, no-store" },
+        ],
+      },
     ];
   },
 };

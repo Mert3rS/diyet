@@ -24,7 +24,12 @@ export function TestimonialsSection({
   const visible = useInView(ref, { amount: 0.35 });
   const running = playing && !reduce && !hovered && !focused && visible;
   useEffect(() => {
-    if (!running || items.length < 2) return;
+    if (
+      !running ||
+      items.length < 2 ||
+      new URLSearchParams(location.search).get("editor") === "1"
+    )
+      return;
     const interval = setInterval(
       () => setIndex((value) => (value + 1) % items.length),
       6500,
@@ -82,17 +87,23 @@ export function TestimonialsSection({
             aria-hidden="true"
           />
           <motion.figure
+            data-testimonial-index={index}
             key={item.id}
             initial={false}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
           >
-            <blockquote>{item.quote}</blockquote>
+            <blockquote data-testimonial-field="quote">{item.quote}</blockquote>
             <figcaption>
-              <span className="testimonial-avatar">{item.initials}</span>
-              <span>
+              <span
+                className="testimonial-avatar"
+                data-testimonial-field="initials"
+              >
                 {item.initials}
-                <small>{item.label}</small>
+              </span>
+              <span>
+                <span data-testimonial-field="initials">{item.initials}</span>
+                <small data-testimonial-field="label">{item.label}</small>
               </span>
             </figcaption>
           </motion.figure>

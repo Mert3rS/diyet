@@ -20,6 +20,7 @@ export function EditorialImage({
   const managed = useSitePhotos()[name];
   return (
     <Image
+      data-site-photo={name}
       src={managed?.url ?? image.src}
       alt={managed?.alt ?? image.alt}
       fill

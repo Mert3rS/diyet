@@ -2,6 +2,17 @@
 
 Geliştirme paneli **http://localhost:3001/admin** adresindedir; ayrı port kullanmaz. İlk hesap ve şifre `.reports/admin-credentials.txt` dosyasındadır. İlk girişte profilinizden şifrenizi değiştirin. Bu dosya ve `.env.cms.*` Git'e eklenmez. Şifre sıfırlama e-postası henüz etkin değildir.
 
+## Görsel düzenleyici
+
+Panelin ana sayfasındaki **Ana sayfayı görerek düzenle** düğmesini veya sol menüdeki **Görsel düzenleyici** bağlantısını açın: `/admin/visual-editor`.
+
+1. Önizlemede değiştirmek istediğiniz yazıya ya da fotoğrafa tıklayın. Seçili alan çerçeveyle belirtilir; sağdaki düzenleme alanı açılır. Bölüm ve alan listelerinden de seçim yapabilirsiniz.
+2. Metni yazarken değişiklik gerçek sayfa yerleşiminde görünür. Masaüstü ve Mobil düğmeleriyle iki görünümü inceleyin. Soru yanıtı seçildiğinde ilgili soru açılır; yorum seçildiğinde o yorum gösterilir.
+3. Fotoğrafı kütüphaneden seçin veya görsel açıklamasını doldurup yeni dosya yükleyin. Yükleme kütüphaneye hemen eklenir; sayfadaki fotoğraf değişimi kaydedene kadar yayınlanmaz. Aynı fotoğraf alanını paylaşan bölümler birlikte güncellenir.
+4. **Bu alandaki değişikliği geri al**, seçili alanı son kaydedilmiş haline döndürür. **Değişiklikleri kaydet**, değişen metinleri ve fotoğraf seçimlerini sitede yayınlar. Kaydetmeden önce yaptığınız değişiklikler ziyaretçilere görünmez.
+
+Başka sekmede içerik güncellendiyse düzenleyici o güncellemenin üzerine yazmaz; taslağı koruyarak haber verir. Liste satırı ekleme, kaldırma, sıralama, görünürlük ve bağlantı ayarları için mevcut **Ana sayfa**, **Site ayarları** ve **Vücut analizi ayarları** formlarını kullanın. Görsel düzenleyici yönetici girişi gerektirir.
+
 ## Site ayarları
 
 - **Marka ve düğmeler:** isim, isim altı yazı, açıklama, randevu düğmesi, footer metinleri.

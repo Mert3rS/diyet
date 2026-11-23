@@ -1,0 +1,36 @@
+.visual-preview-mode {
+  scroll-behavior: auto;
+}
+.visual-preview-mode .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.visual-preview-mode .intro-ribbon,
+.visual-preview-mode .mock-badge,
+.visual-preview-mode .floating-actions,
+.visual-preview-mode .mobile-cta-bar {
+  display: none !important;
+}
+.visual-preview-mode .marquee-track {
+  animation-play-state: paused;
+}
+.visual-preview-mode [data-editor-field] {
+  cursor: pointer;
+  transition: outline-color 0.15s;
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+}
+.visual-preview-mode [data-editor-field]:hover {
+  outline-color: #6c963b;
+  border-radius: 3px;
+}
+.visual-preview-mode [data-editor-selected] {
+  outline-color: #62932c;
+  outline-style: dashed;
+}
+.visual-preview-mode .dark [data-editor-field]:hover,
+.visual-preview-mode .site-footer [data-editor-field]:hover,
+.visual-preview-mode .dark [data-editor-selected],
+.visual-preview-mode .site-footer [data-editor-selected] {
+  outline-color: #d5ee83;
+}

@@ -46,6 +46,7 @@ export function MobileMenu({
       </button>
       {open && (
         <nav id="mobil-menu" aria-label="Mobil menü">
+          <p className="mobile-menu-heading">İyi yaşam burada başlar.</p>
           <ul>
             {items.map((item) => (
               <li key={item.href}>
@@ -55,6 +56,7 @@ export function MobileMenu({
               </li>
             ))}
           </ul>
+          <p className="mobile-menu-note">Kendi ritminde, birlikte.</p>
         </nav>
       )}
     </div>

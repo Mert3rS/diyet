@@ -62,7 +62,10 @@ export async function HomeSections({ content }: { content: HomeContent }) {
         <Container className="about-grid">
           <Reveal className="portrait-composition">
             <div className="portrait-orbit" aria-hidden="true" />
-            <div className="portrait-slot image-frame">
+            <div
+              className="portrait-slot image-frame"
+              data-site-photo="portrait"
+            >
               {hasPortrait ? (
                 <Image
                   src={portrait?.url ?? portraitImage.path}
@@ -97,10 +100,13 @@ export async function HomeSections({ content }: { content: HomeContent }) {
               <em>{content.copy.about.accent}</em>
             </h2>
             <p className="identity-line">
-              {content.identity.title} {content.identity.name}
+              <span className="identity-title">{content.identity.title}</span>{" "}
+              <span className="identity-name">{content.identity.name}</span>
               {(content.identity.titleStatus || content.isMock) && (
                 <span>
-                  {content.identity.titleStatus}
+                  <span className="identity-status">
+                    {content.identity.titleStatus}
+                  </span>
                   {content.isMock ? " · Örnek biyografi" : ""}
                 </span>
               )}

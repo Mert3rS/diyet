@@ -22,7 +22,12 @@ export async function SiteFooter() {
           <span aria-hidden="true">✳</span>
         </p>
         <div className="footer-bottom">
-          <p>{site?.brand.name ?? "Günay Turan"} · Tasarım önizlemesi</p>
+          <p>
+            <span className="footer-copyright-name">
+              {site?.brand.name ?? "Günay Turan"}
+            </span>{" "}
+            · Tasarım önizlemesi
+          </p>
           <nav aria-label="Alt menü">
             {(site?.navigation ?? navigation).map((item) => (
               <a key={item.href} href={item.href}>
