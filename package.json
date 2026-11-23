@@ -2,6 +2,7 @@
   "name": "diyet",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "Beslenme ve diyetisyen web sitesi başlangıç altyapısı",
   "engines": {
     "node": ">=24.22.3 <25"
@@ -26,13 +27,29 @@
     "docker:down": "docker compose down",
     "docker:dev:down": "docker compose -f compose.dev.yaml down",
     "docker:logs": "docker compose logs --follow web",
-    "test:container": "node scripts/container-smoke.mjs"
+    "test:container": "node scripts/container-smoke.mjs",
+    "payload": "payload",
+    "cms:setup": "node scripts/setup-cms-env.mjs",
+    "cms:migrate": "payload migrate",
+    "cms:seed": "payload run scripts/seed-cms.ts"
+  },
+  "overrides": {
+    "dompurify": "3.5.0",
+    "@esbuild-kit/core-utils": {
+      "esbuild": "0.28.2"
+    }
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "3.94.1",
+    "@payloadcms/next": "3.94.1",
+    "@payloadcms/translations": "3.94.1",
+    "@payloadcms/ui": "3.94.1",
+    "graphql": "16.15.0",
     "lenis": "1.3.27",
     "lucide-react": "1.78.0",
     "motion": "14.14.0",
     "next": "16.4.6",
+    "payload": "3.94.1",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },

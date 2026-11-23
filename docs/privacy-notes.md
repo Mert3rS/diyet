@@ -4,7 +4,8 @@ Bu dosya mevcut teknik durum ve gelecekteki operasyon gereksinimlerini açıklar
 
 ## Mevcut durum
 
-- Faz 1 ana sayfası vardır. Randevu formu, backend kayıtları, admin, DB, e-posta gönderimi, analytics ve cookie banner yoktur.
+- Ana sayfa içeriği, halka açık iletişim bilgileri ve görseller Payload/PostgreSQL'de tutulur. Yönetici e-postası, parola hash'i, oturum ve giriş kilidi bilgileri yalnız yönetici erişimindedir; halka açık iletişim kaydına otomatik kopyalanmaz. Admin oturumu gerekli kimlik doğrulama cookie'sini kullanır. Medya dosyaları herkese açıktır; özel dosya yüklemeyin.
+- Randevu kayıt formu, ziyaretçi kaydı, e-posta gönderimi, analytics ve cookie banner yoktur. Şifre kurtarma e-postası yapılandırılmadı. DB'de ziyaretçinin analiz ölçümleri tutulmaz.
 - Vücut analizi değerleri tarayıcı belleğinde işlenir; hesaplama veya önizleme sırasında sunucuya gönderim yapılmaz. Haricî WhatsApp aktarımı yalnızca aşağıdaki ziyaretçi eylemiyle gerçekleşir.
 - Sosyal ve iletişim kayıtları örnektir. Gerçek alıcılar doğrulanana kadar CTA'lar iletişim bölümüne gider; sosyal örnekler ayrılmış `.invalid` alan adını kullanır.
 - Hosting henüz seçilmediği için proxy/CDN erişim loglarının içeriği, IP kaydı ve retention politikası doğrulanmadı. App'in veri toplamaması, altyapının hiç log tutmadığı anlamına gelmez.

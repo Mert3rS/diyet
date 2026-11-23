@@ -12,15 +12,9 @@ for (const width of [320, 390, 768, 1440]) {
     await expect(panel.getByRole("heading", { level: 3 })).toContainText(
       "Biraz ilham",
     );
-    await expect(panel.locator(".social-link")).toHaveCount(5);
+    await expect(panel.locator(".social-link")).toHaveCount(2);
     await expect(page.locator(".floating-actions")).not.toBeVisible();
-    for (const name of [
-      "Instagram",
-      "YouTube",
-      "TikTok",
-      "WhatsApp",
-      "LinkedIn",
-    ]) {
+    for (const name of ["Instagram", "WhatsApp"]) {
       await expect(
         panel.locator(".social-name", { hasText: name }),
       ).toBeVisible();
@@ -51,12 +45,12 @@ test("WhatsApp açıklaması klavyeyle açılır, Escape ile kapanır ve onaysı
   await expect(button).toHaveAccessibleName(/numarası onay bekliyor/);
   await page.keyboard.press("Tab");
   await button.focus();
-  await expect(page.locator(".floating-hint")).toBeVisible();
+  await expect(button.locator(".floating-hint")).toBeVisible();
   await page.keyboard.press("Escape");
-  await expect(page.locator(".floating-hint")).not.toBeVisible();
+  await expect(button.locator(".floating-hint")).not.toBeVisible();
   await page.locator(".hero .text-link").first().focus();
   await button.focus();
-  await expect(page.locator(".floating-hint")).toBeVisible();
+  await expect(button.locator(".floating-hint")).toBeVisible();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/#iletisim$/);
   await expect(page.locator(".floating-actions")).not.toBeVisible();

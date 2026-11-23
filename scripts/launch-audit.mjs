@@ -15,7 +15,6 @@ function check(id, passed, detail) {
 }
 const pkg = readJson("package.json");
 const decisions = readJson("ops/decisions.json");
-const config = readFileSync(path.join(repoRoot, "src/config/site.ts"), "utf8");
 for (const [key, value] of Object.entries(decisions))
   check(
     `DECISION_${key.toUpperCase()}`,
@@ -56,14 +55,14 @@ check(
     : "Başlangıç değişkenlerinin biçimi geçerli; bağlantı erişimi bu kontrolün kapsamı dışında.",
 );
 check(
-  "MOCK_FLAG_OFF",
-  !/USE_MOCK_CONTENT\s*=\s*true/.test(config),
-  "Örnek içerik bayrağı kapatılmalı ve gerçek veri kaynağı bağlanmalı.",
+  "CMS_SAMPLE_REVIEW",
+  false,
+  "Örnek içerik durumu artık CMS'dedir; canlı kayıt denetleyicisi bağlanmadan yayın onayı verilemez.",
 );
 check(
   "REAL_PORTRAIT",
-  existsSync(path.join(repoRoot, "public/images/portrait.jpg")),
-  "İzinli gerçek portre dosyası gerekli.",
+  false,
+  "İzinli gerçek portre CMS medya kaydı veya yerel dosyadan denetlenmeli; canlı kayıt denetleyicisi henüz bağlı değil.",
 );
 check(
   "CMS_INSTALLED",

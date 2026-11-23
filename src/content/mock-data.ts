@@ -31,12 +31,17 @@ export const mockCopy = {
     description:
       "Kalıplara değil, hayatına uyan bir beslenme yaklaşımı. Sevdiğin tatlarla, kendi ritminde, sana ait bir dengeye.",
     note: "Küçük adımlar. Sana ait bir yol.",
+    primaryButton: "Birlikte başlayalım",
+    introLink: "Önce biraz tanışalım",
   },
   about: {
     isMock: true,
     eyebrow: "Merhaba, ben Günay.",
     title: "Bir diyetin ötesinde,",
     accent: "sana ait bir denge.",
+    portraitFirst: "Her yolculuk",
+    portraitAccent: "tanışmakla başlar.",
+    portraitHandwriting: "biraz ben, biraz yaklaşımım.",
   },
   services: {
     isMock: true,
@@ -45,6 +50,7 @@ export const mockCopy = {
     accent: "özenle bir yaklaşım.",
     description:
       "Her ihtiyacın başlangıcı farklı. Sana uygun alanı birlikte keşfedelim.",
+    linkLabel: "Birlikte konuşalım",
   },
   process: {
     isMock: true,
@@ -97,6 +103,11 @@ export const mockCopy = {
     accent: "iyilik alanı aç.",
     description:
       "Birlikte nasıl ilerleyebileceğimizi konuşalım. Soruların için burada bir yer var.",
+    socialEyebrow: "Ekranın öteki tarafında",
+    socialTitle: "Biraz ilham,",
+    socialAccent: "biraz günlük hayat.",
+    socialDescription:
+      "Sofradan, hayattan, birlikte. Sana iyi gelen paylaşımlarda buluşalım.",
   },
 } as const;
 export const mockContact: ContactSettings = {
@@ -119,30 +130,9 @@ export const mockSocialLinks: (SocialLink & MockRecord)[] = [
   },
   {
     isMock: true,
-    platform: "youtube",
-    url: "https://example.invalid/youtube",
-    label: "Birlikte öğrenmeye alan aç",
-    visible: true,
-  },
-  {
-    isMock: true,
-    platform: "tiktok",
-    url: "https://example.invalid/tiktok",
-    label: "Günlük hayattan kısa molalar",
-    visible: true,
-  },
-  {
-    isMock: true,
     platform: "whatsapp",
     url: "https://example.invalid/whatsapp",
     label: "Bir merhaba ile başlayalım",
-    visible: true,
-  },
-  {
-    isMock: true,
-    platform: "linkedin",
-    url: "https://example.invalid/linkedin",
-    label: "Mesleki paylaşımlar",
     visible: true,
   },
 ];

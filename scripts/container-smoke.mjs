@@ -14,6 +14,16 @@ try {
   assert.equal(home.headers.get("x-content-type-options"), "nosniff");
   assert.equal(home.headers.get("x-frame-options"), "DENY");
   const html = await home.text();
+  const health = await request("/api/health");
+  assert.equal(health.status, 200, "CMS ve DB hazır olmalı.");
+  assert.equal((await health.json()).status, "ok");
+  const login = await request("/admin/login");
+  assert.equal(login.status, 200, "Yönetici giriş ekranı yüklenmeli.");
+  const loginHtml = await login.text();
+  assert.match(loginHtml, /noindex/);
+  const forbidden = await request("/api/users");
+  assert.equal(forbidden.status, 403, "Yönetici kayıtları herkese açılmamalı.");
+  await forbidden.body?.cancel();
   assert.match(html, /<html[^>]+lang="tr"/);
   assert.match(html, /noindex/);
   assert.doesNotMatch(html, /id="analiz"/); // Tool stays off by default in production.
@@ -45,7 +55,7 @@ try {
   assert.equal(missing.status, 404);
   await missing.body?.cancel();
   console.log(
-    `Konteyner kontrolü geçti: ana sayfa, ${assets.length} statik dosya, görsel optimizasyonu, güvenlik başlıkları ve 404.`,
+    `Konteyner kontrolü geçti: CMS/DB health, admin girişi ve erişim, ana sayfa, ${assets.length} statik dosya, görsel optimizasyonu, güvenlik başlıkları ve 404.`,
   );
 } catch {
   console.error(

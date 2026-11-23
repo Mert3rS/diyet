@@ -59,9 +59,11 @@ export function TestimonialsSection({
             <br />
             <em>{copy.accent}</em>
           </h2>
-          <p className="sample-review-note">
-            Örnek yorumlar · Gerçek danışan deneyimleri değildir.
-          </p>
+          {items.some((item) => item.isMock) && (
+            <p className="sample-review-note">
+              Örnek yorumlar · Gerçek danışan deneyimleri değildir.
+            </p>
+          )}
         </div>
         <motion.div
           className="testimonial-slider"
@@ -109,7 +111,7 @@ export function TestimonialsSection({
                 key={slide.id}
                 type="button"
                 className={i === index ? "active" : ""}
-                aria-label={`${i + 1}. örnek yorumu göster`}
+                aria-label={`${i + 1}. ${slide.isMock ? "örnek " : ""}yorumu göster`}
                 aria-pressed={i === index}
                 onClick={() => {
                   setPlaying(false);

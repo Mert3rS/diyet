@@ -1,7 +1,7 @@
-// HTTP liveness only. No database or CMS exists yet; this is not a DB readiness check.
+// CMS/database readiness; response contains no connection or account details.
 try {
   const response = await fetch(
-    `http://127.0.0.1:${process.env.PORT || "3000"}/`,
+    `http://127.0.0.1:${process.env.PORT || "3000"}/api/health`,
     {
       redirect: "manual",
       signal: AbortSignal.timeout(5000),

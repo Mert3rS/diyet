@@ -12,7 +12,8 @@ import { ContactSection } from "@/components/home/contact-section";
 import { getBodyAnalysisSettings, getContactLinks } from "@/lib/site-settings";
 
 export default async function HomePage() {
-  const content = getHomepageContent();
+  const content = await getHomepageContent();
+  const contactLinks = await getContactLinks();
   const analysisSettings = await getBodyAnalysisSettings();
   if (!content)
     return (
@@ -36,7 +37,7 @@ export default async function HomePage() {
         <GoalPicker
           copy={content.copy.goals}
           goals={content.goals}
-          whatsappBase={getContactLinks().whatsappBase}
+          whatsappBase={contactLinks.whatsappBase}
         />
         <BodyAnalysisSection settings={analysisSettings} />
       </BodyAnalysisJourney>

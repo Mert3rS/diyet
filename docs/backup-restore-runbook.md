@@ -1,6 +1,6 @@
 # Yedekleme, geri yükleme ve migration
 
-**Durum: yapılandırılmadı ve geri yükleme testi yapılmadı.** Payload/DB/medya yükleme altyapısı yoktur. Docker CLI bulunsa da daemon çalışmıyor; `psql` ve `pg_dump` PATH'te bulunamadı. Bu belge bir plan ve kontrollü prova kılavuzudur; çalışır bir yedekleme sistemi olduğu anlamına gelmez.
+**Durum: dış yedekleme yapılandırılmadı; temiz hedefe restore testi yapılmadı.** Payload/PostgreSQL ve medya yükleme çalışır. DB ve medya Docker volume'lerinde kalıcıdır; DB/web yeniden başlatma sonrası içerik ve yüklenen dosyanın korunması doğrulandı. `pg_dump`/`pg_restore` PostgreSQL konteynerinde bulunur. Aşağıdaki dış hedef/şifreleme/restore akışı canlı ortam için hâlâ tamamlanmalıdır; volume kalıcılığı yedek değildir.
 
 ## Karar verilecekler
 
@@ -32,7 +32,7 @@ Prova tamamlandığında kaydedilecek kanıtlar:
 
 ## Migration ve rollback
 
-[Payload migrations](https://payloadcms.com/docs/database/migrations) belgesi doğrulandı. CMS kurulunca development schema push ile explicit migration akışını karıştırmayın. Şemadan üretilen ve incelenen migration dosyalarını commit edin. Henüz `payload` script'i/config/migration bulunmadığı için bu depoda migrate komutu eklenmiş veya çalıştırılmış değildir.
+[Payload migrations](https://payloadcms.com/docs/database/migrations) belgesi doğrulandı. `push:false` ile açık migration akışı kullanılır. `src/migrations/` ilk şemayı içerir; `cms-init` servisinde `cms:migrate` ardından idempotent `cms:seed` çalışır. Geliştirme ve yerel üretim DB'sine ilk migration uygulandı. Yeni şema için migration üretip SQL/TS dosyalarını inceleyin ve commit edin. Geliştirme schema push ile bu akışı karıştırmayın.
 
 Güvenli sıralama: doğrulanmış yedek → staging restore → yeni sürümle migration provası → eski/yeni uygulama uyumluluğu kontrolü → production yedeği → incelemiş migration → yeni sürüm sağlık kontrolü → trafik geçişi. Tercih edilen şema değişimi önce geriye uyumlu ekleme, sonraki sürümde temizlemedir.
 

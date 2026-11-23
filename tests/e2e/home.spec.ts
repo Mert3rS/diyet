@@ -153,8 +153,9 @@ test("masaüstü süreç ilerlemesi, yorum duraklatma ve sürükleme", async ({
 test("sosyal bağlantılar, az hareket ve erişilebilirlik", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  for (const variant of ["small", "footer", "edge", "cards"])
-    await expect(page.locator(`.social-${variant} a`)).toHaveCount(5);
+  for (const variant of ["small", "footer", "cards"])
+    await expect(page.locator(`.social-${variant} a`)).toHaveCount(2);
+  await expect(page.locator(".social-edge")).toHaveCount(0);
   const safe = await page
     .locator(".social-link")
     .evaluateAll((links) =>

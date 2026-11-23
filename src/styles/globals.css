@@ -2,6 +2,7 @@
 @import "lenis/dist/lenis.css";
 @import "./body-analysis.css";
 @import "./socials.css";
+@import "./social-pair.css";
 
 @theme inline {
   --color-forest: var(--forest);

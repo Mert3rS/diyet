@@ -1,15 +1,15 @@
-import { getSocialLinks } from "@/lib/site-settings";
+import { getSiteSettings, getSocialLinks } from "@/lib/site-settings";
 import { SocialIcon } from "@/components/ui/social-icons";
-import { siteConfig, USE_MOCK_CONTENT } from "@/config/site";
 import { socialPresentation } from "@/content/socials";
 
 export async function SocialLinks({
   variant = "small",
 }: {
-  variant?: "small" | "footer" | "edge" | "cards";
+  variant?: "small" | "footer" | "cards";
 }) {
   const links = await getSocialLinks();
   if (!links.length) return null;
+  const brand = (await getSiteSettings())?.brand.name ?? "Günay Turan";
   return (
     <div
       className={`social-links social-${variant}`}
@@ -20,20 +20,23 @@ export async function SocialLinks({
         const presentation = socialPresentation[link.platform];
         const name = presentation.name;
         const description = link.label || presentation.description;
+        const isMock = link.isMock === true;
         const accessibleLabel =
           variant === "cards"
-            ? `${name} ${description}${USE_MOCK_CONTENT ? " Örnek hesap" : ""} · ${siteConfig.name}`
-            : `${name} · ${link.label || name} · ${siteConfig.name}${USE_MOCK_CONTENT ? " · örnek hesap" : ""}`;
+            ? `${name} ${description}${isMock ? " Örnek hesap" : ""} · ${brand}`
+            : `${name} · ${link.label || name} · ${brand}${isMock ? " · örnek hesap" : ""}`;
         return (
           <a
             href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={link.url.startsWith("https:") ? "_blank" : undefined}
+            rel={
+              link.url.startsWith("https:") ? "noopener noreferrer" : undefined
+            }
             key={link.platform}
             aria-label={accessibleLabel}
             className="social-link"
             data-platform={link.platform}
-            title={variant === "small" || variant === "edge" ? name : undefined}
+            title={variant === "small" ? name : undefined}
           >
             <span className="social-icon-wrap">
               <SocialIcon platform={link.platform} />
@@ -42,7 +45,7 @@ export async function SocialLinks({
               <span className="social-card-copy">
                 <span className="social-name">{name}</span>{" "}
                 <span className="social-description">{description}</span>{" "}
-                {USE_MOCK_CONTENT && <small>Örnek hesap</small>}
+                {isMock && <small>Örnek hesap</small>}
               </span>
             ) : variant === "footer" ? (
               <span className="social-name">{name}</span>

@@ -1,60 +1,15 @@
-# Mimari — Faz 1
+# Mimari
 
-## Docker ve GitHub çalışma ortamı
+Tek Next.js uygulamasında iki root layout vardır: `(site)` halka açık tasarımı, `(payload)` `/admin` ve `/api` uçlarını sunar. Global 404 tam HTML döndürür. Payload 3.94.1, Next 16.4.6 ve Node 24.22.3 ile Docker üzerinde çalışır. PostgreSQL adapteri `push:false` ve sürümlü migration kullanır.
 
-Uygulamanın çalışma/yayın hedefi Docker Compose'tur. Node 24.22.3 resmî Linux imajı digest ile sabitlenir; `.nvmrc`, `.node-version` ve engines aynı minimuma göre ayarlanır. Üretim builder'ı `NEXT_OUTPUT_STANDALONE=1` ile standalone çıktı üretir; runner yalnız izlenen bağımlılıklar, statik dosyalar, public ve başlangıç/health scriptlerini taşır. Non-root kullanıcı, read-only kök dosya sistemi, cache volume ve tmpfs ile doğrulandı. Entrypoint npm prestart denetimini atlamaz: üretim env doğrulamasını kendisi çağırır.
+`src/payload.config.ts` kullanıcıları, görselleri ve üç Global'i tanımlar. Türkçe panel, özel başlangıç ekranı ve mesaj önizlemesi vardır. Yönetici yazma izni rol kontrolüne bağlıdır; açık/ilk hesap kaydı engellenir. İlk hesap yalnız yerel bootstrap bağlamında oluşturulur. Son yönetici silinemez. Oturum ömrü iki saat; başarısız giriş sınırı beş deneme/on dakika kilittir. Üretimde cookie Secure, tüm ortamlarda SameSite Lax kullanılır. CORS/CSRF kökenleri açık env listesiyle sınırlıdır.
 
-`compose.yaml` üretim, `compose.dev.yaml` ayrı geliştirme projesidir. Watch yalnız kaynak/görselleri senkronize eder; host node_modules/.next/env dosyalarını içeri taşımaz. `Dockerfile`, `.dockerignore`, Compose dosyaları ve npm lock Git'e dahildir; env/cache/anahtarlar hariçtir. CI Linux üretim build+health+HTTP/görsel optimizasyonunu ve Docker dev sunucusuna karşı Playwright testlerini içerir. Docker healthcheck GET `/` liveness'tır; CMS/DB readiness ucu eklenmedi. [Çalıştırma kılavuzu](docker.md).
+`src/lib/cms.ts` sunucuya özel Payload Local API erişimidir. `site-settings` ve `homepage` getter'ları veriyi sınırlı tiplere dönüştürür. React cache yalnız istek içi paylaşım sağlar; halka açık sayfa dinamiktir. Kaydetme hook'u `revalidatePath` çağırır. Yeni istekte güncel DB içeriği okunur. DB yokken örnek veriyi sessizce yayınlama yerine hazırlık görünümü gösterilir; health 503 döner.
 
-## Yayın hazırlığı ek katmanı
+İlk varsayılanlar `src/content/` içinden sadece `initialized:false` kayıtlarına eklenir. Kaynak mock dosyasını sonradan değiştirmek mevcut CMS kayıtlarını değiştirmez. Marka/menü/sosyal/iletişim, tüm ilgili bölümlere ortak kaynaktan gider. Yalnız WhatsApp/Instagram platformları kabul edilir; solda sabit dock yoktur. Görsel bağlamı istemciye yalnız halka açık URL ve alt metni aktarır.
 
-`scripts/` altında env başlangıç kontrolü, fail-closed `launch:audit`, salt okunur HTTP `smoke` ve değer yazdırmayan sınırlı sır imza taraması eklendi. `ops/decisions.json` sağlayıcı/bütçe/tarih kararlarını içerir; şu anda hepsi bekliyor. Bu araçlar CMS/API/DB eklemez. Production başlatma `prestart` üzerinden SITE_URL denetler; CMS eklendiğinde PAYLOAD_SECRET/DATABASE_URI biçim denetimi de uygulanır.
+Medya aynı origin `/api/media/file/...` üzerinden sunulur ve kalıcı Docker volume'ünde tutulur. Yükleme yönetici gerektirir, okuma herkese açıktır; JPEG/PNG/WebP/AVIF ve 8 MB sınırı vardır. SVG yüklenmez. Next görsel optimizasyonu bu URL'leri kullanır.
 
-CI'ya operasyon testleri ve sır taraması, ayrıca Dependabot tanımı eklendi; deploy workflow'u sağlayıcı seçilmediğinden yoktur. Üç temel güvenlik başlığı Next config'te tanımlanır; CSP/HSTS ve sağlayıcı redirect/storage/backup entegrasyonları doğrulanmadan eklenmedi. Sağlık endpoint'i DB kontrolü yapılamadığından sahte başarı döndüren stub olarak oluşturulmadı. Güncel sınırlar [yayın hazırlığı raporunda](launch-readiness.md), bağımlı işlemler [işletim kılavuzunda](ops-runbook.md) tutulur.
+Vücut analizi ziyaretçinin tarayıcısında hesaplanır; ölçüler CMS'ye, sunucu loguna veya analitiğe gönderilmez. Panel yalnız görünüm/hizmet/alan/mesaj seçeneklerini yönetir; formül ve güvenlik metinleri kodda sabittir. Mail adapteri yapılandırılmadığından şifre kurtarma kontrollü hata döndürür; konsola e-posta içeriği yazılmaz.
 
-Tek Next.js uygulaması, varsayılan Server Components ve yerel tipli içerik. Özel API route'u, CMS, veritabanı, kullanıcı hesabı, veri kaydeden form veya ödeme servisi yoktur.
-
-```text
-config/site.ts → marka, menü, örnek içerik ve smooth scroll bayrakları
-content/mock-data.ts → content/home.ts → Server Component bölümleri
-                    → lib/site-settings.ts → getSocialLinks() → dört sosyal alan
-content/images.ts → EditorialImage → yerel WebP + next/image
-content/body-analysis.ts → lib/site-settings.ts → getBodyAnalysisSettings()
-lib/body-analysis/ → lazy client aracı → yerel sonuç → düzenleme/onay → haricî WhatsApp
-```
-
-## Yerleşim
-
-`app/` route/layout/metadata, `components/home/` sayfa bölümleri, `components/site/` ortak gezinme/CTA, `components/ui/` küçük ortak parçalar, `content/` içerik, `types/` sözleşmeler, `styles/` tasarım sistemi olarak korunur. Yeni veri yardımcıları `lib/` altındadır. `@/*`, `src/*` konumuna gider.
-
-Yalnızca etkileşim gerektiren küçük bileşenler client'tır: mobil menü, hero kolajı, motion kabuğu/reveal/manyetik bağlantılar, süreç vurgusu, hedef seçimi, yorumlar, hesaplayıcı ve yüzen kontroller. Ana sayfa, içerik seçimi, hizmetler, paketler, blog, SSS ve iletişim gövdesi sunucuda oluşturulur.
-
-## Örnek içerik ve sosyal sınır
-
-`USE_MOCK_CONTENT` tek bayraktır. Kapalıysa örnek sayfa dönmez; sosyal liste boştur. Örnek kayıtlar `isMock: true` içerir. Genel development rozeti production'da gizlenir; biyografi, yorum, iletişim ve paket örnek notları görünmeye devam eder.
-
-`getSocialLinks()` async erişim noktasıdır. Görünmez, boş, geçersiz URL, HTTPS dışı protokol ve URL içine gömülü kimlik bilgisi içeren kayıtlar filtrelenir. Dizi sırası korunur. Sosyal görünümler yalnızca bu işlevi çağırır; boş listede bağlantı alanı dönmez. `SocialIcon` on platform için tek SVG eşlemesidir. Haricî bağlantılar yeni sekme, `noopener noreferrer` ve Türkçe erişilebilir isim kullanır.
-
-`example.invalid` kayıtları gerçek hesap değildir. Faz 2'de async kaynağın CMS ile değiştirilmesi mümkün olacak şekilde sosyal görünüm bileşenleri hazırlanmıştır. Production için mock fallback tasarlanmamıştır; gerçek kaynak bağlanmadan bayrağı kapatmak içeriği boş bırakır.
-
-## İletişim ve veri
-
-`getContactLinks()` mock kayıt için iletişim bölümüne döner. Onaylı kayıt için E.164 telefon doğrulaması ve e-posta biçim denetimiyle `wa.me`, `tel:` ve `mailto:` üretir. Mesaj yalnızca hazırlanır; otomatik gönderilmez. Hedef seçimi ve kopyalama kullanıcı eylemidir, saklama yapmaz.
-
-Eski BMI/enerji hesaplayıcısı kaldırıldı. Vücut analizi `#analiz` içinde, hedef seçimi ile paketler arasındadır. Sunucu yalnızca güvenli ayarları sağlar; form görünüm yaklaştığında dinamik yüklenir. Varsayılanlar ve sabit Türkçe metinler `content/body-analysis.ts`, hesap/validasyon `lib/body-analysis/calculations.ts`, mesaj ve telefon yardımcıları `messages.ts`, ayar allowlist'i `settings.ts` içindedir. Katsayılar, hata payları ve yaş sınırları ayar tipine dahil değildir.
-
-`BodyAnalysisJourney` React context'i yalnızca hizmet seçimini aynı sayfada paylaşır; ölçüler form component state'inde kalır. Modül genelinde ziyaretçiye ait mutable state yoktur. Form gönderimi engellenir; hesap/önizleme/onay sırasında fetch/XHR/beacon, cookie, storage veya site URL'si değişikliği yapılmaz. Alan değişince sonuç ve mesaj onayı düşer. Ziyaretçi mesajı düzenleyip boş başlayan kutuyu işaretlerse yalnızca kendi eylemiyle `wa.me` adresine gider. Bu haricî URL, seçtiği mesaj verisini içerir. Kopyalama API'si kullanılamazsa metin seçilip elle kopyalama anlatılır.
-
-Payload yoktur; getter varsayılanları güvenli birleştirir, onaylı iletişim kaydı/araç numarası/site placeholder sırasını kullanır. Geliştirmede araç açık, production'da kapalıdır. Geçerli numara yoksa gönderim kapalıdır. CMS Global, server access, DB hata politikası ve kaydetme sonrası revalidation henüz uygulanmadı. Ayrıntılar [araç belgesinde](body-analysis.md).
-
-## Hareket ve varlıklar
-
-Motion yalnızca transform/opacity/clip-path geçişleri içindir. Lenis masaüstü + normal hareket tercihinde dinamik import edilir ve cleanup'ta kaldırılır. `smoothScroll=false` ile kapatılabilir. Responsive medya gözlemi `useSyncExternalStore` ile ilk sunucu/tarayıcı HTML'ini tutarlı tutar. Azaltılmış harekette CSS de animasyonları kapatır.
-
-Yerel statik WebP importları boyut ve blur metadata sağlar. Hero fotoğrafı öncelikli, kalanlar lazy'dir. `next/font` fontları kendi alan adından sunar. Portre varlığı sunucuda dosya kontrolüyle belirlenir; production'da yeni portre için rebuild gerekir. Medya yükleme veya yazma endpoint'i yoktur.
-
-## Doğrulama ve sonraki aşama
-
-`npm run check`, `npm run build`, `npm run test:e2e`. Playwright farklı genişlikleri, etkileşimleri, azaltılmış hareketi, gönderim/depolama sınırını; axe erişilebilirliği kontrol eder. Lighthouse production çıktısına karşı ölçülür. Kanıt ve sınırlar [doğrulama raporunda](verification.md) tutulur.
-
-Faz 2 kullanıcı “Phase 2” dediğinde başlar: önce Payload uyumluluğu doğrulanacak; dar kapsamlı Türkçe sosyal/iletişim admin'i, kimlik doğrulama, erişim kontrolü, PostgreSQL, cache invalidation ve migration/yedekleme ayrı uygulanacak. Faz 1 bu altyapıları başlatmaz. Daha geniş blog/tarif CMS planı [içerik modelinde](content-model.md) ayrı bir hedef olarak kalır.
+Docker build sır veya DB istemez. `cms-init` migration ve idempotent seed uygular; `web` health'i gerçek DB bağlantısını sınar. Geliştirme ve üretim DB/medya volume'leri ayrıdır. Randevu kaydı, blog/tarif ayrıntı CMS'si, hukuk sayfaları ve harici e-posta akışı henüz yoktur.

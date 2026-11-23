@@ -1,0 +1,113 @@
+:root {
+  --theme-elevation-0: #fbfaf6;
+  --theme-elevation-50: #f2f1e9;
+  --theme-elevation-100: #e8eadf;
+  --theme-success-500: #44623c;
+}
+.admin-wordmark {
+  color: #173b2c;
+  font:
+    500 2rem/1.2 Georgia,
+    serif;
+  text-align: center;
+  padding: 1rem;
+}
+.admin-wordmark span {
+  display: block;
+  margin-top: 0.5rem;
+  font:
+    400 0.875rem/1.5 system-ui,
+    sans-serif;
+  letter-spacing: 0.1em;
+}
+.admin-monogram {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #173b2c;
+  color: #f6f1e7;
+  font:
+    500 14px Georgia,
+    serif;
+}
+.admin-welcome {
+  font-family: system-ui, sans-serif;
+  margin-bottom: 2.5rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  background: #eef1e6;
+  color: #173b2c;
+  border: 1px solid #d7dfcb;
+  border-radius: 1.25rem;
+}
+.admin-welcome h1 {
+  font:
+    400 clamp(1.8rem, 4vw, 2.6rem)/1.15 Georgia,
+    serif;
+  margin: 0.75rem 0 1rem;
+}
+.admin-kicker {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.admin-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+.admin-shortcuts a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem;
+  background: #fffdf7;
+  border: 1px solid #d2dbc6;
+  border-radius: 0.75rem;
+  text-decoration: none;
+}
+.admin-shortcuts a:focus-visible,
+.admin-reset:focus-visible {
+  outline: 3px solid #62782c;
+  outline-offset: 3px;
+}
+.admin-shortcuts span,
+.admin-help {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.admin-help {
+  margin-top: 1rem;
+}
+.admin-analysis-guide {
+  padding: 1.5rem;
+  border: 1px solid #cdd6c2;
+  border-radius: 1rem;
+  line-height: 1.7;
+}
+.admin-analysis-guide pre {
+  padding: 1rem;
+  background: #f2f4ed;
+  color: #173b2c;
+  font:
+    14px/1.7 system-ui,
+    sans-serif;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.admin-reset {
+  padding: 0.8rem 1rem;
+  background: #173b2c;
+  color: #fffdf7;
+  border: 0;
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  .admin-shortcuts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

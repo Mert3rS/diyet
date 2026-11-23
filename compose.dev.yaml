@@ -10,6 +10,13 @@ services:
       SITE_URL: http://localhost:${DEV_PORT:-3001}
       NODE_ENV: development
       NEXT_TELEMETRY_DISABLED: "1"
+      CMS_ALLOWED_ORIGINS: http://localhost:${DEV_PORT:-3001},http://127.0.0.1:${DEV_PORT:-3001}
+    env_file: .env.cms.local
+    depends_on:
+      cms-init:
+        condition: service_completed_successfully
+    volumes:
+      - media:/app/media
     ports:
       - "127.0.0.1:${DEV_PORT:-3001}:3000"
     init: true
@@ -43,3 +50,33 @@ services:
           path: ./postcss.config.mjs
         - action: rebuild
           path: ./Dockerfile
+
+  cms-init:
+    image: diyet-cms:tooling
+    build:
+      context: .
+      target: tooling
+    env_file: .env.cms.local
+    environment:
+      NODE_ENV: production
+      SITE_URL: http://localhost:${DEV_PORT:-3001}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - media:/app/media
+
+  db:
+    image: postgres:17-bookworm@sha256:837bed18782820fe967067cb5328b02b0d9992c1be9a37ee0c9c492cfc03af3b
+    env_file: .env.cms.local
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  pg_data:
+  media:

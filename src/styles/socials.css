@@ -42,31 +42,6 @@
 .social-link:active {
   transform: translateY(-1px);
 }
-.social-edge {
-  position: fixed;
-  z-index: 30;
-  left: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  flex-direction: column;
-  gap: 0.25rem;
-  padding: 0.3rem;
-  background: #fffdf7e8;
-  border: 1px solid #d6dbcf;
-  border-radius: 2.5rem;
-  box-shadow: 0 8px 28px #10261e08;
-  backdrop-filter: blur(12px);
-}
-.social-edge .social-icon-wrap {
-  width: 44px;
-  height: 44px;
-  border: 0;
-  border-radius: 1.25rem;
-  background: transparent;
-}
-.social-edge .social-link:hover {
-  transform: none;
-}
 .social-footer {
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -125,7 +100,7 @@
 }
 .social-cards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.8rem;
   align-items: stretch;
 }
@@ -185,7 +160,7 @@
   box-shadow: 0 8px 24px #10261e07;
 }
 .social-cards .social-link:first-child {
-  grid-row: span 2;
+  grid-row: auto;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
@@ -359,11 +334,6 @@
 .back-to-top:hover {
   transform: translateY(-2px);
 }
-@media (max-width: 1250px) {
-  .social-edge {
-    display: none;
-  }
-}
 @media (max-width: 1100px) {
   .social-cards .social-link {
     padding: 1rem;
@@ -379,7 +349,7 @@
   }
   .social-cards .social-link:first-child {
     grid-row: auto;
-    grid-column: 1/-1;
+    grid-column: auto;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;

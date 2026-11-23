@@ -1,20 +1,29 @@
-# Günay Turan — vücut analizi düzenleme kılavuzu
+# Türkçe yönetim kılavuzu
 
-Şu anda Payload ve yönetim paneli yoktur. `/admin` üzerinden düzenleme yapılamaz. Bu dosya mevcut kaynak düzenlemesini ve Faz 2'de açılacak alanları ayırır; çalışan panel varmış gibi yönerge vermez.
+Geliştirme paneli **http://localhost:3001/admin** adresindedir; ayrı port kullanmaz. İlk hesap ve şifre `.reports/admin-credentials.txt` dosyasındadır. İlk girişte profilinizden şifrenizi değiştirin. Bu dosya ve `.env.cms.*` Git'e eklenmez. Şifre sıfırlama e-postası henüz etkin değildir.
 
-## Bugün geliştiriciyle düzenleme
+## Site ayarları
 
-1. `src/content/body-analysis.ts` içindeki `defaultBodyAnalysisSettings()` nesnesinde başlık, alt başlık, açıklama ve düğme etiketlerini düzenleyin. Düz metin kullanın. Sınırlar: 60/100/300 ve düğmeler için 40 karakter. `analysisCopy` içindeki güvenlik metinlerini değiştirmeyin.
-2. `services` listesinde hizmet kimliklerini koruyarak etiketleri ve sırayı değiştirin; en fazla 8 hizmet ve bir varsayılan bırakın. Hedef kartları `bireysel`, `sporcu`, `gebelik` ile eşleşir. `metabolik`, kişiye özel danışmanlığa eşlenir; bulunmayan hizmet varsayılana döner.
-3. `fields` içinde çevre ölçülerini gösterip gizleyebilirsiniz. Gerekli çevre ölçülerinden biri gizliyse araç Deurenberg yöntemine döner. Bu anahtarlar yaş/boy/kilo sınırlarını değiştirmez.
-4. `DEFAULT_MESSAGE_TEMPLATE` en fazla 800 karakter olmalı. İzinli alanlar yalnız `{ad}`, `{cinsiyet}`, `{yas}`, `{boy}`, `{kilo}`, `{vki}`, `{yag_orani}`, `{hizmet}`. Boy/kilo satırlarında cm/kg birimlerini koruyun. Bir satırın alanı boşsa satır atlanır. Açıklayıcı bir cümle bırakın; HTML, yeni alan veya vaat eklemeyin. Sıfırlamak için Git'teki varsayılan metne dönün. Hazır panel sıfırlama düğmesi henüz yoktur.
-5. `includeBmi` ve `includeFat` yalnız mesajdaki satırları etkiler; hesabı değiştirmez. Çevre ölçüleri ve hamilelik satırı varsa ayrıca eklenir. Ziyaretçi hepsini önizlemede silebilir.
-6. Sadece sahibi tarafından doğrulanmış WhatsApp numarasını `whatsappOverride` alanına ya da genel fallback için `src/config/site.ts` içindeki `bodyAnalysisWhatsapp` alanına ekleyin. Boş override, onaylı ana iletişim kaydını; o yoksa site fallback'ini kullanır. Türkçe 10 hane / başında 0 olan 11 hane +90'a çevrilir; uluslararası numarada ülke kodu kullanılmalıdır. Biçim doğrulaması sahiplik veya çalışan WhatsApp hesabı doğrulaması değildir. Belgelerde gerçek numara uydurulmamıştır.
-7. `npm run dev` ile ana sayfada “Vücut analizini dene” bağlantısını seçin. Ölçüleri girin, hesaplayın, mesajı gözden geçirin. Varsayılan boş onayı, değişiklik sonrası onayın kalkmasını ve hamilelik/18 yaş altı durumlarını deneyin. Mesajı gerçek alıcıyla yalnız sahibinin denemesi sırasında açın.
-8. `npm run check`, `npm run build` ve Playwright testlerini çalıştırın. Production varsayılanı `enabled: !production` ile kapalıdır. Uzman/hukuk incelemesi, onaylı alıcı ve gerçek KVKK sayfası tamamlandıktan sonra geliştirici bunu açıkça değiştirip yeniden derlemelidir. Bu anahtar diğer yayın NO-GO maddelerini kaldırmaz.
+- **Marka ve düğmeler:** isim, isim altı yazı, açıklama, randevu düğmesi, footer metinleri.
+- **İletişim:** doğrulanmış telefon, e-posta, adres, çalışma saatleri ve başlangıç WhatsApp mesajı. Gerçek bilgileri girdikten sonra “İletişim bilgileri örnektir” işaretini kaldırın. Yönetici hesabının e-postası buraya otomatik aktarılmaz.
+- **WhatsApp ve Instagram:** bu iki hesabın kart açıklamalarını ve görünürlüğünü yönetin. Telefon iletişim sekmesinden alınır; Instagram için HTTPS profil adresini girin ve “adres örnektir” işaretini kaldırın. Ayarlar sağ alt düğmeler, hakkımda, iletişim kartları ve footer'a birlikte uygulanır. Randevu düğmeleri iletişim akışını kullanmaya devam eder.
+- **Fotoğraflar:** portre ve dört yemek fotoğrafını seçin. Önce “Görseller” bölümünden yükleyebilir veya alandan yeni kayıt açabilirsiniz. Alt metni doldurun. Portre boşsa kişi fotoğrafı yerine mevcut yer tutucu gösterilir.
+- **Menü:** bağlantıları sürükleyerek sıralayın, metinlerini değiştirin veya gizleyin.
 
-## Faz 2'de panelde sunulacak adımlar
+## Ana sayfa
 
-Oturum açma ve Global kurulduktan sonra “Vücut Analizi Ayarları” altında aynı sınırlı metin/hizmet/alan/mesaj seçenekleri sunulacak. Kaydetme sonrası revalidation, “Örnek değerlerle önizleme”, “Sıfırla”, yetkisiz yazmayı reddetme ve boş DB davranışı o fazda uygulanacak. Şimdilik bu işlemler mevcut değildir.
+Sekmelerde bölüm başlıklarını, biyografiyi, hizmetleri, süreç adımlarını, hedefleri, paketleri, yorumları, blog kartlarını ve SSS'yi düzenleyin. Liste satırları eklenebilir, kaldırılabilir ve sıralanabilir. Hizmetlerin kimliklerini hedef eşleşmeleriyle uyumlu tutun. İsim için ana kaynak Site ayarlarıdır. Tüm gerçek metinleri onayladıktan sonra “Bu sayfa örnek içerik içeriyor” işaretini kaldırın. Bu işlem tek başına yayın onayı değildir.
 
-Formüller, hata payları, minimum yaş, tahmini aralık etiketi, uyarı, onay kutusu ve gizlilik bildirimi panelde düzenlenmeyecek. Sağlık iddiası, tüketim hedefi veya kilo kategorisi oluşturacak metinler yayınlanmamalı. Teknik kurallar tek başına hukuk/mesleki inceleme yerine geçmez.
+**Kaydet** sonrasında yeni bir site sekmesi açın veya sayfayı yenileyin. Yeniden Docker build gerekmez. Paneldeki değişiklikler mevcut veritabanına yazılır; geliştirme ve üretim ayrı veritabanlarıdır. İlk kurulum verileri sonraki açılışlarda düzenlemelerinizi ezmez.
+
+## Vücut analizi ayarları
+
+Aracı açıp kapatabilir, başlık ve düğmeleri değiştirebilir, en fazla sekiz hizmet belirleyebilir ve isteğe bağlı çevre ölçülerini gizleyebilirsiniz. Üretimde ilk kurulumda kapalıdır. Hizmet kimliklerini koruyun ve tek varsayılan seçin.
+
+Mesaj şablonu yalnız `{ad}`, `{cinsiyet}`, `{yas}`, `{boy}`, `{kilo}`, `{vki}`, `{yag_orani}`, `{hizmet}` alanlarını kabul eder. Açıklayıcı cümleyi ve cm/kg birimlerini koruyun. “Örnek değerlerle önizleme” gerçek ziyaretçi verisi kullanmaz. “Şablonu varsayılana sıfırla” ardından Kaydet ile uygulanır. Özel numara boşsa onaylı genel numara kullanılır.
+
+Formüller, yaş sınırı, tahmini aralık etiketi, uyarı ve onay metni panelden değiştirilemez. Ölçümler veritabanına kaydedilmez; mesaj ancak ziyaretçinin kendi eylemiyle WhatsApp'a açılır. Gerçek numara, uzman/hukuk incelemesi ve gizlilik metni tamamlandıktan sonra aracı yayın için etkinleştirin.
+
+## Hesaplar ve görseller
+
+Yeni yöneticiyi yalnız mevcut yönetici oluşturabilir; açık kayıt yoktur. Son hesap silinemez. Görseller JPEG/PNG/WebP/AVIF ve en fazla 8 MB olmalıdır; SVG kabul edilmez. Kullanılan bir görseli silmeden önce ilgili alanlardan kaldırın. Volume silmek içerik ve fotoğrafları kaybettirir; [Docker kılavuzuna](docker.md) bakın.

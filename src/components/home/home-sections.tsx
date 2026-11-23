@@ -15,7 +15,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { SocialLinks } from "@/components/ui/social-links";
 import { MagneticLink } from "@/components/ui/magnetic-link";
 import { portraitImage } from "@/content/images";
-import { getContactLinks } from "@/lib/site-settings";
+import { getContactLinks, getSiteSettings } from "@/lib/site-settings";
 import type { HomeContent } from "@/content/home";
 
 const serviceIcons = {
@@ -26,10 +26,14 @@ const serviceIcons = {
   sprout: Sprout,
   heart: Heart,
 };
-export function HomeSections({ content }: { content: HomeContent }) {
-  const hasPortrait = existsSync(
-    path.join(process.cwd(), "public", portraitImage.path.replace(/^\//, "")),
-  );
+export async function HomeSections({ content }: { content: HomeContent }) {
+  const site = await getSiteSettings();
+  const portrait = site?.photos.portrait;
+  const hasPortrait =
+    Boolean(portrait) ||
+    existsSync(
+      path.join(process.cwd(), "public", portraitImage.path.replace(/^\//, "")),
+    );
   return (
     <>
       <div className="marquee" aria-label="Danışmanlık yaklaşımı">
@@ -61,8 +65,8 @@ export function HomeSections({ content }: { content: HomeContent }) {
             <div className="portrait-slot image-frame">
               {hasPortrait ? (
                 <Image
-                  src={portraitImage.path}
-                  alt={portraitImage.alt}
+                  src={portrait?.url ?? portraitImage.path}
+                  alt={portrait?.alt ?? portraitImage.alt}
                   fill
                   sizes="(max-width: 768px) 90vw, 35vw"
                 />
@@ -76,12 +80,13 @@ export function HomeSections({ content }: { content: HomeContent }) {
               )}
             </div>
             <div className="portrait-caption">
-              <span aria-hidden="true">✳</span> Her yolculuk
+              <span aria-hidden="true">✳</span>{" "}
+              {content.copy.about.portraitFirst}
               <br />
-              <em>tanışmakla başlar.</em>
+              <em>{content.copy.about.portraitAccent}</em>
             </div>
             <span className="portrait-handwriting">
-              biraz ben, biraz yaklaşımım.
+              {content.copy.about.portraitHandwriting}
             </span>
           </Reveal>
           <Reveal className="about-copy">
@@ -93,12 +98,19 @@ export function HomeSections({ content }: { content: HomeContent }) {
             </h2>
             <p className="identity-line">
               {content.identity.title} {content.identity.name}
-              <span>{content.identity.titleStatus} · Örnek biyografi</span>
+              {(content.identity.titleStatus || content.isMock) && (
+                <span>
+                  {content.identity.titleStatus}
+                  {content.isMock ? " · Örnek biyografi" : ""}
+                </span>
+              )}
             </p>
             <p>{content.identity.bio}</p>
             <p>{content.identity.approach}</p>
             <SocialLinks />
-            <p className="small-note">Sosyal hesaplar örnektir.</p>
+            {site?.socials.some((link) => link.isMock) && (
+              <p className="small-note">Sosyal hesaplar örnektir.</p>
+            )}
           </Reveal>
         </Container>
       </section>
@@ -120,7 +132,9 @@ export function HomeSections({ content }: { content: HomeContent }) {
             <p>
               {content.copy.services.description}
               <br />
-              <span className="small-note">Hizmet kapsamları örnektir.</span>
+              {content.isMock && (
+                <span className="small-note">Hizmet kapsamları örnektir.</span>
+              )}
             </p>
           </Reveal>
           <div className="service-grid">
@@ -139,7 +153,8 @@ export function HomeSections({ content }: { content: HomeContent }) {
                     <h3>{service.title}</h3>
                     <p>{service.description}</p>
                     <a href="#iletisim" className="service-link">
-                      Birlikte konuşalım<span aria-hidden="true">+</span>
+                      {content.copy.services.linkLabel}
+                      <span aria-hidden="true">+</span>
                     </a>
                   </article>
                 </Reveal>
@@ -151,13 +166,14 @@ export function HomeSections({ content }: { content: HomeContent }) {
     </>
   );
 }
-export function PackagesSection({
+export async function PackagesSection({
   packages,
   copy,
 }: {
   packages: HomeContent["packages"];
   copy: HomeContent["copy"]["packages"];
 }) {
+  const whatsapp = (await getContactLinks()).whatsapp;
   return (
     <section
       className="section packages-section"
@@ -181,7 +197,7 @@ export function PackagesSection({
               >
                 {pkg.featured && (
                   <span className="package-popular">
-                    En çok tercih edilen <small>· örnek etiket</small>
+                    Öne çıkan {pkg.isMock && <small>· örnek etiket</small>}
                   </span>
                 )}
                 <p className="eyebrow">{pkg.subtitle}</p>
@@ -196,7 +212,7 @@ export function PackagesSection({
                   ))}
                 </ul>
                 <MagneticLink
-                  href={getContactLinks().whatsapp}
+                  href={whatsapp}
                   className={`button ${pkg.featured ? "button-lime" : "button-outline"}`}
                 >
                   Detayları konuşalım

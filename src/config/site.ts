@@ -1,7 +1,5 @@
 import type { NavigationItem } from "@/types/content";
 
-// Yayından önce kapatın ve onaylı veri kaynağını bağlayın.
-export const USE_MOCK_CONTENT = true;
 export const siteConfig = {
   name: "Günay Turan",
   productionUrl: "https://gunayturan.com.tr",

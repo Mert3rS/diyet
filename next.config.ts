@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
+import { withPayload } from "@payloadcms/next/withPayload";
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["127.0.0.1"],
+  experimental: { globalNotFound: true },
   output: process.env.NEXT_OUTPUT_STANDALONE === "1" ? "standalone" : undefined,
   poweredByHeader: false,
   images: { qualities: [60, 75] },
@@ -19,4 +21,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);

@@ -22,6 +22,8 @@ jobs:
       - run: npm run check
       - run: npm run test:ops
       - run: npm run secrets:audit
+      - name: Geçici CMS ortamı
+        run: npm run cms:setup -- --email admin@example.invalid
       - name: Compose ve Dockerfile doğrulaması
         run: |
           docker compose config --quiet

@@ -4,7 +4,21 @@ import { useEffect, useState } from "react";
 import { ChevronUp } from "lucide-react";
 import { SocialIcon } from "@/components/ui/social-icons";
 
-export function FloatingControls({ whatsapp }: { whatsapp: string }) {
+export function FloatingControls({
+  whatsapp,
+  whatsappVisible = true,
+  instagram,
+  instagramIsMock = false,
+  brandName = "Günay Turan",
+  appointmentLabel = "Randevu Al",
+}: {
+  whatsapp: string;
+  whatsappVisible?: boolean;
+  instagram: string | null;
+  instagramIsMock?: boolean;
+  brandName?: string;
+  appointmentLabel?: string;
+}) {
   const external = whatsapp.startsWith("https://wa.me/");
   const [showTop, setShowTop] = useState(false);
   const [hintDismissed, setHintDismissed] = useState(false);
@@ -52,34 +66,68 @@ export function FloatingControls({ whatsapp }: { whatsapp: string }) {
             <ChevronUp size={20} />
           </a>
         )}
-        <a
-          href={whatsapp}
-          className="floating-whatsapp"
-          data-hint-dismissed={hintDismissed}
-          onFocus={() => setHintDismissed(false)}
-          onPointerEnter={() => setHintDismissed(false)}
-          aria-label={
-            external
-              ? "WhatsApp ile iletişime geç"
-              : "İletişim seçeneklerini gör · WhatsApp numarası onay bekliyor"
-          }
-          target={external ? "_blank" : undefined}
-          rel={external ? "noopener noreferrer" : undefined}
-        >
-          <span className="floating-whatsapp-face">
-            <SocialIcon platform="whatsapp" />
-          </span>
-          <span className="floating-hint" aria-hidden="true">
-            <strong>Bir merhaba de.</strong>
-            <span>
-              {external ? "WhatsApp ile iletişim" : "İletişim seçenekleri"}
-            </span>
-          </span>
-        </a>
+        {(whatsappVisible || instagram) && (
+          <div
+            className="floating-socials"
+            role="group"
+            aria-label="Hızlı iletişim"
+          >
+            {whatsappVisible && (
+              <a
+                href={whatsapp}
+                className="floating-whatsapp"
+                data-hint-dismissed={hintDismissed}
+                onFocus={() => setHintDismissed(false)}
+                onPointerEnter={() => setHintDismissed(false)}
+                aria-label={
+                  external
+                    ? "WhatsApp ile iletişime geç"
+                    : "İletişim seçeneklerini gör · WhatsApp numarası onay bekliyor"
+                }
+                target={external ? "_blank" : undefined}
+                rel={external ? "noopener noreferrer" : undefined}
+              >
+                <span className="floating-whatsapp-face">
+                  <SocialIcon platform="whatsapp" />
+                </span>
+                <span className="floating-hint" aria-hidden="true">
+                  <strong>Bir merhaba de.</strong>
+                  <span>
+                    {external
+                      ? "WhatsApp ile iletişim"
+                      : "İletişim seçenekleri"}
+                  </span>
+                </span>
+              </a>
+            )}
+            {instagram && (
+              <a
+                className="floating-instagram"
+                href={instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Instagram hesabını aç${instagramIsMock ? " · örnek hesap" : ""}`}
+                data-hint-dismissed={hintDismissed}
+                onFocus={() => setHintDismissed(false)}
+                onPointerEnter={() => setHintDismissed(false)}
+              >
+                <span className="floating-whatsapp-face">
+                  <SocialIcon platform="instagram" />
+                </span>
+                <span className="floating-hint" aria-hidden="true">
+                  <strong>Instagram’da buluşalım.</strong>
+                  <span>
+                    {instagramIsMock ? "Örnek hesap" : "Profili görüntüle"}
+                  </span>
+                </span>
+              </a>
+            )}
+          </div>
+        )}
       </div>
       <div className="mobile-cta-bar">
         <span>
-          Kendi ritminde, birlikte.<small>Günay Turan</small>
+          Kendi ritminde, birlikte.<small>{brandName}</small>
         </span>
         <a
           href={whatsapp}
@@ -87,7 +135,7 @@ export function FloatingControls({ whatsapp }: { whatsapp: string }) {
           target={external ? "_blank" : undefined}
           rel={external ? "noopener noreferrer" : undefined}
         >
-          Randevu Al
+          {appointmentLabel}
         </a>
       </div>
     </>

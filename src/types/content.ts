@@ -1,21 +1,12 @@
-export type MockRecord = { isMock: true };
+export type MockRecord = { isMock: boolean };
 export type NavigationItem = { label: string; href: `#${string}` };
-export type SocialPlatform =
-  | "instagram"
-  | "tiktok"
-  | "youtube"
-  | "facebook"
-  | "x"
-  | "linkedin"
-  | "whatsapp"
-  | "telegram"
-  | "threads"
-  | "pinterest";
+export type SocialPlatform = "instagram" | "whatsapp";
 export type SocialLink = {
   platform: SocialPlatform;
   url: string;
   label?: string;
   visible: boolean;
+  isMock?: boolean;
 };
 export type ImageKey = "salad" | "preparation" | "fruit" | "breakfast";
 export type Service = MockRecord & {

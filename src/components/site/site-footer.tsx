@@ -1,22 +1,30 @@
 import { Container } from "@/components/ui/container";
 import { navigation } from "@/config/site";
 import { SocialLinks } from "@/components/ui/social-links";
+import { getSiteSettings } from "@/lib/site-settings";
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const site = await getSiteSettings();
   return (
     <footer className="site-footer">
       <Container>
         <div className="footer-top">
-          <p className="eyebrow">Kendine iyi gelmeye yer aç.</p>
+          <p className="eyebrow">
+            {site?.brand.footerEyebrow ?? "Kendine iyi gelmeye yer aç."}
+          </p>
           <SocialLinks variant="footer" />
         </div>
-        <p className="footer-wordmark" aria-label="Günay Turan">
-          Günay Turan<span aria-hidden="true">✳</span>
+        <p
+          className="footer-wordmark"
+          aria-label={site?.brand.name ?? "Günay Turan"}
+        >
+          {site?.brand.name ?? "Günay Turan"}
+          <span aria-hidden="true">✳</span>
         </p>
         <div className="footer-bottom">
-          <p>Günay Turan · Tasarım önizlemesi</p>
+          <p>{site?.brand.name ?? "Günay Turan"} · Tasarım önizlemesi</p>
           <nav aria-label="Alt menü">
-            {navigation.map((item) => (
+            {(site?.navigation ?? navigation).map((item) => (
               <a key={item.href} href={item.href}>
                 {item.label}
               </a>
@@ -37,10 +45,7 @@ export function SiteFooter() {
             </span>
           </div>
         </div>
-        <p className="footer-note">
-          Bu site örnek içerikle hazırlanmıştır. Sosyal hesaplar ve iletişim
-          bilgileri temsildir.
-        </p>
+        <p className="footer-note">{site?.brand.footerNote}</p>
       </Container>
     </footer>
   );

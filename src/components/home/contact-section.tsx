@@ -14,7 +14,7 @@ export async function ContactSection({
 }: {
   copy: HomeContent["copy"]["contact"];
 }) {
-  const contact = getContactSettings();
+  const contact = await getContactSettings();
   if (!contact)
     return (
       <section id="iletisim" className="section">
@@ -23,7 +23,7 @@ export async function ContactSection({
         </Container>
       </section>
     );
-  const links = getContactLinks();
+  const links = await getContactLinks(contact);
   const socials = await getSocialLinks();
   return (
     <section
@@ -47,19 +47,32 @@ export async function ContactSection({
           <a href={links.whatsapp} className="contact-card">
             <SocialIcon platform="whatsapp" />
             <span>
-              WhatsApp&apos;tan yaz<small>Telefon bilgisi onay bekliyor</small>
+              WhatsApp&apos;tan yaz
+              <small>
+                {contact.isMock
+                  ? "Telefon bilgisi onay bekliyor"
+                  : "Danışmanlık hakkında bilgi al"}
+              </small>
             </span>
           </a>
           <a href={links.phone} className="contact-card">
             <Phone size={24} />
             <span>
-              Bir telefon kadar yakın<small>{contact.phone} · örnek</small>
+              Bir telefon kadar yakın
+              <small>
+                {contact.phone}
+                {contact.isMock ? " · örnek" : ""}
+              </small>
             </span>
           </a>
           <a href={links.email} className="contact-card">
             <Mail size={24} />
             <span>
-              Bir e-posta bırak<small>{contact.email} · örnek</small>
+              Bir e-posta bırak
+              <small>
+                {contact.email}
+                {contact.isMock ? " · örnek" : ""}
+              </small>
             </span>
           </a>
         </div>
@@ -73,26 +86,25 @@ export async function ContactSection({
             <span>{contact.hours}</span>
           </p>
         </div>
-        <p className="contact-preview-note">
-          Örnek iletişim bilgileri. Gerçek numara ve e-posta onaylanana kadar bu
-          bağlantılar mesaj göndermez veya arama başlatmaz. Bu site randevu
-          kaydetmez.
-        </p>
+        {contact.isMock && (
+          <p className="contact-preview-note">
+            Örnek iletişim bilgileri. Gerçek numara ve e-posta onaylanana kadar
+            bu bağlantılar mesaj göndermez veya arama başlatmaz. Bu site randevu
+            kaydetmez.
+          </p>
+        )}
         {socials.length > 0 && (
           <div className="contact-social">
             <div className="contact-social-intro">
               <div>
-                <p className="eyebrow">Ekranın öteki tarafında</p>
+                <p className="eyebrow">{copy.socialEyebrow}</p>
                 <h3>
-                  Biraz ilham,
+                  {copy.socialTitle}
                   <br />
-                  <em>biraz günlük hayat.</em>
+                  <em>{copy.socialAccent}</em>
                 </h3>
               </div>
-              <p>
-                Sofradan, hayattan, birlikte. Sana iyi gelen paylaşımlarda
-                buluşalım.
-              </p>
+              <p>{copy.socialDescription}</p>
             </div>
             <SocialLinks variant="cards" />
           </div>

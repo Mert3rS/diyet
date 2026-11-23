@@ -22,7 +22,6 @@ import {
   defaultBodyAnalysisSettings,
   DEFAULT_MESSAGE_TEMPLATE,
 } from "../../src/content/body-analysis";
-import { BodyAnalysisSection } from "../../src/components/home/body-analysis-section";
 import { BodyAnalysisHeroLink } from "../../src/components/home/body-analysis-link";
 import type { RawMeasurements } from "../../src/lib/body-analysis/types";
 
@@ -230,20 +229,7 @@ test("ayarlar güvenli varsayılanlarla birleşir; sabitler geçersiz kılınama
   expect(safe.services.filter((item) => item.isDefault)).toHaveLength(1);
   expect(safe.fields.neck).toBe(false);
 });
-test("kapalı araç bölümü ve hero bağlantısı hiç render edilmez", () => {
-  const config = {
-    ...defaultBodyAnalysisSettings(true),
-    phone: null,
-    phoneHref: "#iletisim",
-    emailHref: "#iletisim",
-    privacyUrl: null,
-    isDevelopment: false,
-  };
-  expect(
-    renderToStaticMarkup(
-      createElement(BodyAnalysisSection, { settings: config }),
-    ),
-  ).toBe("");
+test("kapalı araç hero bağlantısı render edilmez", () => {
   const html = renderToStaticMarkup(
     createElement(BodyAnalysisHeroLink, { enabled: false }),
   );

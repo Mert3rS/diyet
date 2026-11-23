@@ -4,7 +4,7 @@ import type { BodyAnalysisSettings } from "./types";
 
 const bannedCopy =
   /ideal\s*kilo|hedef\s*kilo|kalori|kcal|kilo\s*ver|obez|kilolu|normal\s*(kilo|vki|bki)|zayıf|garanti|kesin\s*sonuç/;
-const hasBannedCopy = (text: string) =>
+export const hasBannedCopy = (text: string) =>
   bannedCopy.test(text.normalize("NFKC").toLocaleLowerCase("tr-TR"));
 export function isSafeCopy(value: unknown, max: number): value is string {
   return (

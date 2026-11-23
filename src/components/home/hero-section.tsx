@@ -7,7 +7,7 @@ import type { MockRecord } from "@/types/content";
 import type { HomeContent } from "@/content/home";
 import { Check, Sparkles } from "lucide-react";
 
-export function HeroSection({
+export async function HeroSection({
   trust,
   copy,
   showBodyAnalysis = false,
@@ -46,11 +46,14 @@ export function HeroSection({
           </h1>
           <p className="hero-description">{copy.description}</p>
           <div className="hero-buttons">
-            <MagneticLink href={getContactLinks().whatsapp} className="button">
-              <Sparkles size={18} /> Birlikte başlayalım
+            <MagneticLink
+              href={(await getContactLinks()).whatsapp}
+              className="button"
+            >
+              <Sparkles size={18} /> {copy.primaryButton}
             </MagneticLink>
             <a href="#hakkimda" className="text-link">
-              Önce biraz tanışalım
+              {copy.introLink}
             </a>
             <BodyAnalysisHeroLink enabled={showBodyAnalysis} />
           </div>

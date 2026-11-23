@@ -1,21 +1,21 @@
 import { test, expect } from "@playwright/test";
 import {
   filterSocialLinks,
-  getContactLinks,
-} from "../../src/lib/site-settings";
+  contactLinks as getContactLinks,
+} from "../../src/lib/contact";
 
 test("sosyal bağlantı filtresi güvensiz, boş ve gizli kayıtları çıkarır; sırayı korur", () => {
   const links = filterSocialLinks([
-    { platform: "x", url: "javascript:alert(1)", visible: true },
-    { platform: "youtube", url: "http://example.invalid", visible: true },
+    { platform: "instagram", url: "javascript:alert(1)", visible: true },
+    { platform: "whatsapp", url: "http://example.invalid", visible: true },
     {
-      platform: "tiktok",
+      platform: "instagram",
       url: "https://example.invalid/hidden",
       visible: false,
     },
-    { platform: "facebook", url: "", visible: true },
+    { platform: "whatsapp", url: "", visible: true },
     {
-      platform: "linkedin",
+      platform: "whatsapp",
       url: "https://example.invalid/first",
       visible: true,
     },
@@ -25,7 +25,7 @@ test("sosyal bağlantı filtresi güvensiz, boş ve gizli kayıtları çıkarır
       visible: true,
     },
   ]);
-  expect(links.map((link) => link.platform)).toEqual(["linkedin", "instagram"]);
+  expect(links.map((link) => link.platform)).toEqual(["whatsapp", "instagram"]);
   expect(filterSocialLinks([])).toEqual([]);
 });
 test("örnek iletişim kaydı gerçek alıcıya yönlenmez", () => {

@@ -1,6 +1,6 @@
 # Vücut analizi — uygulama ve doğrulama
 
-23 Kasım 2026. Payload / PostgreSQL / admin bulunmadığı doğrulandı. Bu isteğin fallback'i uygulandı: ek CMS kurulmadan `getBodyAnalysisSettings()` ve güvenli yerel varsayılanlar. Mevcut sosyal/iletişim getter'ları hâlâ örnek içerik okur. Analytics yoktur; analiz tıklama olayı eklenmedi.
+23 Kasım 2026: Payload / PostgreSQL ve Türkçe admin çalışır. `getBodyAnalysisSettings()` CMS Global'ini okur, izinli alanları güvenli varsayılanlarla birleştirir. Sosyal/iletişim bilgileri de CMS kaynağındadır. Analytics yoktur; analiz tıklama olayı eklenmedi. Panel kullanımı [admin kılavuzundadır](admin-guide-tr.md).
 
 ## Kaynak doğrulaması
 
@@ -33,7 +33,7 @@ Sonuç aralığı `[floor(merkez − SEE), ceil(merkez + SEE)]`, fiziksel %0–1
 
 Varsayılan görünürlük geliştirmede açık, üretimde kapalıdır. Araç kapalıysa bölüm ve hero linki render edilmez; yeni menü maddesi eklenmedi. Açıkken eski `#hesaplayici` çapasının yeri korunur. Hedef seçimi context ile hizmeti önceden seçer; ölçü taşımaz. `metabolik` seçimi `bireysel`e, eşleşmeyen hizmet varsayılana döner.
 
-Sabit uyarı/onay/etiketler dahil varsayılan metinler `src/content/body-analysis.ts` içindedir. `analysisCopy` panel sözleşmesinin dışındadır. `settings.ts` yalnız izinli anahtarları birleştirir; HTML, uzun/geçersiz metin ve kısıtlı ifadeler güvenli varsayılana düşer. Bu filtre uzman editör incelemesinin yerini tutmaz. CMS erişim kontrolü/revalidation/örnek admin önizlemesi yoktur; [planlanan model](content-model.md) ve [düzenleme kılavuzu](admin-guide-tr.md) ayrıntılıdır.
+Sabit uyarı/onay/etiketler dahil varsayılan metinler `src/content/body-analysis.ts` içindedir. `analysisCopy` panel sözleşmesinin dışındadır. `settings.ts` yalnız izinli anahtarları birleştirir; HTML, uzun/geçersiz metin ve kısıtlı ifadeler güvenli varsayılana düşer. Sunucu doğrulaması geçersiz panel yazmalarını reddeder. Yönetici erişimi, kaydetme sonrası revalidation, örnek değerlerle önizleme ve sıfırlama uygulanmıştır. Bu filtre uzman editör incelemesinin yerini tutmaz.
 
 İzinli 8 placeholder dışındakiler reddedilir; builder boş veya bilinmeyen alan içeren satırları atlar. Ad ayrı “Adım” satırıdır. cm/kg template satırlarında, çevre ölçüleri ve hamilelik bilgisi ayrı browser satırlarında bulunur. Yağ satırı yalnız “tahmini aralık” taşır. VKİ/yağ mesaj anahtarları hesap yöntemini değiştirmez. Metin `Intl.NumberFormat('tr-TR')` ile hazırlanır. Şablon en fazla 800 karakter; URL için 2000 karakterlik **uygulama uyumluluk bütçesi** kullanılır (WhatsApp için evrensel sınır iddiası değildir). Otomatik taslak gerekirse önce ad/yağ/VKİ, ardından diğer isteğe bağlı satırları çıkarır; kullanıcıya kısaltıldığı gösterilir. Elle düzenlenen mesaj sonradan kesilmez: çok uzunsa gönderim kapanır ve kopyalama açık kalır.
 
