@@ -18,6 +18,7 @@ Günay Turan için hazırlanan, beslenme danışmanlığını dergi estetiğinde
 - Bağlantısız “Yakında” blog kartları ve klavye ile açılabilen SSS.
 - Hedef seçiminin ardından **Vücut analizi**: tarayıcıda tahmini yağ oranı aralığı, ölçüm ipuçları, koruyucu sınırlar ve düzenlenebilir/onaylı WhatsApp taslağı. Eski enerji hesaplayıcısı kaldırıldı. Araç geliştirmede açık, üretimde varsayılan olarak kapalıdır.
 - Sosyal hesapların dört alanda aynı **`getSocialLinks()`** kaynağından sunulması; HTTPS/görünürlük filtresi ve on platform için inline SVG simgesi.
+- Sosyal alan için asimetrik hesap kartları, açıklamalı platform adları, ince footer kapsülleri ve masaüstü ikon şeridi; iletişim bölümünde içeriği örtmeyen, klavyeyle açıklaması açılan yuvarlak WhatsApp düğmesi.
 - Tek `USE_MOCK_CONTENT` bayrağı, merkezi `mock-data.ts`, her örnek kayıtta `isMock: true`; yalnızca development'ta küçük örnek içerik rozeti.
 - Yerel WebP fotoğraflar, Türkçe alt metinler, blur önizleme, responsive `next/image` ve belgelenmiş kaynaklar.
 - Azaltılmış hareket desteği, görünür odak, içeriğe atlama bağlantısı, 404, lint/tip/build ve Playwright + axe kontrolleri.

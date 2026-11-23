@@ -80,7 +80,20 @@ export async function ContactSection({
         </p>
         {socials.length > 0 && (
           <div className="contact-social">
-            <p className="eyebrow">Sofradan, hayattan, birlikte.</p>
+            <div className="contact-social-intro">
+              <div>
+                <p className="eyebrow">Ekranın öteki tarafında</p>
+                <h3>
+                  Biraz ilham,
+                  <br />
+                  <em>biraz günlük hayat.</em>
+                </h3>
+              </div>
+              <p>
+                Sofradan, hayattan, birlikte. Sana iyi gelen paylaşımlarda
+                buluşalım.
+              </p>
+            </div>
             <SocialLinks variant="cards" />
           </div>
         )}

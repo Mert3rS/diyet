@@ -2,6 +2,12 @@
 
 Tarih: 23 Kasım 2026. Yerel Windows, Node.js 24, Chromium ve production Next.js çıktısı kullanıldı. Public yayın yapılmadı.
 
+## Sosyal medya tasarım revizyonu
+
+İletişimde asimetrik sosyal panel, footer'da isimli bağlantılar, sol kenarda çerçeveli ikon şeridi ve yeni yuvarlak WhatsApp düğmesi uygulandı. Link getter/HTTPS filtresi ve örnek hesap durumu korundu. Yüzen düğme, iletişim/footer görünürken gizlenir; tooltip klavye odağı ve Escape ile çalışır. 320/390/768/1440 px sosyal panel ekran görüntüleri `test-results/socials-*.png` altındadır. Desktop hero/panel ve mobil görünüm ayrıca incelendi.
+
+Docker geliştirme sunucusuna karşı **29/29 test** (önceki 24 + sosyal düzen/tooltip için 5) geçti. axe WCAG ve görünür etiket/erişilebilir ad eşleşmesi sıfır ihlal; lint/tip başarılı. Docker üretim imajı derlenip healthy duruma getirildi. Sonuçlar yerel Windows Chromium + Linux uygulama konteynerine aittir; gerçek sosyal hesaplar/telefonlar eklenmedi. Önceki Docker/GitHub ilk commit CI çalışması başarıyla tamamlandı; yeni revizyonun uzak workflow'u push sonrası ayrıca izlenmelidir.
+
 ## Docker çalışma ortamı doğrulaması
 
 Üretim ve geliştirme imajları Windows host bağımlılıkları kopyalanmadan Linux'ta `npm ci` ile üretildi. Resmî Node digest'i ve `node --version` **v24.22.3** olarak doğrulandı. Dockerfile lint/check sıfır uyarı; iki Compose dosyası geçerli. Üretim konteyneri non-root uid 1000, read-only kök, yazılabilir cache volume ile healthy duruma geldi. HTTP smoke: ana sayfa, 16 JS/CSS/font varlığı, gerçek `next/image` optimizasyonu, güvenlik başlıkları ve 404 geçti. Yanlış SITE_URL ile entrypoint hata kodu 1 döndürdü.

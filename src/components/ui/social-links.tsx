@@ -1,7 +1,7 @@
 import { getSocialLinks } from "@/lib/site-settings";
 import { SocialIcon } from "@/components/ui/social-icons";
-import { MagneticLink } from "@/components/ui/magnetic-link";
 import { siteConfig, USE_MOCK_CONTENT } from "@/config/site";
+import { socialPresentation } from "@/content/socials";
 
 export async function SocialLinks({
   variant = "small",
@@ -16,23 +16,40 @@ export async function SocialLinks({
       role="group"
       aria-label="Sosyal medya hesapları"
     >
-      {links.map((link) => (
-        <MagneticLink
-          href={link.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          key={link.platform}
-          aria-label={`${link.label || link.platform}${variant === "cards" && USE_MOCK_CONTENT ? " Örnek hesap" : ""} · ${siteConfig.name}${variant !== "cards" && USE_MOCK_CONTENT ? " · örnek hesap" : ""}`}
-          className="social-link"
-        >
-          <SocialIcon platform={link.platform} />
-          {variant === "cards" && (
-            <span>
-              {link.label} {USE_MOCK_CONTENT && <small>Örnek hesap</small>}
+      {links.map((link) => {
+        const presentation = socialPresentation[link.platform];
+        const name = presentation.name;
+        const description = link.label || presentation.description;
+        const accessibleLabel =
+          variant === "cards"
+            ? `${name} ${description}${USE_MOCK_CONTENT ? " Örnek hesap" : ""} · ${siteConfig.name}`
+            : `${name} · ${link.label || name} · ${siteConfig.name}${USE_MOCK_CONTENT ? " · örnek hesap" : ""}`;
+        return (
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            key={link.platform}
+            aria-label={accessibleLabel}
+            className="social-link"
+            data-platform={link.platform}
+            title={variant === "small" || variant === "edge" ? name : undefined}
+          >
+            <span className="social-icon-wrap">
+              <SocialIcon platform={link.platform} />
             </span>
-          )}
-        </MagneticLink>
-      ))}
+            {variant === "cards" ? (
+              <span className="social-card-copy">
+                <span className="social-name">{name}</span>{" "}
+                <span className="social-description">{description}</span>{" "}
+                {USE_MOCK_CONTENT && <small>Örnek hesap</small>}
+              </span>
+            ) : variant === "footer" ? (
+              <span className="social-name">{name}</span>
+            ) : null}
+          </a>
+        );
+      })}
     </div>
   );
 }

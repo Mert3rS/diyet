@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "lenis/dist/lenis.css";
 @import "./body-analysis.css";
+@import "./socials.css";
 
 @theme inline {
   --color-forest: var(--forest);
@@ -504,81 +505,6 @@ svg {
 .hero-bottom a span {
   display: inline-block;
   margin-left: 0.75rem;
-}
-.social-links {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-}
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  position: relative;
-  overflow: hidden;
-  width: 2.7rem;
-  height: 2.7rem;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  text-decoration: none;
-  transition:
-    background 0.2s,
-    color 0.2s;
-}
-.social-link:hover {
-  background: var(--lime);
-  color: var(--forest);
-}
-.social-link:active {
-  scale: 0.95;
-}
-.social-edge {
-  position: fixed;
-  z-index: 30;
-  left: 1rem;
-  top: 42%;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-.social-edge .social-link {
-  width: 2rem;
-  height: 2rem;
-  border: 0;
-}
-.social-edge svg {
-  width: 17px;
-  height: 17px;
-}
-.social-footer {
-  gap: 0.8rem;
-}
-.social-footer .social-link {
-  width: 3.7rem;
-  height: 3.7rem;
-  border-color: #607266;
-}
-.social-footer svg {
-  width: 24px;
-  height: 24px;
-}
-.social-cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.social-cards .social-link {
-  width: 100%;
-  height: auto;
-  min-height: 5rem;
-  padding: 1rem;
-  border-radius: 1rem;
-  justify-content: flex-start;
-  font-size: 0.875rem;
-}
-.social-cards small {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--muted);
 }
 .section {
   padding-block: 7rem;
@@ -1491,67 +1417,6 @@ svg {
   color: #3d4e20;
   max-width: 57rem;
 }
-.contact-social {
-  margin-top: 3rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid #8fa836;
-}
-.contact-social .social-link {
-  border-color: #8fa836;
-}
-.contact-social .social-link:hover {
-  background: var(--forest);
-  color: var(--cream);
-}
-.contact-social .social-link small {
-  color: #3d4e20;
-}
-.contact-social .social-link:hover small {
-  color: var(--cream);
-}
-.floating-actions {
-  position: fixed;
-  z-index: 45;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.65rem;
-}
-.floating-whatsapp {
-  display: inline-flex;
-  gap: 0.6rem;
-  justify-content: center;
-  align-items: center;
-  min-width: 3.3rem;
-  height: 3.3rem;
-  padding: 0.85rem 1.2rem;
-  border: 1px solid var(--cream);
-  border-radius: 100px;
-  background: var(--forest);
-  color: var(--cream);
-  box-shadow: 0 5px 20px #10261e20;
-  text-decoration: none;
-  font-size: 0.8125rem;
-  transition: transform 0.2s;
-}
-.floating-whatsapp:hover {
-  transform: translateY(-4px);
-  background: var(--lime);
-  color: var(--forest);
-}
-.back-to-top {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 50%;
-  background: var(--cream);
-  color: var(--forest);
-  border: 1px solid #cbd0bd;
-}
 .mobile-cta-bar {
   display: none;
 }
@@ -1663,18 +1528,6 @@ svg {
   }
   .contact-heading h2 {
     font-size: 3.4rem;
-  }
-  .floating-actions {
-    bottom: 5.6rem;
-    right: 0.85rem;
-  }
-  .floating-whatsapp {
-    width: 3.1rem;
-    height: 3.1rem;
-    padding: 0.8rem;
-  }
-  .floating-whatsapp > span {
-    display: none;
   }
   .mobile-cta-bar {
     display: flex;
@@ -1919,9 +1772,6 @@ svg {
   .section {
     padding-block: 5rem;
   }
-  .social-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 @media (max-width: 600px) {
   .container,
@@ -2034,16 +1884,9 @@ svg {
     align-items: flex-start;
     gap: 1.5rem;
   }
-  .social-cards {
-    grid-template-columns: 1fr;
-  }
   .footer-top {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .social-footer .social-link {
-    width: 3rem;
-    height: 3rem;
   }
   .footer-wordmark {
     font-size: 12.5vw;
