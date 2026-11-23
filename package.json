@@ -1,0 +1,52 @@
+{
+  "name": "diyet",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Beslenme ve diyetisyen web sitesi başlangıç altyapısı",
+  "engines": {
+    "node": ">=24.22.3 <25"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "next typegen && tsc --noEmit",
+    "check": "npm run lint && npm run typecheck",
+    "test:e2e": "playwright test",
+    "format": "prettier --write .",
+    "prestart": "node scripts/validate-production-env.mjs",
+    "env:check": "node scripts/validate-production-env.mjs",
+    "launch:audit": "node scripts/launch-audit.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "test:ops": "node --test tests/ops/*.test.mjs",
+    "secrets:audit": "node scripts/secrets-audit.mjs",
+    "docker:up": "docker compose up --build -d --wait",
+    "docker:dev": "docker compose -f compose.dev.yaml up --build --watch",
+    "docker:down": "docker compose down",
+    "docker:dev:down": "docker compose -f compose.dev.yaml down",
+    "docker:logs": "docker compose logs --follow web",
+    "test:container": "node scripts/container-smoke.mjs"
+  },
+  "dependencies": {
+    "lenis": "1.3.27",
+    "lucide-react": "1.78.0",
+    "motion": "14.14.0",
+    "next": "16.4.6",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.65.1",
+    "@tailwindcss/postcss": "4.3.5",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.6",
+    "prettier": "3.10.1",
+    "tailwindcss": "4.3.5",
+    "typescript": "6.0.3"
+  }
+}

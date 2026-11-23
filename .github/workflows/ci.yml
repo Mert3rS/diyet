@@ -1,0 +1,51 @@
+name: Proje kontrolleri
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run test:ops
+      - run: npm run secrets:audit
+      - name: Compose ve Dockerfile doğrulaması
+        run: |
+          docker compose config --quiet
+          docker compose -f compose.dev.yaml config --quiet
+          docker build --check .
+      - name: Üretim konteynerini derle ve başlat
+        run: docker compose up --build --detach --wait --wait-timeout 120
+      - name: HTTP, statik varlıklar ve görsel optimizasyonu
+        run: npm run test:container -- http://127.0.0.1:3000
+      - name: Geliştirme konteyneri
+        run: docker compose -f compose.dev.yaml up --build --detach --wait --wait-timeout 120
+      - name: Chromium kurulumu
+        run: npx playwright install --with-deps chromium --only-shell
+      - name: Docker geliştirme sunucusunda tarayıcı testleri
+        run: npm run test:e2e
+        env:
+          TEST_BASE_URL: http://127.0.0.1:3001
+      - name: Konteyner logları
+        if: failure()
+        run: |
+          docker compose logs --no-color --tail 100 web
+          docker compose -f compose.dev.yaml logs --no-color --tail 100 web
+      - name: Konteynerleri kapat
+        if: always()
+        run: |
+          docker compose -f compose.dev.yaml down
+          docker compose down

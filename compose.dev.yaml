@@ -1,0 +1,45 @@
+name: diyet-dev
+
+services:
+  web:
+    image: diyet-web:dev
+    build:
+      context: .
+      target: development
+    environment:
+      SITE_URL: http://localhost:${DEV_PORT:-3001}
+      NODE_ENV: development
+      NEXT_TELEMETRY_DISABLED: "1"
+    ports:
+      - "127.0.0.1:${DEV_PORT:-3001}:3000"
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "node", "scripts/docker-healthcheck.mjs"]
+      interval: 15s
+      timeout: 6s
+      start_period: 60s
+      retries: 3
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/src
+          initial_sync: true
+        - action: sync
+          path: ./public
+          target: /app/public
+          initial_sync: true
+        - action: rebuild
+          path: ./package.json
+        - action: rebuild
+          path: ./package-lock.json
+        - action: rebuild
+          path: ./next.config.ts
+        - action: rebuild
+          path: ./tsconfig.json
+        - action: rebuild
+          path: ./postcss.config.mjs
+        - action: rebuild
+          path: ./Dockerfile

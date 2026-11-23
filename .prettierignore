@@ -1,0 +1,10 @@
+node_modules/
+.next/
+test-results/
+.reports/
+playwright-report/
+coverage/
+package-lock.json
+AGENTS.md
+public/images/
+public/fonts/
