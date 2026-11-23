@@ -1,11 +1,11 @@
 {
-  "hosting": null,
-  "database": null,
-  "storage": null,
+  "hosting": "Render Free; configuration ready, account connection pending",
+  "database": "Supabase Free; account exists, project connection pending",
+  "storage": "Supabase Storage S3; configuration ready, bucket provisioning pending",
   "email": null,
   "analytics": null,
   "dns": null,
   "monitoring": null,
-  "monthlyBudget": null,
+  "monthlyBudget": 0,
   "launchDate": null
 }

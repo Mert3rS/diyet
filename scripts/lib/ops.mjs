@@ -28,8 +28,20 @@ export function loadProductionEnvironment(root = repoRoot, env = process.env) {
 export function validateProductionEnvironment(env, cmsInstalled = false) {
   const errors = [];
   try {
-    const url = new URL(env.SITE_URL);
-    if (url.href !== `${productionUrl}/`)
+    const configured = env.SITE_URL || env.RENDER_EXTERNAL_URL;
+    const url = new URL(configured);
+    const isRenderUrl =
+      env.RENDER === "true" &&
+      configured === env.RENDER_EXTERNAL_URL &&
+      url.protocol === "https:" &&
+      /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.onrender\.com$/.test(url.hostname) &&
+      url.pathname === "/" &&
+      !url.search &&
+      !url.hash &&
+      !url.username &&
+      !url.password &&
+      !url.port;
+    if (url.href !== `${productionUrl}/` && !isRenderUrl)
       errors.push(
         "SITE_URL: production için beklenen HTTPS kök adresi kullanılmalı.",
       );
@@ -39,6 +51,35 @@ export function validateProductionEnvironment(env, cmsInstalled = false) {
     );
   }
   if (cmsInstalled) {
+    if (env.RENDER === "true" && env.MEDIA_STORAGE !== "s3")
+      errors.push(
+        "MEDIA_STORAGE: barındırılan ortamda kalıcı S3 depolaması gerekli.",
+      );
+    if (env.MEDIA_STORAGE === "s3") {
+      for (const key of [
+        "S3_BUCKET",
+        "S3_ENDPOINT",
+        "S3_REGION",
+        "S3_ACCESS_KEY_ID",
+        "S3_SECRET_ACCESS_KEY",
+      ]) {
+        if (!env[key] || /CHANGE_ME|PLACEHOLDER/i.test(env[key]))
+          errors.push(`${key}: kalıcı görsel depolaması için gerekli.`);
+      }
+      try {
+        const endpoint = new URL(env.S3_ENDPOINT);
+        if (
+          endpoint.protocol !== "https:" ||
+          endpoint.username ||
+          endpoint.password ||
+          endpoint.search ||
+          endpoint.hash
+        )
+          throw new Error();
+      } catch {
+        errors.push("S3_ENDPOINT: geçerli bir HTTPS depolama adresi gerekli.");
+      }
+    }
     if (
       !env.PAYLOAD_SECRET ||
       env.PAYLOAD_SECRET.length < 32 ||

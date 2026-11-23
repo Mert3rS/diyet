@@ -38,6 +38,55 @@ test("production URL ve CMS sırları değerleri yazdırmadan doğrulanır", () 
   assert.equal(errors.length, 2);
   assert.ok(!errors.join().includes("private:secret"));
 });
+test("Render adresi yalnız platform ortamında kabul edilir; yerel dosya deposuna düşülmez", () => {
+  const env = {
+    RENDER: "true",
+    RENDER_EXTERNAL_URL: "https://gunay-turan.onrender.com",
+    PAYLOAD_SECRET: "a".repeat(48),
+    DATABASE_URI: "postgresql://user:password@db:5432/diyet",
+    MEDIA_STORAGE: "s3",
+    S3_BUCKET: "site-media",
+    S3_ENDPOINT: "https://project.storage.supabase.co/storage/v1/s3",
+    S3_REGION: "eu-central-1",
+    S3_ACCESS_KEY_ID: "test-access",
+    S3_SECRET_ACCESS_KEY: "test-private",
+  };
+  assert.deepEqual(validateProductionEnvironment(env, true), []);
+  assert.ok(
+    validateProductionEnvironment({ ...env, RENDER: undefined }, false).length,
+  );
+  for (const address of [
+    "http://gunay-turan.onrender.com",
+    "https://gunay-turan.onrender.com.attacker.invalid",
+    "https://gunay-turan.onrender.com/?token=private",
+  ]) {
+    assert.ok(
+      validateProductionEnvironment(
+        { ...env, RENDER_EXTERNAL_URL: address },
+        false,
+      ).length,
+    );
+  }
+  assert.ok(
+    validateProductionEnvironment(
+      { ...env, MEDIA_STORAGE: undefined },
+      true,
+    ).some((error) => error.startsWith("MEDIA_STORAGE:")),
+  );
+  assert.ok(
+    validateProductionEnvironment(
+      { ...env, S3_SECRET_ACCESS_KEY: undefined },
+      true,
+    ).some((error) => error.startsWith("S3_SECRET_ACCESS_KEY:")),
+  );
+  assert.ok(
+    validateProductionEnvironment(
+      { ...env, S3_ENDPOINT: "http://storage.internal" },
+      true,
+    ).some((error) => error.startsWith("S3_ENDPOINT:")),
+  );
+});
+
 test("ortam dosyalarında process ve üretim dosyası önceliği korunur", () => {
   const root = mkdtempSync(path.join(os.tmpdir(), "diyet-ops-"));
   try {

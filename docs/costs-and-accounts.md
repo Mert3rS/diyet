@@ -1,20 +1,20 @@
 # Hesaplar, maliyetler ve bekleyen kararlar
 
-Kontrol tarihi: **23 Kasım 2026**. Sağlayıcılar seçilmedi; hesap açılmadı, domain satın alınmadı, ücretli işlem yapılmadı. Fiyatlar ve yenileme tarihleri bilinmiyor; aylık toplamın sıfır olduğu iddia edilmez. Seçimden sonra güncel resmî fiyat sayfası, para birimi, vergi, bant genişliği/depolama/aşım bedelleri ve kontrol tarihi buraya eklenmeli.
+Kontrol tarihi: **23 Kasım 2026**. Kullanıcı ücretsiz ilk yayın istedi: **Render Free + Supabase Free** seçildi. Kullanıcının Supabase hesabı var; Render hesabı ve her iki hizmetin bu projeye bağlantıları bekleniyor. Ücretli işlem yapılmadı. [Kurulum ve kota bilgileri](render-supabase.md) hazırdır; gerçek deploy sonucu henüz yoktur. Ücretsiz kotaların aşılması veya sürekli açık çalışma gereksinimi için ücretli plan ayrıca değerlendirilir.
 
 Kararların makinece okunur kaydı `ops/decisions.json` dosyasındadır. `null` “karar bekliyor” demektir; sır veya hesap parolası bu dosyaya yazılmaz. Analytics istenmiyorsa kullanıcı kararıyla `none` yazılabilir; kod bunu kendiliğinden seçmez.
 
-| Kalem                   | Durum                                 | Aylık maliyet                     | Sahip/yenileme |
-| ----------------------- | ------------------------------------- | --------------------------------- | -------------- |
-| Node uygulama hosting'i | Karar bekliyor                        | Fiyat doğrulanmadı                | OWNER ACTION   |
-| Managed PostgreSQL      | Karar bekliyor                        | Fiyat/PITR planı doğrulanmadı     | OWNER ACTION   |
-| Medya depolama          | Karar bekliyor                        | Kapasite/aşım doğrulanmadı        | OWNER ACTION   |
-| E-posta                 | Karar bekliyor                        | Gönderim kotası doğrulanmadı      | OWNER ACTION   |
-| Analitik                | Sağlayıcı veya `none` kararı bekliyor | Doğrulanmadı                      | OWNER ACTION   |
-| Registrar ve DNS        | Karar/sahiplik doğrulaması bekliyor   | Domain yenileme bedeli bilinmiyor | OWNER ACTION   |
-| Hata/uptime izleme      | Karar bekliyor                        | Saklama/uyarı planı doğrulanmadı  | OWNER ACTION   |
-| Bütçe üst sınırı        | Belirtilmedi                          | Hesaplanamaz                      | OWNER ACTION   |
-| Yayın tarihi            | Belirtilmedi                          | —                                 | OWNER ACTION   |
+| Kalem                   | Durum                                    | Aylık maliyet                     | Sahip/yenileme   |
+| ----------------------- | ---------------------------------------- | --------------------------------- | ---------------- |
+| Node uygulama hosting'i | Render Free; hesap bağlantısı bekliyor   | $0 plan; uyuma/kota sınırları var | Kullanıcı hesabı |
+| Managed PostgreSQL      | Supabase Free; proje bağlantısı bekliyor | $0 plan; 500 MB                   | Kullanıcı hesabı |
+| Medya depolama          | Supabase Storage; bucket bekliyor        | Free kotasında 1 GB               | Kullanıcı hesabı |
+| E-posta                 | Karar bekliyor                           | Gönderim kotası doğrulanmadı      | OWNER ACTION     |
+| Analitik                | Sağlayıcı veya `none` kararı bekliyor    | Doğrulanmadı                      | OWNER ACTION     |
+| Registrar ve DNS        | Karar/sahiplik doğrulaması bekliyor      | Domain yenileme bedeli bilinmiyor | OWNER ACTION     |
+| Hata/uptime izleme      | Karar bekliyor                           | Saklama/uyarı planı doğrulanmadı  | OWNER ACTION     |
+| Bütçe üst sınırı        | Kullanıcı ücretsiz başlangıç seçti       | 0; ücretli kaynak açılmaz         | Kullanıcı kararı |
+| Yayın tarihi            | Belirtilmedi                             | —                                 | OWNER ACTION     |
 
 ## Seçeneklerin farkları
 

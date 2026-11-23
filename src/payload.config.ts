@@ -12,12 +12,14 @@ import { SiteSettings } from "./cms/globals/site-settings";
 import { Homepage } from "./cms/globals/homepage";
 import { BodyAnalysisSettingsGlobal } from "./cms/globals/body-analysis";
 import { disabledEmailAdapter } from "./cms/email";
+import { mediaStorage } from "./cms/storage";
 
 const root = path.resolve(process.cwd(), "src");
 const origins = [
   ...new Set(
     [
       process.env.SITE_URL,
+      process.env.RENDER_EXTERNAL_URL,
       ...(process.env.CMS_ALLOWED_ORIGINS || "").split(","),
     ]
       .filter(Boolean)
@@ -27,6 +29,7 @@ const origins = [
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "",
   telemetry: false,
+  plugins: [mediaStorage],
   email: disabledEmailAdapter,
   serverURL: "",
   cors: origins,
@@ -61,7 +64,7 @@ export default buildConfig({
     },
   },
   db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URI || "" },
+    pool: { connectionString: process.env.DATABASE_URI || "", max: 5 },
     push: false,
     migrationDir: path.resolve(root, "migrations"),
   }),

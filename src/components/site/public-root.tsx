@@ -38,13 +38,6 @@ export function PublicRoot({
 }) {
   return (
     <html lang="tr" className={`${display.variable} ${sans.variable}`}>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `if (!location.hash && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') { history.scrollRestoration = 'manual'; window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); window.addEventListener('pageshow', function (event) { if (!event.persisted && !location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }, { once: true }); }`,
-          }}
-        />
-      </head>
       <body>
         <VisualPreviewBridge />
         <a className="skip-link" href="#ana-icerik">

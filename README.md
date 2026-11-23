@@ -4,6 +4,14 @@ Günay Turan için Türkçe danışmanlık sitesi ve içerik yönetimi. Hedef ya
 
 Sosyal alanlarda yalnızca **WhatsApp ve Instagram** bulunur. Soldaki sabit şerit kaldırılmıştır; sağ alttaki çift düğme, hakkımda, iletişim ve footer aynı panel ayarlarını kullanır.
 
+## GitHub'dan canlı yayın
+
+Tam sürüm (site, admin ve görsel düzenleyici) için **Render Free + Supabase Free** kurulumu hazırdır. GitHub Pages bu Node/PostgreSQL uygulamasını çalıştıramaz; README'yi görüntülemesi canlı uygulama yayını değildir.
+
+[![Render'da kur](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Mert3rS/diyet)
+
+[Adım adım ücretsiz yayın kılavuzu](docs/render-supabase.md). `render.yaml` ücretsiz web servisini tanımlar; veritabanı ve kalıcı fotoğraf deposu için Supabase bilgileri Render ortamına girilir. Gerçek hesaplara bağlanıp başarılı deploy sonucu alınmadan site canlı sayılmaz. Ücretsiz planlarda uyuma ve kota sınırları vardır.
+
 ## Başlatma
 
 Docker Desktop Linux konteynerleri kullanmalıdır. İlk kurulumda Node 24.22.3 ile:

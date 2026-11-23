@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: gunay-turan
+    runtime: node
+    plan: free
+    region: frankfurt
+    repo: https://github.com/Mert3rS/diyet
+    branch: main
+    autoDeployTrigger: checksPass
+    buildCommand: npm ci --include=dev && NODE_OPTIONS=--max-old-space-size=3072 npm run build:hosted
+    startCommand: npm run start:hosted
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 24.22.3
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: CMS_ENVIRONMENT
+        value: production
+      - key: PAYLOAD_SECRET
+        generateValue: true
+      - key: CMS_ADMIN_PASSWORD
+        generateValue: true
+      - key: CMS_ADMIN_EMAIL
+        sync: false
+      - key: DATABASE_URI
+        sync: false
+      - key: MEDIA_STORAGE
+        value: s3
+      - key: S3_BUCKET
+        value: site-media
+      - key: S3_ENDPOINT
+        sync: false
+      - key: S3_REGION
+        sync: false
+      - key: S3_ACCESS_KEY_ID
+        sync: false
+      - key: S3_SECRET_ACCESS_KEY
+        sync: false

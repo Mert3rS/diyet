@@ -10,12 +10,14 @@ import {
 import { PublicRoot } from "@/components/site/public-root";
 import { siteConfig } from "@/config/site";
 import type { Metadata } from "next";
+import { getSiteUrl } from "@/config/site-url";
+import Script from "next/script";
 
 export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSiteSettings();
   return {
-    metadataBase: new URL(process.env.SITE_URL || siteConfig.productionUrl),
+    metadataBase: new URL(getSiteUrl()),
     title: {
       default: `${site?.brand.name ?? siteConfig.name} — Beslenme, hareket, denge`,
       template: `%s | ${site?.brand.name ?? siteConfig.name}`,
@@ -37,6 +39,13 @@ export default async function SiteLayout({
   ]);
   return (
     <PublicRoot photos={site?.photos ?? {}}>
+      <Script
+        id="initial-scroll-position"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `if (!location.hash && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') { history.scrollRestoration = 'manual'; window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); window.addEventListener('pageshow', function (event) { if (!event.persisted && !location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }, { once: true }); }`,
+        }}
+      />
       <SiteHeader />
       <main id="ana-icerik" tabIndex={-1}>
         {children}

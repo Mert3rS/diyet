@@ -1,5 +1,13 @@
 # Doğrulama raporu
 
+## Render ve Supabase yayın hazırlığı — 23 Kasım 2026
+
+Render Blueprint resmi JSON şemasına göre doğrulandı. S3 depolama ve tablo RLS migration'ları yerel verileri koruyarak uygulandı; ortam doğrulama testleri 6/6 geçti. Güncel uygulamada 38 Playwright testi geçti. Ayrıca 512 MB bellek sınırındaki üretim konteynerinde S3 uyumlu test deposuyla 6 admin/görsel düzenleyici testi geçti. Yüklenen görselin uygulama yeniden başlatıldıktan sonra aynı içerikle indirildiği doğrulandı. PostgreSQL'de salt SELECT izni verilen geçici bir anonim rol, RLS korumalı `users` ve `homepage` tablolarında sıfır satır gördü; rolü oluşturan işlem geri alındı.
+
+S3 testi yerel S3 uyumlu test servisiyle yapıldı; gerçek Supabase projesine bağlantı ve Render'da gerçek deploy, hesap erişimi bekliyor. Bu kontroller uzakta çalışan bir site olduğu anlamına gelmez. [Ücretsiz yayın kılavuzu](render-supabase.md).
+
+## Önceki yerel kurulum
+
 23 Kasım 2026, Windows ve Docker Desktop Linux motoru. Canlı alan adına yayın yapılmadı.
 
 | Kontrol                                     | Sonuç                                                                                                                                |

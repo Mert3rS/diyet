@@ -1,15 +1,15 @@
 # İşletim ve acil durum kılavuzu
 
-**Yayın durumu: NO-GO.** Şu anda yalnızca yerel Faz 1 önizlemesi var. Hosting/DB/e-posta/izleme seçilmedi; `/admin`, health, blog, tarif ve randevu uçları bulunmuyor. Aşağıdaki bekleyen adımlar tamamlanmadan bu dosya çalışan production sistemi varmış gibi kullanılmamalıdır.
+**Gerçek sunucu yayını henüz doğrulanmadı.** Yerelde site, `/admin`, görsel düzenleyici ve DB'yi denetleyen `/api/health` çalışır. Ücretsiz ilk yayın için Render + Supabase yapılandırması hazırdır; hesap/proje bağlantısı ve gerçek deploy sonucu beklenir. [Yayın kılavuzu](render-supabase.md). E-posta, izleme, blog/tarif ayrıntıları ve randevu kayıt sistemi henüz tamamlanmadı.
 
-Çalışma/yayın yöntemi Docker Compose olarak belirlendi. Yerel üretim konteyneri ve ayrı geliştirme/Watch ortamı doğrulandı; gerçek sunucu sağlayıcısı henüz belirlenmedi. Konteyner durumu için `docker compose ps`, log için `docker compose logs --follow web`, güncelleme için `docker compose up --build --detach --wait` kullanılır. Geliştirme projesinde `-f compose.dev.yaml` eklenir. Konteyner healthcheck'i yalnız ana sayfa HTTP kontrolüdür; DB readiness ucu değildir. Ayrıntılar [Docker kılavuzunda](docker.md).
+Yerel çalışma Docker Compose ile, ücretsiz ilk uzak yayın Render Node servisi ve Supabase ile yapılır. Konteyner durumu için `docker compose ps`, log için `docker compose logs --follow web`, güncelleme için `docker compose up --build --detach --wait` kullanılır. Geliştirme projesinde `-f compose.dev.yaml` eklenir. Healthcheck gerçek DB erişimini denetler. Ayrıntılar [Docker kılavuzunda](docker.md). Uzak ortamda servis durumunu ve loglarını Render panelinden izleyin.
 
 ## Bir sayfalık acil durum
 
 1. Canlı site ileride açıldıktan sonra erişim sorunu görülürse önce hosting durum panelini ve erişim uyarısını kontrol edin. Şimdilik panel adresi ve sorumlu kişi **karar bekliyor**.
 2. Teknik sorumluya yalnızca olay zamanı, hata kodu, etkilenen genel sayfa ve release ID'sini iletin. Danışan adı/telefonu/form ekran görüntüsü göndermeyin.
 3. `npm run smoke -- <staging-veya-production-kök-adresi>` çalıştırın. `.reports/smoke.json` dosyasını paylaşmadan önce inceleyin. Araç form göndermez; API'lerde yalnızca `/api/health` kontrol eder.
-4. Son yayın sonrası bozulduysa önceki release'i geri getirme planını uygulayın. Sağlayıcı/release kaydı seçilmediği ve Git geçmişinde commit bulunmadığı için şu an tek tık rollback yoktur.
+4. Son yayın sonrası bozulduysa önceki release'i geri getirme planını uygulayın. Git geçmişi vardır; henüz başarılı uzak deploy kaydı bulunmadığından çalışan bir uzak rollback noktası olduğu varsayılmaz.
 5. DB veya medya sorunuysa yeni yazmaları durdurma prosedürünü teknik sorumlu yürütmeli. Production DB'yi silmeyin; eski yedeği üzerine geri yüklemeyin. Ayrı temiz hedefte restore ve veri uzlaştırma gerekir.
 6. Sır sızıntısında sağlayıcıdaki sırrı iptal edin/döndürün, erişimleri gözden geçirin. Değeri destek mesajına veya loga yapıştırmayın.
 7. KVKK/veri olayı şüphesini site sahibine ve belirleyeceği hukuk danışmanına bildirin. Bu kılavuz bildirim süresi veya hukuki uyum kararı vermez.

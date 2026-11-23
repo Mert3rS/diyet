@@ -134,11 +134,11 @@ test("sayfadan yazı ve fotoğraf seçilir, taslak anında görünür, kaydedinc
     await published.close();
     await page.setViewportSize({ width: 390, height: 844 });
     await page.getByRole("button", { name: "Mobil", exact: true }).click();
-    expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= innerWidth,
-      ),
-    ).toBe(true);
+    await expect
+      .poll(() =>
+        page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+      )
+      .toBe(true);
     await page.screenshot({
       path: "test-results/visual-editor-mobile.png",
       fullPage: true,

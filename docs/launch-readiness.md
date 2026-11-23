@@ -8,4 +8,4 @@ Blog/tarif ayrıntı sayfaları, KVKK/çerez metinleri, randevu kayıt/consent a
 
 `launch:audit` mevcut dosya/route ve örnek işaret denetimidir; CMS'nin canlı kayıtlarını inceleyen adapter henüz bağlanmadığından fail-closed davranır. Gerçek içeriklerin panelde düzenlenmesi bu denetleyiciyi otomatik tamamlamaz. Eski kaynak örnekleri ilk kurulum için depoda durur; bunları silmek yerine canlı DB kayıt denetimi eklenmelidir.
 
-Hosting/izleme/mail/bölge/bütçe kararları `ops/decisions.json` içinde hâlâ bekler. Yerel PostgreSQL seçimi, canlı sağlayıcı kararı değildir. Docker imajı ve GitHub CI, bir production deploy veya yayın onayı anlamına gelmez.
+Ücretsiz ilk yayın için **Render Free + Supabase Free** seçildi; bütçe sıfırdır. `render.yaml`, S3 depolama, sürümlü migration ve RLS hazırlığı eklendi. Gerçek sunucu/proje/bucket hesap bağlantıları henüz tamamlanmadı; deploy sonucu alınmadı. [Kurulum kılavuzu](render-supabase.md) ve `ops/decisions.json` bu durumu kaydeder. Ücretsiz planın uyuma/kota sınırları vardır; sürekli açık işletme yayını ayrıca değerlendirilir. İzleme/mail/DNS ve gerçek içerik hazırlığı beklemektedir.
