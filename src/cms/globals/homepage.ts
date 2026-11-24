@@ -51,7 +51,7 @@ const image: Field = {
     { label: "Sofra", value: "breakfast" },
   ],
 };
-export const Homepage = globalConfig("homepage", "Ana sayfa", [
+export const Homepage = globalConfig("homepage", "Eski ana sayfa · Arşiv", [
   {
     ...checkbox("isMock", "Bu sayfa örnek içerik içeriyor", true),
     admin: {
@@ -231,3 +231,10 @@ export const Homepage = globalConfig("homepage", "Ana sayfa", [
     ],
   },
 ]);
+
+Homepage.admin = {
+  ...Homepage.admin,
+  group: "Arşiv",
+  description:
+    "Önceki tasarımın korunmuş kayıtlarıdır. Güncel siteyi düzenlemek için Ana sayfa · Spor ve beslenme bölümünü açın.",
+};

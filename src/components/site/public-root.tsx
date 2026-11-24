@@ -4,22 +4,11 @@ import { MotionShell } from "@/components/ui/motion-shell";
 import { SiteMediaProvider } from "./site-media";
 import type { SitePhotos } from "@/types/site-settings";
 import "@/styles/globals.css";
-import "@/styles/header.css";
 import "@/styles/visual-preview.css";
 import { VisualPreviewBridge } from "./visual-preview-bridge";
 const display = localFont({
-  src: [
-    {
-      path: "../../../public/fonts/fraunces-tr.woff2",
-      weight: "450",
-      style: "normal",
-    },
-    {
-      path: "../../../public/fonts/fraunces-italic-tr.woff2",
-      weight: "450",
-      style: "italic",
-    },
-  ],
+  src: "../../../public/fonts/geist-tr.woff2",
+  weight: "100 900",
   variable: "--font-display",
   display: "swap",
 });

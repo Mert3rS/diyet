@@ -1,14 +1,18 @@
-# Yol haritası
+﻿# Yol haritası
 
-Tamamlananlar: Türkçe responsive tasarım, erişilebilir etkileşimler, tarayıcıda analiz aracı, yalnız WhatsApp/Instagram sosyal alanları, Docker geliştirme/üretim, CI kontrolleri, Payload/PostgreSQL, Türkçe admin, medya yükleme, ana sayfa/iletişim/sosyal/menü/analiz yönetimi, erişim denetimi ve ilk migration.
+## Tamamlanan yerel tasarım ve yönetim
 
-Yayın öncesi kalanlar:
+Mavi-beyaz ana sayfa, dört hizmetli etkileşimli hero ve örnek pano; hedef kitle, hakkımda, hizmet/kapsam, sistem, etkinlik, filtreli tarif, sosyal/medya, yorum, SSS ve iletişim bölümleri.
 
-1. Günay Turan'a ait izinli portre, doğrulanmış unvan/biyografi, gerçek hizmetler, paketler ve iletişim/sosyal adresleri panelde tamamlamak.
-2. Blog ve tarif ayrıntı sayfaları/koleksiyonlarını kurmak; mevcut ana sayfa kartları yalnız önizlemedir.
-3. Randevu kayıt formu, consent kaydı, veri saklama ve gerçek e-posta servisini eklemek. Şifre kurtarma maili de bu servise bağlıdır.
-4. Hukuk/KVKK/çerez metinlerini tamamlamak, analiz aracı için uzman incelemesini yapmak.
-5. Sunucu, TLS reverse proxy, DNS, izleme ve şifreli dış yedekleme/restore provasını tamamlamak.
-6. Gerçek CMS içeriklerini kapsayan yayın denetimini ve staging kanıtlarını bağlamak; ardından indeksleme kararını vermek.
+Yeni sports-homepage CMS modeli, kart sırası/görünürlüğü, özel görseller, bölüm görünürlüğü ve örnek işaretleri panelden yönetilir. Ortak marka/menü/iletişim ve portre mevcut site-settings kaynağına bağlıdır. Görsel editör yeni tasarımla çalışır. Önceki ana sayfa kayıtları arşivde korunur.
 
-Docker volume'leri kalıcıdır; bu durum dış yedekleme yerine geçmez. GitHub'a push, sunucuya deployment yapmaz. Canlı alan adında yayın henüz yapılmadı.
+## Sonraki çalışmalar
+
+1. Mesleki bilgiler, gerçek portre, hizmet metinleri, iletişim ve sosyal hesapları doğrulamak; örnek kayıtları değiştirmek.
+2. Blog, tarif ve etkinlik ayrıntı sayfalarını gerçek içerikler hazır olduğunda eklemek.
+3. Randevu formunu/harici randevu bağlantısını gereksinimlerine göre ele almak; mevcut sürüm kayıt veya ödeme oluşturmaz.
+4. Gerçek video/podcast içeriklerini gömülü izleyici yerine bağlantı yaklaşımıyla eklemek.
+5. Hukuk metinleri, dış yedek/restore, domain, DNS/TLS ve gerçek üretim ortamını ayrı yayın sürecinde tamamlamak.
+6. Gerçek içerikle mobil performansı yeniden ölçmek ve iyileştirmek; noindex'i yalnız yayın kararıyla kaldırmak.
+
+Yeni kabul testleri: tests/e2e/sports-home.spec.ts ve tests/e2e/sports-admin.spec.ts. Önceki yeşil/krem tasarımın model ve bileşenleri arşiv uyumluluğu için depoda tutulur.

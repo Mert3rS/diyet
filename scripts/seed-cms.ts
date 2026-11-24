@@ -3,6 +3,7 @@ import config from "@payload-config";
 import { defaultSiteSettings } from "@/content/site-defaults";
 import { defaultHomepageContent } from "@/content/home-defaults";
 import { defaultBodyAnalysisSettings } from "@/content/body-analysis";
+import { sportsSeedData } from "@/content/sports-defaults";
 
 const payload = await getPayload({ config });
 try {
@@ -47,6 +48,7 @@ try {
   for (const [slug, data] of [
     ["site-settings", defaultSiteSettings],
     ["homepage", homeData],
+    ["sports-homepage", sportsSeedData()],
     ["body-analysis-settings", bodyData],
   ] as const) {
     const current = await payload.findGlobal({ slug, overrideAccess: true });

@@ -70,7 +70,8 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings | null> => {
     .flatMap((item) => {
       const row = record(item);
       const original = navigation.find(
-        (link) => link.href === `#${row.anchor}`,
+        (link) =>
+          link.href === `#${row.anchor === "surec" ? "sistem" : row.anchor}`,
       );
       return original && flag(row.visible, true)
         ? [{ href: original.href, label: text(row.label, original.label, 40) }]
@@ -92,6 +93,24 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings | null> => {
         100,
       ),
       footerNote: text(brand.footerNote, "", 500),
+      title: text(brand.title, siteConfig.title, 50),
+      titleStatus: text(brand.titleStatus, siteConfig.titleStatus, 100),
+      descriptorStatus: text(
+        brand.descriptorStatus,
+        siteConfig.descriptorStatus,
+        100,
+      ),
+      bookingUrl: (() => {
+        const value = text(brand.bookingUrl, "", 500);
+        try {
+          const url = new URL(value);
+          return url.protocol === "https:" && !url.username && !url.password
+            ? url.href
+            : "";
+        } catch {
+          return "";
+        }
+      })(),
     },
     contact: normalizedContact,
     socials: filterSocialLinks(socials),

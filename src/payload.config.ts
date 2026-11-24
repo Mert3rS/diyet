@@ -10,6 +10,7 @@ import {
 } from "./cms/access";
 import { SiteSettings } from "./cms/globals/site-settings";
 import { Homepage } from "./cms/globals/homepage";
+import { SportsHomepage } from "./cms/globals/sports-homepage";
 import { BodyAnalysisSettingsGlobal } from "./cms/globals/body-analysis";
 import { disabledEmailAdapter } from "./cms/email";
 import { mediaStorage } from "./cms/storage";
@@ -134,5 +135,5 @@ export default buildConfig({
       ],
     },
   ],
-  globals: [SiteSettings, Homepage, BodyAnalysisSettingsGlobal],
+  globals: [SiteSettings, SportsHomepage, Homepage, BodyAnalysisSettingsGlobal],
 });

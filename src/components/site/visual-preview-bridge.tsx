@@ -173,17 +173,28 @@ export function VisualPreviewBridge() {
       if (event.data.type === "focus") {
         const field = fields.find((item) => item.id === event.data.id);
         if (!field) return;
-        const dynamic = /^(testimonials|goals)\.(\d+)\./.exec(field.path);
-        if (dynamic) {
-          const selector =
-            dynamic[1] === "testimonials"
-              ? ".slider-dots button"
-              : ".goal-card";
+        const slide = /data-sports-field="slides\.(\d+)\./.exec(
+          field.selectors.join(" "),
+        );
+        if (slide)
           document
-            .querySelectorAll<HTMLButtonElement>(selector)
-            [Number(dynamic[2])]?.click();
+            .querySelectorAll<HTMLButtonElement>(".slide-tabs button")
+            [Number(slide[1])]?.click();
+        if (field.path.startsWith("recipes."))
+          document
+            .querySelectorAll<HTMLButtonElement>(".recipe-filters button")[0]
+            ?.click();
+        const audience = /data-sports-row="audiences\.(\d+)"/.exec(
+          field.selectors.join(" "),
+        );
+        if (audience) {
+          const button =
+            document.querySelectorAll<HTMLButtonElement>(".audience-toggle")[
+              Number(audience[1])
+            ];
+          if (button?.getAttribute("aria-expanded") !== "true") button?.click();
         }
-        requestAnimationFrame(() => {
+        window.setTimeout(() => {
           const element = elements(field)[0];
           if (element) {
             element.closest("details")?.setAttribute("open", "");
@@ -191,7 +202,7 @@ export function VisualPreviewBridge() {
             selected = field.id;
             apply();
           }
-        });
+        }, 220);
       }
     };
     const click = (event: MouseEvent) => {

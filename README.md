@@ -1,74 +1,61 @@
-# Günay Turan · Beslenme & Yaşam
+﻿# Günay Turan · Spor ve Beslenme
 
-Günay Turan için Türkçe danışmanlık sitesi ve içerik yönetimi. Hedef yayın adresi **gunayturan.com.tr**; henüz bu alan adına yayın yapılmadı. Next.js 16, React 19, Payload 3 ve PostgreSQL 17, Docker Compose üzerinde çalışır.
+Mavi-beyaz, hareketli ana sayfa ve aynı tasarımın içeriklerini yöneten Türkçe Payload admin paneli. Next.js 16.4.6, React 19.3.1, Payload 3.94.1, PostgreSQL 17 ve sabit Node 24.22.3 ile çalışır. Ana sayfa artık CMS kayıtlarından okunur.
 
-Sosyal alanlarda yalnızca **WhatsApp ve Instagram** bulunur. Soldaki sabit şerit kaldırılmıştır; sağ alttaki çift düğme, hakkımda, iletişim ve footer aynı panel ayarlarını kullanır.
+## Yerel başlangıç
 
-## GitHub'dan canlı yayın
-
-Tam sürüm (site, admin ve görsel düzenleyici) için **Render Free + Supabase Free** kurulumu hazırdır. GitHub Pages bu Node/PostgreSQL uygulamasını çalıştıramaz; README'yi görüntülemesi canlı uygulama yayını değildir.
-
-[![Render'da kur](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Mert3rS/diyet)
-
-[Adım adım ücretsiz yayın kılavuzu](docs/render-supabase.md). `render.yaml` ücretsiz web servisini tanımlar; veritabanı ve kalıcı fotoğraf deposu için Supabase bilgileri Render ortamına girilir. Gerçek hesaplara bağlanıp başarılı deploy sonucu alınmadan site canlı sayılmaz. Ücretsiz planlarda uyuma ve kota sınırları vardır.
-
-## Başlatma
-
-Docker Desktop Linux konteynerleri kullanmalıdır. İlk kurulumda Node 24.22.3 ile:
-
-```sh
-node scripts/setup-cms-env.mjs --email admin@example.invalid
-docker compose -f compose.dev.yaml up --build --watch
-```
-
-Örnek e-postanın yerine kendi yönetici adresinizi yazın. Host Node olmadan ilk komutun eşdeğeri:
+Docker Desktop Linux motoru gereklidir. Mevcut kurulumda:
 
 ```powershell
-docker run --rm --mount "type=bind,source=$($PWD.Path),target=/workspace" -w /workspace node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54 node scripts/setup-cms-env.mjs --email admin@example.invalid
+docker compose -f compose.dev.yaml up --build --detach --wait
+docker compose -f compose.dev.yaml watch --no-up
 ```
 
-- Site: [localhost:3001](http://localhost:3001)
-- Türkçe yönetim: [localhost:3001/admin](http://localhost:3001/admin), aynı uygulama ve port
-- İlk giriş bilgileri: `.reports/admin-credentials.txt`, Git dışında
+İlk kurulumda ortam dosyaları henüz yoksa Node 24.22.3 ile `node scripts/setup-cms-env.mjs --email kendi-adresiniz@example.com` çalıştırın. Betik mevcut ortam dosyalarını değiştirmez. Başlangıç servisi migration ve seed uygular; mevcut içerikleri ve parolaları ezmez.
 
-Kurulum iki ayrı ortam dosyası, bağımsız parolalar ve sırlar oluşturur. Mevcut dosyaları değiştirmez. Başlangıç servisi migration uygular ve boş veritabanını bir kez hazırlar; mevcut içerikleri veya değiştirilen şifreleri ezmez. İlk girişten sonra şifrenizi panelden değiştirin.
+- Site: http://localhost:3001
+- Yönetim merkezi: http://localhost:3001/admin
+- Yeni ana sayfa formu: http://localhost:3001/admin/globals/sports-homepage
+- Görsel düzenleyici: http://localhost:3001/admin/visual-editor
+- Ortak marka/iletişim ayarları: http://localhost:3001/admin/globals/site-settings
+- İlk giriş bilgileri: Git dışındaki `.reports/admin-credentials.txt`.
 
-Üretim imajını yerelde denemek için PowerShell:
+## Panelden düzenleme
+
+Yeni ana sayfa formunun altı sekmesi slider, bölüm metinleri, biyografi, hizmet/kapsam, hedef kitle, sistem, etkinlikler, tarifler, sosyal kartlar, medya önizlemeleri, yorumlar, SSS, performans panosu ve görünürlüğü yönetir. Kartlar eklenebilir, sıralanabilir ve silmeden gizlenebilir. Slider ve kartların özel fotoğrafları yüklenebilir.
+
+Görsel düzenleyicide yazı/fotoğrafa tıklayın, masaüstü veya mobilde taslağı inceleyin ve kaydedin. Taslak ziyaretçiye görünmez; Kaydet sonrası yeni sayfa isteğinde güncel içerik gösterilir. Yeniden build gerekmez. Marka, menü, sosyal hesaplar, portre, paylaşılan görseller, footer ve isteğe bağlı HTTPS randevu adresi Site ayarları içindedir.
+
+[Adım adım Türkçe yönetim kılavuzu](docs/admin-guide-tr.md).
+
+## Kaynak düzeni
+
+- Marka varsayılanları ve menü: `src/config/site.ts`.
+- CMS şeması: `src/cms/globals/sports-homepage.ts` ve `site-settings.ts`.
+- İlk içerikler: `src/content/mock-data.ts` ve `sports-defaults.ts`; yalnız boş Global'e seed edilir.
+- Canlı içerik okuma/normalizasyon: `src/content/sports-home.ts`, `src/lib/site-settings.ts`.
+- Görsel yolları ve kaynakları: `src/content/images.ts`.
+- Görsel editör eşlemeleri: `src/lib/visual-editor.ts`.
+- Tasarım değişkenleri: `src/styles/globals.css`; panel stilleri `admin.css` ve `visual-editor.css`.
+- Şema migration'ları ve üretilen tipler: `src/migrations/`, `src/payload-types.ts`.
+
+Örnek içerik durumu panelde yönetilir. Eski `USE_MOCK_CONTENT` kod anahtarı kaldırıldı. Seed dosyasını değiştirmek mevcut CMS kaydını değiştirmez. Önceki tasarımın `homepage` kayıtları **Eski ana sayfa · Arşiv** altında korunur.
+
+## Doğrulama
 
 ```powershell
-$env:APP_PORT = '3002'
-docker compose up --build --detach --wait
-```
-
-Üretim önizlemesi `http://localhost:3002`, panel `/admin` yolundadır. Varsayılan üretim portu 3000; bu makinedeki önizleme 3002 kullanır. Geliştirme ve üretimin DB/medya volume'leri ayrıdır; içerik otomatik kopyalanmaz.
-
-## Yönetim
-
-**Site ayarları:** marka, düğmeler, iletişim, yalnızca WhatsApp/Instagram, fotoğraflar, menü. **Ana sayfa:** başlıklar, biyografi, hizmetler, süreç, hedefler, paketler, yorumlar, blog önizlemeleri, SSS. **Vücut analizi ayarları:** görünürlük, metinler, hizmetler, isteğe bağlı ölçüler, mesaj şablonu, örnek önizleme ve sıfırlama. Kaydedilen değişiklikler sayfa yenilendiğinde görünür; yeniden build gerekmez. [Kullanım kılavuzu](docs/admin-guide-tr.md).
-
-Fotoğraflar alt metinle yüklenir; JPEG/PNG/WebP/AVIF, en fazla 8 MB. Kullanıcılar ve yazma işlemleri yönetici oturumu gerektirir. Yeni hesapların açık kaydı kapalıdır; son yönetici silinemez. Parola kurtarma e-postası için henüz mail servisi yapılandırılmadı.
-
-## Geliştirme ve kontrol
-
-```sh
 docker compose -f compose.dev.yaml exec web npm run check
-npm run test:ops
-npm run secrets:audit
-npx playwright install chromium --only-shell
+$env:TEST_BASE_URL='http://127.0.0.1:3001'
+npx playwright test tests/e2e/sports-admin.spec.ts tests/e2e/sports-home.spec.ts
+docker build --target builder --tag diyet-admin:verified .
 ```
 
-Playwright için `TEST_BASE_URL=http://127.0.0.1:3001` ayarlayıp `npm run test:e2e` çalıştırın. CMS testleri yerel ortam dosyasındaki hesapla giriş yapar, geçici değişikliklerini geri alır; gerçek mesaj göndermez. `npm run test:container -- http://127.0.0.1:3002` üretim HTTP/varlık kontrolüdür. CI aynı Docker akışını ve tarayıcı testlerini çalıştırır.
+Testler yerel hesapla giriş yapar, geçici içerik/görsel değişikliklerini geri alır. Eski tasarıma bağlı test beklentileri ayrı tarihsel kapsamdadır. [Doğrulama kaydı](docs/verification.md).
 
-`src/cms/` alanları ve erişim kurallarını, `src/migrations/` sürümlü şemayı, `src/lib/` veri erişimini, `src/components/` arayüzü içerir. İlk örnek içerikler `src/content/` içinden yalnızca boş DB'ye eklenir; sonraki düzenlemeler panelden yapılır.
+Veri ve görseller kalıcı Docker volume'lerindedir. `down -v` kullanmayın. Geliştirme ve üretim verileri ayrıdır; kod pushlamak veri taşımaz. [Docker işletimi](docs/docker.md), [yedekleme](docs/backup-restore-runbook.md), [mimari](docs/architecture.md), [içerik modeli](docs/content-model.md).
 
 ## Yayın durumu
 
-İçerikler ve sosyal adresler hâlâ örnektir. Gerçek portre, doğrulanmış unvan/biyografi/hizmetler, telefon ve Instagram adresi panelden girilmelidir. Admin e-postası, halka açık iletişim adresi olarak otomatik kullanılmaz. Blog/tarif ayrıntı sayfaları, randevu kayıt formu, hukuk sayfaları, mail servisi, sunucu/DNS/TLS ve dış yedekleme henüz tamamlanmadı. Arama motoru indekslemesi kapalı; analiz aracı üretim DB'sinde ilk kurulumda kapalıdır. [Yayın durumu](docs/launch-readiness.md).
+Yerel CMS revizyonu tamamlandıktan sonra da site **noindex** kalır. Unvan, biyografi, portre, iletişim, sosyal hesaplar ve örnek içerikler doğrulanmalıdır. Randevu kaydı, ödeme, çalışan iletişim formu, ayrıntı içerik sayfaları ve hukuk metinleri bu sürümde yoktur. Şifre kurtarma e-postası etkin değildir.
 
-- [Docker ve kalıcı veriler](docs/docker.md)
-- [Mimari](docs/architecture.md) · [İçerik modeli](docs/content-model.md)
-- [Ortam değişkenleri](docs/env-reference.md) · [Gizlilik notları](docs/privacy-notes.md)
-- [Yedekleme](docs/backup-restore-runbook.md) · [Doğrulama](docs/verification.md)
-- [Yol haritası](docs/roadmap.md) · [Görsel kaynakları](docs/image-credits.md)
-
-Paylaşılan `read.txt` başka projenin README örneğidir. Referans sitenin kimliği veya içerikleri bu projeye aktarılmadı.
+Canlı yayın yapılmadı. Render Free + Supabase Free için mevcut [yayın kılavuzu](docs/render-supabase.md) korunur; hesap, sunucu, DNS/TLS ve dış yedek işlemleri ayrı çalışmadır. [Yayın listesi](docs/launch-checklist.md), [görsel kaynakları](docs/image-credits.md), [tasarım kararları](docs/design-direction.md), [yol haritası](docs/roadmap.md).

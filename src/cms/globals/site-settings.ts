@@ -59,6 +59,32 @@ export const SiteSettings = globalConfig("site-settings", "Site ayarları", [
               textField("appointmentLabel", "Randevu düğmesi", 40),
               textField("footerEyebrow", "Alt bölüm üst yazısı", 100),
               textField("footerNote", "Alt bölüm açıklaması", 500),
+              textField("title", "Mesleki unvan", 50),
+              textField("titleStatus", "Unvan onay notu", 100),
+              textField("descriptorStatus", "İsim altı metnin onay notu", 100),
+              {
+                name: "bookingUrl",
+                label: "Harici online randevu bağlantısı",
+                type: "text",
+                admin: {
+                  description:
+                    "İsteğe bağlı HTTPS adresi. Boşsa bağlantı gösterilmez.",
+                },
+                validate: (value: unknown) => {
+                  if (!value) return true;
+                  try {
+                    const url = new URL(String(value));
+                    return (
+                      (url.protocol === "https:" &&
+                        !url.username &&
+                        !url.password) ||
+                      "Geçerli bir HTTPS adresi girin."
+                    );
+                  } catch {
+                    return "Geçerli bir HTTPS adresi girin.";
+                  }
+                },
+              },
             ],
           },
         ],
@@ -141,8 +167,8 @@ export const SiteSettings = globalConfig("site-settings", "Site ayarları", [
               ...[
                 ["portrait", "Günay Turan portresi"],
                 ["salad", "Ana yemek görseli"],
-                ["fruit", "İkinci açılış görseli"],
-                ["preparation", "Hazırlık ve süreç görseli"],
+                ["fruit", "Meyve fotoğrafı"],
+                ["preparation", "Hazırlık ve mutfak fotoğrafı"],
                 ["breakfast", "Sofra görseli"],
               ].map(([name, label]): Field => ({
                 name,
@@ -165,7 +191,7 @@ export const SiteSettings = globalConfig("site-settings", "Site ayarları", [
             name: "navigation",
             type: "array",
             label: "Menü bağlantıları",
-            maxRows: 5,
+            maxRows: 12,
             fields: [
               {
                 name: "anchor",
@@ -176,6 +202,9 @@ export const SiteSettings = globalConfig("site-settings", "Site ayarları", [
                   { label: "Hakkımda", value: "hakkimda" },
                   { label: "Hizmetler", value: "hizmetler" },
                   { label: "Süreç", value: "surec" },
+                  { label: "Kimler için", value: "kimler-icin" },
+                  { label: "Sistem", value: "sistem" },
+                  { label: "Tarifler", value: "tarifler" },
                   { label: "Sık sorulan sorular", value: "sss" },
                   { label: "İletişim", value: "iletisim" },
                 ],

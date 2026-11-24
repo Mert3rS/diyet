@@ -14,12 +14,12 @@ import { Gutter } from "@payloadcms/ui";
 
 const shortcuts = [
   {
-    href: "/admin/visual-editor",
-    title: "Görsel düzenleyici",
-    note: "Sayfayı görerek düzenle. Yazıya veya fotoğrafa tıkla, değişikliği anında gör.",
+    href: "/admin/globals/sports-homepage",
+    title: "Yeni ana sayfa",
+    note: "Slider, hizmetler, tarifler, etkinlikler ve tüm yeni bölümleri yönet.",
     icon: LayoutTemplate,
     color: "green",
-    label: "Önizlemeyle düzenle",
+    label: "İçerikleri yönet",
   },
   {
     href: "/admin/globals/site-settings",
@@ -30,12 +30,12 @@ const shortcuts = [
     label: "Ayarları aç",
   },
   {
-    href: "/admin/globals/body-analysis-settings",
-    title: "Vücut analizi",
-    note: "Analiz alanlarını, bilgilendirmeleri ve WhatsApp mesajını kişiselleştir.",
+    href: "/admin/visual-editor",
+    title: "Görsel düzenleyici",
+    note: "Yeni tasarımın üzerinde yazı veya fotoğraf seç; masaüstü ve mobilde önizle.",
     icon: Activity,
     color: "purple",
-    label: "Analizi yönet",
+    label: "Görerek düzenle",
   },
   {
     href: "/admin/collections/media",
@@ -56,8 +56,8 @@ export function AdminDashboard() {
       >
         <div className="admin-dashboard-topline">
           <p className="admin-kicker">
-            <Sparkles size={15} aria-hidden="true" /> SENİN ALANIN, SENİN
-            HİKÂYEN
+            <Sparkles size={15} aria-hidden="true" /> BESLENME & HAREKET ·
+            İÇERİK MERKEZİ
           </p>
           <a
             className="admin-preview-link"
@@ -74,14 +74,14 @@ export function AdminDashboard() {
               Günay Turan · Yönetim merkezi
             </span>
             <h1 id="admin-dashboard-title">
-              Güzel şeyler
+              Sitenin ritmi,
               <br />
-              <em>seninle başlar.</em>
+              <em>senin elinde.</em>
             </h1>
             <p>
-              Siteni güncelle, içeriklerine hayat ver.
+              Açılış slaytlarından son iletişim kartına.
               <br />
-              Bir sonraki güzel adım için her şey burada.
+              Yeni tasarımının tüm içeriklerini buradan yönet.
             </p>
             <Link className="admin-hero-button" href="/admin/visual-editor">
               <LayoutTemplate size={18} aria-hidden="true" /> Ana sayfayı

@@ -2,33 +2,33 @@
 :root,
 html[data-theme="light"] {
   --theme-elevation-0: #ffffff;
-  --theme-elevation-50: #f6f8f7;
-  --theme-elevation-100: #edf2ef;
-  --theme-elevation-150: #e5ece7;
-  --theme-elevation-200: #d8e3dc;
-  --theme-elevation-250: #c5d3cb;
-  --theme-elevation-300: #a8bcb0;
-  --theme-elevation-350: #8da697;
-  --theme-elevation-400: #738d7f;
-  --theme-elevation-450: #617b6d;
-  --theme-elevation-500: #526c5e;
-  --theme-elevation-550: #435e50;
-  --theme-elevation-600: #365342;
-  --theme-elevation-650: #2c4839;
-  --theme-elevation-700: #254333;
-  --theme-elevation-750: #1e3c2e;
-  --theme-elevation-800: #163d2d;
-  --theme-elevation-850: #173428;
-  --theme-elevation-900: #142d23;
-  --theme-elevation-950: #11261e;
-  --theme-elevation-1000: #0e211a;
-  --theme-bg: #f6f8f7;
-  --theme-text: #213a2e;
-  --theme-input-bg: #fff;
-  --theme-success-500: #22774c;
-  --theme-border-color: #dce6df;
+  --theme-elevation-50: #f5f9ff;
+  --theme-elevation-100: #e8f3ff;
+  --theme-elevation-150: #e8f3ff;
+  --theme-elevation-200: #e8f3ff;
+  --theme-elevation-250: #5bb8ff;
+  --theme-elevation-300: #5bb8ff;
+  --theme-elevation-350: #3b82ff;
+  --theme-elevation-400: #3b82ff;
+  --theme-elevation-450: #1440d6;
+  --theme-elevation-500: #1440d6;
+  --theme-elevation-550: #0b1f5c;
+  --theme-elevation-600: #0b1f5c;
+  --theme-elevation-650: #0b1f5c;
+  --theme-elevation-700: #0b1f5c;
+  --theme-elevation-750: #0b1f5c;
+  --theme-elevation-800: #0b1f5c;
+  --theme-elevation-850: #0b1f5c;
+  --theme-elevation-900: #0b1f5c;
+  --theme-elevation-950: #050b24;
+  --theme-elevation-1000: #050b24;
+  --theme-bg: #f5f9ff;
+  --theme-text: #0b1f5c;
+  --theme-input-bg: #ffffff;
+  --theme-success-500: #0b1f5c;
+  --theme-border-color: #e8f3ff;
   --font-body: "Geist Admin", system-ui, sans-serif;
-  --font-admin-display: "Fraunces Admin", Georgia, serif;
+  --font-admin-display: "Geist Admin", system-ui, sans-serif;
   color-scheme: light;
   font-size: 16px;
 }
@@ -60,7 +60,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  color: #163d2d;
+  color: #0b1f5c;
   font: 450 1.85rem/1.1 var(--font-admin-display);
 }
 .admin-wordmark div > span {
@@ -69,7 +69,7 @@ body {
   font: 500 0.75rem/1.4 var(--font-body);
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: #587061;
+  color: #1440d6;
 }
 .admin-brand-symbol,
 .admin-monogram {
@@ -79,15 +79,15 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 16px;
-  background: #deeddf;
-  color: #1f623f;
+  background: #e8f3ff;
+  color: #0b1f5c;
 }
 .admin-monogram {
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  background: #1d5a3b;
-  color: #d5ee8b;
+  background: #0b1f5c;
+  color: #5bb8ff;
 }
 .admin-kicker {
   display: flex;
@@ -100,7 +100,7 @@ body {
 }
 a:focus-visible,
 button:focus-visible {
-  outline: 3px solid #4c8a4d;
+  outline: 3px solid #1440d6;
   outline-offset: 4px;
 }
 /* Login */
@@ -111,7 +111,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f5f0;
+  background: #f5f9ff;
 }
 .login .template-minimal__wrap {
   position: relative;
@@ -121,10 +121,10 @@ button:focus-visible {
   min-height: 720px;
   padding: 60px 64px 42px calc(48% + 64px);
   margin: 0;
-  background: #fff;
-  border: 1px solid #e1e9e1;
+  background: #ffffff;
+  border: 1px solid #e8f3ff;
   border-radius: 28px;
-  box-shadow: 0 22px 90px #173c2510;
+  box-shadow: 0 22px 90px #0b1f5c10;
 }
 .login__brand {
   margin: 0 0 44px;
@@ -139,9 +139,9 @@ button:focus-visible {
   border-radius: 20px;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 15% 90%, #3c7543 0%, transparent 56%),
-    linear-gradient(145deg, #163f30, #20543b);
-  color: #fff;
+    radial-gradient(ellipse at 15% 90%, #1440d6 0%, transparent 56%),
+    linear-gradient(145deg, #0b1f5c, #0b1f5c);
+  color: #ffffff;
   padding: 38px;
   display: flex;
   flex-direction: column;
@@ -155,7 +155,7 @@ button:focus-visible {
   padding: 9px 14px;
   border: 1px solid #ffffff30;
   border-radius: 100px;
-  color: #e4efcf;
+  color: #e8f3ff;
   font-size: 0.875rem;
 }
 .admin-story-copy {
@@ -164,7 +164,7 @@ button:focus-visible {
   margin-top: 28px;
 }
 .admin-story-copy .admin-kicker {
-  color: #c9e58d;
+  color: #5bb8ff;
   font-size: 0.7rem;
 }
 .admin-story-copy h2 {
@@ -174,12 +174,12 @@ button:focus-visible {
   color: white;
 }
 .admin-story-copy h2 em {
-  color: #d3e99b;
+  color: #5bb8ff;
   font-weight: inherit;
 }
 .admin-story-copy p {
   max-width: 320px;
-  color: #d7e6db;
+  color: #e8f3ff;
   font-size: 1rem;
   line-height: 1.8;
 }
@@ -187,7 +187,7 @@ button:focus-visible {
   position: relative;
   z-index: 1;
   margin-top: 140px;
-  color: #d2e3d6;
+  color: #e8f3ff;
   font-size: 0.875rem;
 }
 .admin-story-orbit {
@@ -196,11 +196,11 @@ button:focus-visible {
   bottom: 7px;
   width: 270px;
   height: 270px;
-  border: 1px solid #d3e99b36;
+  border: 1px solid #5bb8ff36;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  color: #cfe99b;
+  color: #5bb8ff;
   transform: rotate(-23deg);
 }
 .admin-story-orbit::before,
@@ -208,7 +208,7 @@ button:focus-visible {
   content: "";
   position: absolute;
   inset: 25px;
-  border: 1px solid #d3e99b25;
+  border: 1px solid #5bb8ff25;
   border-radius: 50%;
 }
 .admin-story-orbit::after {
@@ -221,39 +221,39 @@ button:focus-visible {
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #cce889;
+  background: #5bb8ff;
 }
 .admin-login-heading {
   margin-bottom: 28px;
 }
 .admin-login-heading .admin-kicker {
-  color: #4d7755;
+  color: #1440d6;
   margin: 0 0 12px;
 }
 .admin-login-heading h1 {
   font: 450 2.5rem/1.2 var(--font-admin-display);
   letter-spacing: -0.045em;
   margin: 0 0 12px;
-  color: #173d2d;
+  color: #0b1f5c;
 }
 .admin-login-heading > p:last-child {
   font-size: 0.9375rem;
   line-height: 1.7;
-  color: #66756c;
+  color: #1440d6;
   margin: 0;
 }
 .login .field-label {
-  color: #2e4437;
+  color: #0b1f5c;
   font-size: 0.875rem;
   font-weight: 550;
   margin-bottom: 9px;
 }
 .login .field-type input {
   min-height: 52px;
-  border: 1px solid #d9e3dc;
+  border: 1px solid #e8f3ff;
   border-radius: 10px;
-  background: #f9fbf9;
-  color: #213a2e;
+  background: #f5f9ff;
+  color: #0b1f5c;
   box-shadow: none;
   padding: 13px 16px;
   font-size: 1rem;
@@ -262,21 +262,21 @@ button:focus-visible {
     box-shadow 0.2s;
 }
 .login .field-type input:focus {
-  background: #fff;
-  border-color: #4b8054;
+  background: #ffffff;
+  border-color: #1440d6;
   outline: 0;
-  box-shadow: 0 0 0 4px #4b805414;
+  box-shadow: 0 0 0 4px #1440d614;
 }
 .login .field-type input:-webkit-autofill {
-  -webkit-text-fill-color: #213a2e;
-  box-shadow: 0 0 0 1000px #f5faf3 inset;
+  -webkit-text-fill-color: #0b1f5c;
+  box-shadow: 0 0 0 1000px #f5f9ff inset;
 }
 .login .login__form__inputWrap {
   margin-bottom: 14px;
 }
 .login .login__form > a {
   font-size: 0.875rem;
-  color: #41684a;
+  color: #0b1f5c;
   text-underline-offset: 4px;
 }
 .login .form-submit {
@@ -286,22 +286,22 @@ button:focus-visible {
   width: 100%;
   min-height: 52px;
   margin: 0;
-  background: #22573a;
-  color: #fff;
-  border: 1px solid #22573a;
+  background: #0b1f5c;
+  color: #ffffff;
+  border: 1px solid #0b1f5c;
   border-radius: 10px;
   font-size: 1rem;
   font-weight: 600;
-  box-shadow: 0 5px 12px #22573a16;
+  box-shadow: 0 5px 12px #0b1f5c16;
 }
 .login .form-submit .btn:hover {
-  background: #163f2a;
+  background: #0b1f5c;
 }
 .admin-login-footer {
   margin-top: 26px;
   text-align: center;
   font-size: 0.8125rem;
-  color: #5c6d61;
+  color: #1440d6;
 }
 .admin-login-footer > span,
 .admin-login-footer a {
@@ -312,24 +312,24 @@ button:focus-visible {
 }
 .admin-login-footer a {
   margin-top: 24px;
-  color: #355e40;
+  color: #0b1f5c;
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 550;
 }
 /* Navigation and editing surfaces */
 .template-default {
-  background: #f6f8f7;
+  background: #f5f9ff;
 }
 .nav {
-  background: #fff;
-  border-inline-end: 1px solid #e1e9e3;
+  background: #ffffff;
+  border-inline-end: 1px solid #e8f3ff;
 }
 .nav__wrap {
   padding-top: 20px;
 }
 .nav-group__toggle {
-  color: #5e7163;
+  color: #1440d6;
   font-size: 0.8125rem;
   font-weight: 600;
 }
@@ -341,12 +341,12 @@ button:focus-visible {
 }
 .nav__link:hover,
 .nav__link--active {
-  background: #eaf3e7;
-  color: #205538;
+  background: #e8f3ff;
+  color: #0b1f5c;
 }
 .app-header {
   background: #ffffffed;
-  border-bottom: 1px solid #e1e9e3;
+  border-bottom: 1px solid #e8f3ff;
 }
 .field-type input,
 .field-type textarea {
@@ -362,7 +362,7 @@ button:focus-visible {
 /* Dashboard */
 .admin-welcome {
   font-family: var(--font-body);
-  color: #213a2e;
+  color: #0b1f5c;
   padding-bottom: 24px;
 }
 .admin-dashboard-topline {
@@ -373,7 +373,7 @@ button:focus-visible {
   margin-bottom: 24px;
 }
 .admin-dashboard-topline .admin-kicker {
-  color: #56715b;
+  color: #1440d6;
   margin: 0;
 }
 .admin-preview-link {
@@ -381,9 +381,9 @@ button:focus-visible {
   align-items: center;
   gap: 8px;
   padding: 11px 16px;
-  border: 1px solid #dce5df;
+  border: 1px solid #e8f3ff;
   border-radius: 10px;
-  background: #fff;
+  background: #ffffff;
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 550;
@@ -394,9 +394,9 @@ button:focus-visible {
   overflow: hidden;
   padding: clamp(28px, 4vw, 50px);
   background:
-    radial-gradient(ellipse at 100% 100%, #467149 0, transparent 62%), #1c4934;
+    radial-gradient(ellipse at 100% 100%, #1440d6 0, transparent 62%), #0b1f5c;
   border-radius: 22px;
-  color: #fff;
+  color: #ffffff;
   min-height: 330px;
 }
 .admin-hero > div:first-child {
@@ -404,31 +404,31 @@ button:focus-visible {
   z-index: 1;
 }
 .admin-hero-label {
-  color: #d4e8be;
+  color: #e8f3ff;
   font-size: 0.875rem;
 }
 .admin-hero h1 {
   margin: 18px 0;
-  color: #fff;
+  color: #ffffff;
   font: 450 clamp(2.6rem, 4.5vw, 4.25rem)/1.04 var(--font-admin-display);
   letter-spacing: -0.045em;
 }
 .admin-hero h1 em {
-  color: #d2e98c;
+  color: #5bb8ff;
   font-weight: inherit;
 }
 .admin-hero p {
   font-size: 1rem;
   line-height: 1.75;
-  color: #d8e8dc;
+  color: #e8f3ff;
   margin: 0 0 24px;
 }
 .admin-hero-button {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  background: #d2e98c;
-  color: #203c24;
+  background: #5bb8ff;
+  color: #0b1f5c;
   padding: 13px 18px;
   border-radius: 9px;
   text-decoration: none;
@@ -436,7 +436,7 @@ button:focus-visible {
   font-size: 0.9375rem;
 }
 .admin-hero-button:hover {
-  background: #e2f3ae;
+  background: #5bb8ff;
 }
 .admin-hero-art {
   position: absolute;
@@ -444,7 +444,7 @@ button:focus-visible {
   top: 40px;
   width: 275px;
   height: 275px;
-  border: 1px solid #cbe28c40;
+  border: 1px solid #5bb8ff40;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -455,7 +455,7 @@ button:focus-visible {
   content: "";
   position: absolute;
   inset: 23px;
-  border: 1px solid #cbe28c35;
+  border: 1px solid #5bb8ff35;
   border-radius: 50%;
 }
 .admin-hero-art::after {
@@ -463,14 +463,14 @@ button:focus-visible {
 }
 .admin-hero-art > span {
   font: italic 450 230px/0.8 var(--font-admin-display);
-  color: #d2e98c;
+  color: #5bb8ff;
   margin-top: -30px;
 }
 .admin-hero-art > svg {
   position: absolute;
   right: 0;
   top: 0;
-  color: #e5edc2;
+  color: #e8f3ff;
 }
 .admin-hero-art i {
   position: absolute;
@@ -478,7 +478,7 @@ button:focus-visible {
   bottom: 20px;
   width: 30px;
   height: 30px;
-  background: #e8bd88;
+  background: #5bb8ff;
   border-radius: 50%;
 }
 .admin-section-heading {
@@ -496,12 +496,12 @@ button:focus-visible {
 }
 .admin-section-heading p {
   font-size: 0.9375rem;
-  color: #596e60;
+  color: #1440d6;
   margin: 0;
 }
 .admin-section-heading > span {
   font-size: 0.8125rem;
-  color: #5b7060;
+  color: #1440d6;
 }
 .admin-shortcuts {
   display: grid;
@@ -509,14 +509,14 @@ button:focus-visible {
   gap: 16px;
 }
 .admin-shortcut {
-  --card-accent: #326e44;
-  --card-tint: #eaf3df;
+  --card-accent: #0b1f5c;
+  --card-tint: #e8f3ff;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 24px;
-  background: #fff;
-  border: 1px solid #e0e8e1;
+  background: #ffffff;
+  border: 1px solid #e8f3ff;
   border-radius: 16px;
   text-decoration: none;
   transition:
@@ -526,20 +526,20 @@ button:focus-visible {
 }
 .admin-shortcut:hover {
   transform: translateY(-4px);
-  border-color: #aac3ac;
-  box-shadow: 0 12px 30px #23452d0b;
+  border-color: #5bb8ff;
+  box-shadow: 0 12px 30px #0b1f5c0b;
 }
 .admin-shortcut--orange {
-  --card-accent: #9b5122;
-  --card-tint: #fcf0e4;
+  --card-accent: #1440d6;
+  --card-tint: #e8f3ff;
 }
 .admin-shortcut--purple {
-  --card-accent: #74549c;
-  --card-tint: #f1eaf9;
+  --card-accent: #1440d6;
+  --card-tint: #e8f3ff;
 }
 .admin-shortcut--blue {
-  --card-accent: #366e99;
-  --card-tint: #e6f2f9;
+  --card-accent: #1440d6;
+  --card-tint: #e8f3ff;
 }
 .admin-shortcut-icon {
   width: 48px;
@@ -559,7 +559,7 @@ button:focus-visible {
 }
 .admin-shortcut p {
   margin: 0 0 22px;
-  color: #66776b;
+  color: #1440d6;
   font-size: 0.875rem;
   line-height: 1.75;
 }
@@ -581,9 +581,9 @@ button:focus-visible {
   align-items: center;
   gap: 17px;
   padding: 22px;
-  border: 1px solid #e0e8e1;
+  border: 1px solid #e8f3ff;
   border-radius: 14px;
-  background: #eef4e9;
+  background: #e8f3ff;
 }
 .admin-note-icon {
   display: grid;
@@ -591,8 +591,8 @@ button:focus-visible {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: #ddebd2;
-  color: #3e6c35;
+  background: #e8f3ff;
+  color: #0b1f5c;
   flex-shrink: 0;
 }
 .admin-publish-note h3 {
@@ -604,14 +604,14 @@ button:focus-visible {
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.7;
-  color: #5d735f;
+  color: #1440d6;
 }
 .admin-team-link {
-  background: #fff;
+  background: #ffffff;
   text-decoration: none;
 }
 .admin-team-link > svg {
-  color: #6b846f;
+  color: #1440d6;
   flex-shrink: 0;
 }
 .admin-team-link strong,
@@ -621,7 +621,7 @@ button:focus-visible {
 }
 .admin-team-link span {
   margin-top: 6px;
-  color: #5e7162;
+  color: #1440d6;
   font-size: 0.875rem;
 }
 .admin-help {
@@ -630,7 +630,7 @@ button:focus-visible {
   gap: 8px;
   font-size: 0.8125rem;
   line-height: 1.7;
-  color: #596d5d;
+  color: #1440d6;
   margin-top: 22px;
 }
 .admin-help svg {
@@ -638,24 +638,24 @@ button:focus-visible {
 }
 .admin-analysis-guide {
   padding: 24px;
-  border: 1px solid #dce5da;
+  border: 1px solid #e8f3ff;
   border-radius: 14px;
-  background: #f5f9f1;
+  background: #f5f9ff;
   line-height: 1.7;
 }
 .admin-analysis-guide pre {
   padding: 18px;
   border-radius: 10px;
-  background: #fff;
-  color: #274433;
+  background: #ffffff;
+  color: #0b1f5c;
   font: 0.875rem/1.7 var(--font-body);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 .admin-reset {
   padding: 12px 18px;
-  background: #22573a;
-  color: #fff;
+  background: #0b1f5c;
+  color: #ffffff;
   border: 0;
   border-radius: 9px;
   font: 500 0.875rem/1.4 var(--font-body);
@@ -744,4 +744,100 @@ button:focus-visible {
   .admin-shortcut:hover {
     transform: none;
   }
+}
+/* Yeni mavi-beyaz spor tasarımıyla ortak yönetim dili. */
+:root,
+html[data-theme="light"] {
+  --theme-bg: #f5f9ff;
+  --theme-text: #050b24;
+  --theme-border-color: #d6e4ff;
+  --theme-input-bg: #ffffff;
+  --theme-elevation-0: #ffffff;
+  --theme-elevation-50: #f5f9ff;
+  --theme-elevation-100: #e8f3ff;
+  --theme-elevation-200: #d6e4ff;
+  --theme-elevation-400: #1440d6;
+  --theme-elevation-450: #1440d6;
+  --theme-elevation-500: #0b1f5c;
+  --theme-elevation-600: #0b1f5c;
+  --theme-elevation-750: #0b1f5c;
+  --theme-elevation-800: #050b24;
+  --theme-elevation-900: #050b24;
+  --font-admin-display: "Geist Admin", system-ui, sans-serif;
+}
+.admin-hero {
+  background:
+    radial-gradient(ellipse at 100% 100%, #1e5bff, transparent 65%), #0b1f5c;
+}
+.admin-hero h1,
+.admin-story-copy h2 {
+  font-weight: 600;
+  letter-spacing: -0.055em;
+}
+.admin-hero h1 em,
+.admin-story-copy h2 em {
+  font-style: normal;
+  color: #4fe3ff;
+}
+.admin-hero-label,
+.admin-hero p {
+  color: #e8f3ff;
+}
+.admin-hero-button {
+  background: #ffffff;
+  color: #0b1f5c;
+}
+.admin-hero-button:hover {
+  background: #e8f3ff;
+}
+.admin-brand-symbol,
+.admin-monogram {
+  background: #1e5bff;
+  color: #ffffff;
+}
+.admin-shortcut {
+  --card-accent: #1440d6;
+  --card-tint: #e8f3ff;
+}
+.admin-shortcut h3 {
+  font-weight: 600;
+}
+.admin-preview-link:focus-visible,
+.admin-shortcut:focus-visible {
+  outline: 3px solid #1e5bff;
+  outline-offset: 4px;
+}
+.admin-wordmark {
+  font-weight: 600;
+}
+.admin-wordmark div > span {
+  letter-spacing: 0.06em;
+}
+.admin-hero-art {
+  color: #5bb8ff;
+}
+.admin-hero-art span {
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+.ve-save,
+.btn--style-primary {
+  background: #1e5bff;
+  color: #ffffff;
+}
+.ve-save:hover {
+  background: #1440d6;
+}
+.ve-device-switch button[aria-pressed="true"] {
+  background: #1e5bff;
+  color: #ffffff;
+}
+.ve-inspector label,
+.ve-preview-caption,
+.ve-save-state {
+  color: #0b1f5c;
+}
+.ve-field-meta,
+.ve-empty {
+  color: #0b1f5c;
 }

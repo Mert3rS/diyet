@@ -2,9 +2,14 @@ import type { NavigationItem } from "@/types/content";
 
 export const siteConfig = {
   name: "Günay Turan",
+  descriptor: "Sporcu Beslenmesi Danışmanlığı",
+  descriptorStatus: "[ONAY BEKLİYOR]",
+  title: "Dyt.",
+  titleStatus: "[ONAY BEKLİYOR]",
+  bookingUrl: "",
   productionUrl: "https://gunayturan.com.tr",
   description:
-    "Günay Turan — beslenmeye, harekete ve sana alan açan bir yaklaşım. Beslenme danışmanlığı sitesi tasarım önizlemesi.",
+    "Günay Turan — spor, beslenme ve günlük yaşamın ritmine eşlik eden bir yaklaşım. Örnek içerikli tasarım önizlemesi.",
   repository: "https://github.com/Mert3rS/diyet",
   // Yayın alan adı belirli; içerik ve randevu akışı tamamlanana kadar önizleme.
   isPreview: true,
@@ -14,9 +19,11 @@ export const siteConfig = {
 } as const;
 
 export const navigation: readonly NavigationItem[] = [
-  { label: "Hakkımda", href: "#hakkimda" },
   { label: "Hizmetler", href: "#hizmetler" },
-  { label: "Süreç", href: "#surec" },
-  { label: "Sıkça sorulanlar", href: "#sss" },
+  { label: "Hakkımda", href: "#hakkimda" },
+  { label: "Kimler için", href: "#kimler-icin" },
+  { label: "Sistem", href: "#sistem" },
+  { label: "Tarifler", href: "#tarifler" },
+  { label: "SSS", href: "#sss" },
   { label: "İletişim", href: "#iletisim" },
 ];

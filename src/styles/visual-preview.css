@@ -34,3 +34,23 @@
 .visual-preview-mode .site-footer [data-editor-selected] {
   outline-color: #d5ee83;
 }
+.visual-preview-mode .floating-tools,
+.visual-preview-mode .mobile-appointment,
+.visual-preview-mode .motion-toggle {
+  display: none !important;
+}
+.visual-preview-mode * {
+  animation-play-state: paused !important;
+}
+.visual-preview-mode .section {
+  content-visibility: visible;
+}
+.visual-preview-mode [data-editor-field]:hover,
+.visual-preview-mode [data-editor-selected] {
+  outline-color: #1e5bff;
+}
+.visual-preview-mode .sports-hero [data-editor-field]:hover,
+.visual-preview-mode .sports-hero [data-editor-selected],
+.visual-preview-mode .site-footer [data-editor-selected] {
+  outline-color: #4fe3ff;
+}

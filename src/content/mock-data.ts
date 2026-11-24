@@ -11,6 +11,515 @@ import type {
   MockRecord,
 } from "@/types/content";
 
+// Spor odaklı ana sayfa için tek örnek içerik kaynağı. Sayısal sonuç iddiası içermez.
+export const sportsSlides = [
+  {
+    isMock: true,
+    service: "sporcu",
+    kicker: "SPORCU BESLENMESİ",
+    first: "Oyununun",
+    accent: "bir parçası.",
+    description:
+      "Antrenmandan günlük yaşama. Beslenmeyi senin ritmin, branşın ve ihtiyaçlarınla birlikte düşünelim.",
+    visual: "running",
+    label: "Antrenman ritmi",
+  },
+  {
+    isMock: true,
+    service: "bireysel",
+    kicker: "BİREYSEL BESLENME",
+    first: "Senin hayatın.",
+    accent: "Senin dengen.",
+    description:
+      "Sevdiğin tatlara ve günlük alışkanlıklarına yer açan, birlikte şekillenen bir beslenme yaklaşımı.",
+    visual: "food",
+    label: "Günlük denge",
+  },
+  {
+    isMock: true,
+    service: "takim",
+    kicker: "KULÜPLER VE TAKIMLAR",
+    first: "Aynı sahada,",
+    accent: "birlikte.",
+    description:
+      "Takımın antrenman, seyahat ve sezon akışında beslenme üzerine ortak bir dil kuralım.",
+    visual: "track",
+    label: "Takımın ritmi",
+  },
+  {
+    isMock: true,
+    service: "kurumsal",
+    kicker: "KURUMSAL VE ETKİNLİK",
+    first: "Bilgiyi paylaş.",
+    accent: "Alan aç.",
+    description:
+      "Beslenme okuryazarlığını gündelik hayatla buluşturan, katılıma açık eğitim ve buluşmalar.",
+    visual: "kitchen",
+    label: "Birlikte öğrenmek",
+  },
+] as const;
+
+export const sportsServices = [
+  {
+    isMock: true,
+    slug: "sporcu",
+    title: "Sporcu Beslenmesi Danışmanlığı",
+    tag: "ANTRENMANDAN GÜNLÜK YAŞAMA",
+    description:
+      "Branşın, antrenman düzenin ve gündelik hayatın odağında bir görüşme süreci.",
+    icon: "activity",
+    scope: [
+      "Sezon ve antrenman düzenini birlikte tanıma",
+      "Maç günü öğün düzenini ele alma",
+      "Kamp ve seyahat dönemlerine hazırlık",
+      "Toparlanma alışkanlıklarını değerlendirme",
+      "Sıvı tüketimi farkındalığı",
+      "Takviye kullanımının gerekliliğini değerlendirme",
+      "Besin etiketi okuma çalışmaları",
+      "Vejetaryen ve vegan tercihleri konuşma",
+    ],
+    note: "İlk görüşmede spor geçmişin, günlük düzenin ve beklentilerin üzerinden birlikte geçeriz.",
+  },
+  {
+    isMock: true,
+    slug: "bireysel",
+    title: "Bireysel Beslenme Danışmanlığı",
+    tag: "HAYATINA UYAN BİR YAKLAŞIM",
+    description:
+      "Hazır kalıplar yerine; tercihlerini, zamanını ve günlük ritmini konuşalım.",
+    icon: "utensils",
+    scope: [
+      "Günlük öğün düzenini tanıma",
+      "Besin tercihlerini ve alışkanlıkları konuşma",
+      "Alışveriş ve mutfak rutinine bakış",
+      "Dışarıda yemek seçeneklerini değerlendirme",
+      "Çalışma düzenine uygun planlama",
+      "Beslenme okuryazarlığı çalışmaları",
+      "Günlük hareketle ilişkiyi ele alma",
+      "Görüşme sıklığını birlikte belirleme",
+    ],
+    note: "İlk görüşme tanışmaya ve ihtiyaçlarını anlamaya ayrılır; hazır bir listeyle başlamayız.",
+  },
+  {
+    isMock: true,
+    slug: "takim",
+    title: "Spor Kulüpleri ve Takımlar için Danışmanlık",
+    tag: "ORTAK HEDEF, ORTAK DİL",
+    description:
+      "Sporcular, teknik ekip ve mutfak ekibi arasında beslenme iletişimine alan açalım.",
+    icon: "users",
+    scope: [
+      "Takımın sezon akışını tanıma",
+      "Kamp dönemi öğün organizasyonu",
+      "Seyahat koşullarını değerlendirme",
+      "Maç günü seçeneklerini ele alma",
+      "Mutfak ekibiyle iletişim",
+      "Altyapı için yaşa uygun eğitim planı",
+      "Sporcu ve veli bilgilendirme buluşmaları",
+      "Eğitim materyallerini birlikte tasarlama",
+    ],
+    note: "İlk görüşmede ekip yapısı, çalışma kapsamı ve iletişim biçimi netleştirilir.",
+  },
+  {
+    isMock: true,
+    slug: "kurumsal",
+    title: "Kurumsal ve Etkinlik Danışmanlığı",
+    tag: "MERAKTAN FARKINDALIĞA",
+    description:
+      "Gündelik sorulara yer veren, anlaşılır ve katılımcı beslenme buluşmaları.",
+    icon: "mic",
+    scope: [
+      "Katılımcı ihtiyaçlarını dinleme",
+      "Seminer içeriğini birlikte belirleme",
+      "Besin etiketi okuma atölyesi",
+      "İş yerinde öğün düzenini konuşma",
+      "Etkinlik menüsüne genel bakış",
+      "Soru ve paylaşım oturumları",
+      "Çevrim içi eğitim seçenekleri",
+      "Eğitim sonrasında kaynak paylaşımı",
+    ],
+    note: "İlk görüşmede konu, hedef kitle ve etkinliğin formatı birlikte belirlenir.",
+  },
+] as const;
+
+export const sportsAudiences = [
+  {
+    isMock: true,
+    title: "Profesyonel sporcu",
+    subtitle: "Sezonun her ritminde.",
+    description:
+      "Antrenman, kamp ve maç takviminle birlikte şekillenen bir görüşme süreci.",
+    service: "sporcu",
+    icon: "trophy",
+    message: "Profesyonel sporcu beslenmesi hakkında bilgi almak istiyorum.",
+  },
+  {
+    isMock: true,
+    title: "Altyapı sporcusu",
+    subtitle: "7–18 yaş · aileyle birlikte",
+    description:
+      "Yaşa, günlük yaşama ve spor deneyimine uygun görüşme kapsamını aileyle birlikte konuşalım.",
+    service: "takim",
+    icon: "sprout",
+    message:
+      "Altyapı sporcularına yönelik danışmanlık hakkında bilgi almak istiyorum.",
+  },
+  {
+    isMock: true,
+    title: "Amatör ve yeni başlayan",
+    subtitle: "Kendi başlangıç çizginde.",
+    description:
+      "Spora ayırdığın alanı, beslenme alışkanlıklarınla birlikte değerlendirelim.",
+    service: "sporcu",
+    icon: "footprints",
+    message:
+      "Spora yeni başlayanlar için danışmanlık hakkında bilgi almak istiyorum.",
+  },
+  {
+    isMock: true,
+    title: "Sağlık ve yaşam hedefleri",
+    subtitle: "Hayatına alan aç.",
+    description:
+      "Tercihlerini ve günlük düzenini gözeten bir yaklaşımı birlikte düşünelim.",
+    service: "bireysel",
+    icon: "heart",
+    message: "Bireysel beslenme danışmanlığı hakkında bilgi almak istiyorum.",
+  },
+] as const;
+
+export const sportsMethod = [
+  {
+    isMock: true,
+    title: "Anlama",
+    word: "Önce seni dinliyoruz.",
+    description:
+      "Günlük hayatın, sporla ilişkin, tercihlerin ve soruların. Başlangıç noktamız her zaman senin hikâyen.",
+    label: "SENİN HİKÂYEN",
+  },
+  {
+    isMock: true,
+    title: "Çözüm bulma",
+    word: "Hayatında yer bulan bir yol.",
+    description:
+      "Seçenekleri birlikte değerlendirir, uygulanabilir bir yaklaşımı senin koşulların içinde düşünürüz.",
+    label: "ORTAK BİR YOL",
+  },
+  {
+    isMock: true,
+    title: "Süreklilik",
+    word: "Ritmin değişir. Yol da değişir.",
+    description:
+      "Antrenman takvimin, iş düzenin ve gündelik hayatın değiştiğinde süreci yeniden ele alırız.",
+    label: "KENDİ RİTMİNDE",
+  },
+  {
+    isMock: true,
+    title: "İletişim",
+    word: "Sorularına her zaman alan var.",
+    description:
+      "Görüşme sıklığını, iletişim kanallarını ve sürecin sınırlarını başlangıçta birlikte netleştiririz.",
+    label: "AÇIK İLETİŞİM",
+  },
+] as const;
+
+export const sportsEvents = [
+  {
+    isMock: true,
+    type: "SEMİNER",
+    title: "Spor ve beslenme üzerine bir buluşma",
+    date: "Örnek · Tarih belirlenecek",
+    icon: "mic",
+  },
+  {
+    isMock: true,
+    type: "PANEL",
+    title: "Gündelik hayatta beslenme okuryazarlığı",
+    date: "Örnek · Tarih belirlenecek",
+    icon: "messages",
+  },
+  {
+    isMock: true,
+    type: "KULÜP EĞİTİMİ",
+    title: "Altyapıda ortak bir beslenme dili",
+    date: "Örnek · Tarih belirlenecek",
+    icon: "users",
+  },
+] as const;
+
+export const sportsRecipes = [
+  {
+    isMock: true,
+    title: "Renkli nohut kâsesi",
+    description: "Yeşillikler ve nohutla sofraya renkli bir ara.",
+    category: "Ana yemek",
+    time: "Örnek · 20 dk",
+    image: "salad",
+  },
+  {
+    isMock: true,
+    title: "Sebzeli açık tabak",
+    description: "Mevsimin sebzeleriyle sade bir mutfak fikri.",
+    category: "Ana yemek",
+    time: "Örnek · 25 dk",
+    image: "breakfast",
+  },
+  {
+    isMock: true,
+    title: "Meyveli yoğurt kâsesi",
+    description: "Taze meyvelerle kolay bir hazırlık fikri.",
+    category: "Tatlı",
+    time: "Örnek · 10 dk",
+    image: "fruit",
+  },
+  {
+    isMock: true,
+    title: "Mutfaktan küçük atıştırmalıklar",
+    description: "Elindeki malzemelerle yeni eşleşmeler.",
+    category: "Tuzlu",
+    time: "Örnek · 15 dk",
+    image: "preparation",
+  },
+  {
+    isMock: true,
+    title: "Meyveyle küçük bir mola",
+    description: "Mevsim meyvelerini bir araya getiren bir tabak.",
+    category: "Tatlı",
+    time: "Örnek · 10 dk",
+    image: "fruit",
+  },
+  {
+    isMock: true,
+    title: "Yeşillikli mutfak tabağı",
+    description: "Farklı dokularla gündelik bir sofra fikri.",
+    category: "Tuzlu",
+    time: "Örnek · 15 dk",
+    image: "salad",
+  },
+] as const;
+
+export const sportsSocialTiles = [
+  {
+    isMock: true,
+    title: "Tabakta biraz renk.",
+    topic: "MUTFAKTAN",
+    image: "salad",
+  },
+  {
+    isMock: true,
+    title: "Her ritmin bir hikâyesi var.",
+    topic: "HAREKETTEN NOTLAR",
+    image: null,
+  },
+  {
+    isMock: true,
+    title: "Birlikte düşünelim.",
+    topic: "BESLENME SOHBETLERİ",
+    image: null,
+  },
+  {
+    isMock: true,
+    title: "Hazırlığın küçük keyifleri.",
+    topic: "GÜNLÜK YAŞAM",
+    image: "preparation",
+  },
+  {
+    isMock: true,
+    title: "Sofraya bir mola.",
+    topic: "MEVSİMİN İÇİNDEN",
+    image: "fruit",
+  },
+  { isMock: true, title: "Kendi ritminde.", topic: "BİRAZ İLHAM", image: null },
+] as const;
+
+export const sportsMedia = [
+  {
+    isMock: true,
+    type: "VİDEO",
+    title: "Antrenman gününü birlikte düşünmek",
+    description: "Örnek içerik · Yayın hazırlığında",
+  },
+  {
+    isMock: true,
+    type: "PODCAST",
+    title: "Beslenme üzerine gündelik sorular",
+    description: "Örnek içerik · Yayın hazırlığında",
+  },
+  {
+    isMock: true,
+    type: "BLOG",
+    title: "Bir öğünün etrafındaki alışkanlıklar",
+    description: "Örnek yazı · Yakında",
+  },
+] as const;
+
+export const sportsTestimonials = [
+  {
+    isMock: true,
+    initials: "A. K.",
+    label: "Örnek danışan yorumu",
+    quote:
+      "Görüşmelerde günlük düzenimi anlatabilmek ve sorularımı rahatça paylaşabilmek benim için değerliydi.",
+  },
+  {
+    isMock: true,
+    initials: "M. D.",
+    label: "Örnek danışan yorumu",
+    quote:
+      "Antrenman programımla birlikte düşünmek ve farklı seçenekleri konuşmak süreci daha anlaşılır kıldı.",
+  },
+  {
+    isMock: true,
+    initials: "S. E.",
+    label: "Örnek danışan yorumu",
+    quote:
+      "Sevdiğim tatlara ve alışkanlıklarıma da yer açılan bir görüşme deneyimi oldu.",
+  },
+] as const;
+
+export const sportsFaqs = [
+  {
+    isMock: true,
+    question: "İlk görüşmede neler konuşulur?",
+    answer:
+      "Günlük düzenin, sporla ilişkin, beslenme alışkanlıkların ve beklentilerin konuşulur. Görüşmenin kapsamı birlikte netleştirilir.",
+  },
+  {
+    isMock: true,
+    question: "Danışmanlık yalnızca profesyonel sporcular için mi?",
+    answer:
+      "Hayır. Amatör sporcular, spora yeni başlayanlar ve günlük beslenme alışkanlıkları üzerine konuşmak isteyenler de bilgi alabilir.",
+  },
+  {
+    isMock: true,
+    question: "Çevrim içi görüşme yapılabilir mi?",
+    answer:
+      "Görüşme biçimi ve uygunluk iletişim sırasında birlikte değerlendirilir. Bu önizlemede çevrim içi randevu sistemi bulunmuyor.",
+  },
+  {
+    isMock: true,
+    question: "Altyapı sporcularının görüşmesine aile katılır mı?",
+    answer:
+      "Çocuk ve ergenlerle yapılacak görüşmelerin kapsamı yaşa uygun biçimde, ebeveyn veya yasal temsilciyle birlikte belirlenir.",
+  },
+  {
+    isMock: true,
+    question: "Kulüp veya kurum olarak nasıl bilgi alabiliriz?",
+    answer:
+      "Katılımcı profili, takvim ve beklentilerinizi paylaşarak çalışma kapsamını konuşabilirsiniz. Örnek iletişim bilgileri yayından önce doğrulanacaktır.",
+  },
+  {
+    isMock: true,
+    question: "Takviye ürün önerisi bu sitede veriliyor mu?",
+    answer:
+      "Hayır. Buradaki içerikler tanıtım amaçlı örnektir; kişisel değerlendirme, tıbbi öneri veya ürün tavsiyesi içermez.",
+  },
+  {
+    isMock: true,
+    question: "Görüşme sıklığı ve ücret nasıl belirlenir?",
+    answer:
+      "Süreç, ihtiyaçlar ve görüşme kapsamı konuşulduktan sonra netleştirilir. Bu önizlemede fiyat veya paket satışı yer almıyor.",
+  },
+] as const;
+
+export const sportsDashboard = {
+  isMock: true,
+  rings: ["Enerji dengesi", "Sıvı dengesi", "Toparlanma"],
+  timeline: [
+    "Maç öncesi öğün",
+    "Maç öncesi atıştırmalık",
+    "Maç arası sıvı",
+    "Maç sonrası toparlanma",
+  ],
+  chips: [
+    "Günlük ritim",
+    "Birlikte planlama",
+    "Beslenme farkındalığı",
+    "Antrenman düzeni",
+  ],
+} as const;
+export const sportsBranches = [
+  "Futbol",
+  "Basketbol",
+  "Voleybol",
+  "Yüzme",
+  "Koşu",
+  "Tenis",
+  "Dövüş sporları",
+  "Fitness",
+  "Triatlon",
+  "Yelken",
+] as const;
+
+export const sportsCopy = {
+  audience: {
+    isMock: true,
+    eyebrow: "BAŞLANGIÇ NOKTAN NERESİ?",
+    title: "Herkesin ritmi",
+    accent: "kendine ait.",
+    description:
+      "Sporun neresinde olursan ol, sana ait bir başlangıç noktası var.",
+  },
+  about: {
+    isMock: true,
+    eyebrow: "MERHABA, BEN GÜNAY.",
+    title: "Önce insan.",
+    accent: "Sonra plan.",
+    bio: "Beslenmeyi yalnızca tabaktakilerle değil; hareketle, günlük hayatla ve kişisel tercihlerle birlikte düşünmeyi önemsiyorum. Seni dinleyerek başlayan, sorularına alan açan bir süreç üzerine çalışıyorum.",
+    philosophy:
+      "Bilimsel bilgiyi gündelik hayatla buluşturan; hazır kalıplardan önce senin ritmine kulak veren bir yaklaşım.",
+    note: "Örnek biyografi · Yayından önce doğrulanacak.",
+    credential: "Eğitim, mesleki unvan ve uzmanlık bilgileri [ONAY BEKLİYOR]",
+  },
+  services: {
+    isMock: true,
+    eyebrow: "BİRLİKTE NELER YAPABİLİRİZ?",
+    title: "Sana, takımına,",
+    accent: "hayatına alan.",
+    description:
+      "İhtiyacın nerede başlıyorsa, oradan konuşalım. Her çalışma alanının kapsamını aşağıdan keşfedebilirsin.",
+  },
+  events: {
+    isMock: true,
+    eyebrow: "BİLGİ PAYLAŞTIKÇA",
+    title: "Aynı merakta",
+    accent: "buluşalım.",
+    description:
+      "Seminerler, eğitimler ve küçük buluşmalar. Aşağıdaki etkinlikler örnektir.",
+  },
+  recipes: {
+    isMock: true,
+    eyebrow: "MUTFAKTA BİRAZ İLHAM",
+    title: "Sofrana renk,",
+    accent: "gününe bir mola.",
+    description:
+      "Kolay fikirler, tanıdık malzemeler. Örnek tarif seçkisi; ayrıntılar yakında.",
+  },
+  social: {
+    isMock: true,
+    eyebrow: "EKRANIN ÖTEKİ TARAFINDA",
+    title: "Biraz hareket.",
+    accent: "Biraz hayat.",
+    description:
+      "Mutfaktan, antrenmandan ve gündelik meraklardan küçük notlar. Tüm paylaşımlar örnektir.",
+  },
+  faq: {
+    isMock: true,
+    eyebrow: "AKLINDAKİLER",
+    title: "Önce birkaç",
+    accent: "soruyu konuşalım.",
+    description: "Birlikte başlamadan önce merak edebileceklerin.",
+  },
+  contact: {
+    isMock: true,
+    eyebrow: "BİR MERHABA İLE BAŞLAYALIM",
+    title: "Senin ritmin.",
+    accent: "Bizim başlangıcımız.",
+    description:
+      "Sorularını paylaş, sana uygun görüşme kapsamını birlikte konuşalım.",
+    note: "İletişim bilgileri örnektir. Bu önizlemede mesaj veya randevu kaydı gönderilmez.",
+  },
+} as const;
+
 export const mockIdentity = {
   isMock: true,
   name: "Günay Turan",

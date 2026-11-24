@@ -1,4 +1,4 @@
-export type EditorGlobal = "homepage" | "site-settings";
+export type EditorGlobal = "sports-homepage" | "site-settings";
 export type EditorDocuments = Record<EditorGlobal, Record<string, unknown>>;
 export type EditorMedia = {
   id: number;
@@ -22,9 +22,14 @@ export const editorSections = [
   "Açılış",
   "Hakkımda",
   "Hizmetler",
-  "Süreç",
-  "Hedefler",
-  "Paketler",
+  "Sistem",
+  "Kimler için",
+  "Etkinlikler",
+  "Tarifler",
+  "Sosyal içerikler",
+  "Medya",
+  "Performans panosu",
+  "Spor branşları",
   "Yorumlar",
   "Blog",
   "Sorular",
@@ -64,416 +69,348 @@ export function writeEditorPath(
 
 export function visualFields(documents: EditorDocuments): VisualField[] {
   const fields: VisualField[] = [];
-  const text = (
+  const add = (
     global: EditorGlobal,
     path: string,
     label: string,
     section: string,
     selectors: string | string[],
-    maxLength = 150,
+    type: "text" | "image" = "text",
+    maxLength = 3000,
   ) =>
     fields.push({
-      id: `${global}:${path}`,
+      id: global + ":" + path,
       global,
       path,
       label,
       section,
       selectors: typeof selectors === "string" ? [selectors] : selectors,
-      type: "text",
+      type,
       maxLength,
     });
   const home = (
     path: string,
     label: string,
     section: string,
-    selectors: string | string[],
-    maxLength?: number,
-  ) => text("homepage", path, label, section, selectors, maxLength);
-  const site = (
-    path: string,
-    label: string,
-    section: string,
-    selectors: string | string[],
-    maxLength?: number,
-  ) => text("site-settings", path, label, section, selectors, maxLength);
-  site(
-    "brand.name",
-    "İsim",
-    "Üst menü",
-    [
-      ".header-brand-name",
-      ".footer-wordmark",
-      ".identity-name",
-      ".footer-copyright-name",
-      ".mobile-cta-bar > span > small",
-    ],
-    80,
-  );
-  site(
-    "brand.tagline",
-    "İsim altındaki kısa metin",
-    "Üst menü",
-    ".header-brand-copy small",
-    60,
-  );
-  site(
-    "brand.appointmentLabel",
-    "Randevu düğmesi",
-    "Üst menü",
-    [".header-cta > span", ".mobile-cta-bar > a"],
-    40,
-  );
+    selector?: string | string[],
+    max = 3000,
+  ) =>
+    add(
+      "sports-homepage",
+      path,
+      label,
+      section,
+      selector ?? '[data-sports-field="' + path + '"]',
+      "text",
+      max,
+    );
+  const site = (path: string, label: string, section: string, max = 3000) =>
+    add(
+      "site-settings",
+      path,
+      label,
+      section,
+      '[data-site-field="' + path + '"]',
+      "text",
+      max,
+    );
+  for (const [key, label, max] of [
+    ["name", "İsim", 80],
+    ["tagline", "İsim altı yazısı", 60],
+    ["descriptorStatus", "Tanım onay notu", 100],
+    ["appointmentLabel", "Randevu düğmesi", 40],
+    ["title", "Mesleki unvan", 50],
+    ["titleStatus", "Unvan onay notu", 100],
+    ["footerEyebrow", "Alt bölüm başlığı", 100],
+    ["footerNote", "Alt bölüm açıklaması", 500],
+  ] as const)
+    site(
+      "brand." + key,
+      label,
+      key.startsWith("footer") ? "Alt bölüm" : "Üst menü",
+      max,
+    );
   const menu = documents["site-settings"].navigation;
   if (Array.isArray(menu)) {
-    let visibleIndex = 0;
-    menu.forEach((item, i) => {
-      if (!item || item.visible === false) return;
-      visibleIndex++;
-      site(
-        `navigation.${i}.label`,
-        `${visibleIndex}. menü bağlantısı`,
+    let visible = 0;
+    menu.forEach((row, i) => {
+      if (row.visible === false) return;
+      add(
+        "site-settings",
+        "navigation." + i + ".label",
+        i + 1 + ". menü bağlantısı",
         "Üst menü",
-        [
-          `.desktop-navigation li:nth-child(${visibleIndex}) > a`,
-          `.footer-bottom nav > a:nth-child(${visibleIndex})`,
-          `#mobil-menu li:nth-child(${visibleIndex}) > a`,
-        ],
+        '[data-menu-index="' + visible + '"]',
+        "text",
         40,
       );
+      visible++;
     });
   }
-  site(
-    "social.instagramLabel",
-    "Instagram kartı açıklaması",
-    "İletişim",
-    '.social-cards [data-platform="instagram"] .social-description',
-    100,
-  );
-  site(
-    "social.whatsappLabel",
-    "WhatsApp kartı açıklaması",
-    "İletişim",
-    '.social-cards [data-platform="whatsapp"] .social-description',
-    100,
-  );
-  const copyGroups = [
-    ["hero", "Açılış", ".hero", "#hero-title"],
-    ["about", "Hakkımda", ".about-copy", "#about-title"],
-    ["services", "Hizmetler", ".services-section", "#services-title"],
-    ["process", "Süreç", ".process-section", "#process-title"],
-    ["goals", "Hedefler", ".goals-section", "#goals-title"],
-    ["packages", "Paketler", ".packages-section", "#packages-title"],
-    [
-      "testimonials",
-      "Yorumlar",
-      ".testimonials-section",
-      "#testimonials-title",
-    ],
-    ["blog", "Blog", ".blog-section", "#blog-title"],
-    ["faq", "Sorular", ".faq-section", "#faq-title"],
-    ["contact", "İletişim", ".contact-section", "#contact-title"],
-  ];
-  for (const [key, section, selector, title] of copyGroups) {
-    home(`copy.${key}.eyebrow`, "Üst yazı", section, `${selector} .eyebrow`);
-    if (key === "hero") {
+  const doc = documents["sports-homepage"];
+  const labels: Record<string, string> = {
+    audience: "Kimler için",
+    about: "Hakkımda",
+    services: "Hizmetler",
+    method: "Sistem",
+    events: "Etkinlikler",
+    recipes: "Tarifler",
+    social: "Sosyal içerikler",
+    testimonials: "Yorumlar",
+    faq: "Sorular",
+    contact: "İletişim",
+  };
+  const fieldLabels: Record<string, string> = {
+    eyebrow: "Üst yazı",
+    title: "Başlık",
+    accent: "Vurgulu başlık",
+    description: "Açıklama",
+    bio: "Biyografi",
+    philosophy: "Yaklaşım",
+    note: "Alt not",
+    credential: "Mesleki bilgiler",
+    kicker: "Üst etiket",
+    first: "Başlık ilk satır",
+    label: "Açıklama",
+    word: "Büyük başlık",
+    tag: "Üst etiket",
+    quote: "Yorum",
+    initials: "Baş harfler",
+    question: "Soru",
+    answer: "Yanıt",
+    category: "Kategori",
+    time: "Hazırlık süresi",
+    type: "Tür",
+    topic: "Konu",
+    subtitle: "Üst not",
+    date: "Tarih metni",
+  };
+  const copy =
+    doc.copy && typeof doc.copy === "object"
+      ? (doc.copy as Record<string, Record<string, unknown>>)
+      : {};
+  for (const [section, values] of Object.entries(copy))
+    for (const [key, value] of Object.entries(values)) {
+      if (typeof value !== "string" || key === "id") continue;
+      const path = "copy." + section + "." + key;
+      const root = '[data-sports-copy="' + section + '"]';
+      const selector =
+        key === "eyebrow"
+          ? root + " > .eyebrow"
+          : key === "title"
+            ? root + " > h2"
+            : key === "accent"
+              ? root + " > h2 > .gradient-text"
+              : key === "description"
+                ? root + " > .section-description"
+                : '[data-sports-field="' + path + '"]';
       home(
-        "copy.hero.first",
-        "Başlık ilk satır",
-        section,
-        "#hero-title .word-mask:nth-child(1) > span",
+        path,
+        (labels[section] ?? section) + " · " + (fieldLabels[key] ?? key),
+        labels[section] ?? "Açılış",
+        [selector, '[data-sports-field="' + path + '"]'],
+        ["bio", "philosophy"].includes(key)
+          ? 3000
+          : ["description", "note", "credential"].includes(key)
+            ? 800
+            : 180,
       );
-      home(
-        "copy.hero.second",
-        "Başlık ikinci satır",
-        section,
-        "#hero-title .word-mask:nth-child(2) > span",
-      );
-    } else home(`copy.${key}.title`, "Başlık", section, title);
-    home(`copy.${key}.accent`, "Vurgulu başlık", section, `${title} > em`);
-    if (key !== "about") {
-      const description =
-        key === "hero"
-          ? ".hero-description"
-          : key === "process" || key === "faq"
-            ? `${selector} .section-description`
-            : key === "contact"
-              ? ".contact-heading > p"
-              : key === "packages"
-                ? ".packages-section .center-heading > p:last-child"
-                : `${selector} .section-title-row > p`;
-      if (key !== "testimonials")
-        home(`copy.${key}.description`, "Açıklama", section, description, 800);
     }
-  }
-  home(
-    "copy.hero.primaryButton",
-    "Ana düğme metni",
-    "Açılış",
-    ".hero-buttons > .button",
-  );
-  home(
-    "copy.hero.introLink",
-    "Tanışma bağlantısı",
-    "Açılış",
-    ".hero-buttons > .text-link",
-  );
-  home("copy.hero.note", "Alt not", "Açılış", ".hero-bottom > span");
-  home(
-    "copy.about.portraitFirst",
-    "Portre notu",
-    "Hakkımda",
-    ".portrait-caption",
-  );
-  home(
-    "copy.about.portraitAccent",
-    "Portre vurgusu",
-    "Hakkımda",
-    ".portrait-caption > em",
-  );
-  home(
-    "copy.about.portraitHandwriting",
-    "El yazısı notu",
-    "Hakkımda",
-    ".portrait-handwriting",
-  );
-  home("identity.title", "Unvan", "Hakkımda", ".identity-title", 50);
-  home(
-    "identity.titleStatus",
-    "Unvan hakkında not",
-    "Hakkımda",
-    ".identity-status",
-    100,
-  );
-  home(
-    "identity.bio",
-    "Biyografi",
-    "Hakkımda",
-    ".about-copy > p:nth-of-type(3)",
-    3000,
-  );
-  home(
-    "identity.approach",
-    "Yaklaşım",
-    "Hakkımda",
-    ".about-copy > p:nth-of-type(4)",
-    3000,
-  );
+  for (const [key, label, max] of [
+    ["headline", "Ana başlık", 180],
+    ["primaryLabel", "Bilgi düğmesi", 60],
+    ["secondaryLabel", "İkinci düğme", 60],
+    ["note", "Alt not", 200],
+    ["scrollLabel", "Kaydırma ipucu", 100],
+    ["visualCaption", "Görsel küçük yazısı", 150],
+  ] as const)
+    home("hero." + key, label, "Açılış", undefined, max);
   const rows = (key: string) =>
-    Array.isArray(documents.homepage[key])
-      ? (documents.homepage[key] as Record<string, unknown>[])
-      : [];
-  for (const [i] of rows("services").entries()) {
-    const selector = `.service-grid > div:nth-child(${i + 1}) .service-card`;
-    for (const [key, label, target, length] of [
-      ["title", "Hizmet adı", "h3", 150],
-      ["tag", "Etiket", ".service-tag", 60],
-      ["description", "Açıklama", "h3 + p", 1000],
-    ] as const)
-      home(
-        `services.${i}.${key}`,
-        `${i + 1}. hizmet · ${label}`,
-        "Hizmetler",
-        `${selector} ${target}`,
-        length,
-      );
-  }
-  home(
-    "copy.services.linkLabel",
-    "Hizmet bağlantısı",
-    "Hizmetler",
-    rows("services").map(
-      (_, i) => `.service-grid > div:nth-child(${i + 1}) .service-link`,
-    ),
-  );
-  for (const [i] of rows("trust").entries())
-    home(
-      `trust.${i}.label`,
-      `${i + 1}. kısa not`,
-      "Açılış",
-      `.trust-list > span:nth-child(${i + 1})`,
-      100,
-    );
-  for (const [i] of rows("tags").entries())
-    home(
-      `tags.${i}.label`,
-      `${i + 1}. kayan metin`,
-      "Hizmetler",
-      [
-        `.marquee-group:nth-child(1) > span:nth-child(${i + 1})`,
-        `.marquee-group:nth-child(2) > span:nth-child(${i + 1})`,
-      ],
-      80,
-    );
-  for (const [i] of rows("process").entries()) {
-    for (const [key, label, selector, length] of [
-      ["title", "Başlık", ".eyebrow", 150],
-      ["description", "Kısa açıklama", "h3", 500],
-      ["detail", "Ayrıntı", "h3 + p", 1200],
-    ] as const)
-      home(
-        `process.${i}.${key}`,
-        `${i + 1}. adım · ${label}`,
-        "Süreç",
-        `.process-step:nth-child(${i + 1}) ${selector}`,
-        length,
-      );
-  }
-  for (const [i] of rows("goals").entries()) {
-    home(
-      `goals.${i}.message`,
-      `${i + 1}. hedef · İlk mesaj`,
-      "Hedefler",
-      `[data-goal-index="${i}"] [data-goal-message]`,
-      800,
-    );
-    home(
-      `goals.${i}.title`,
-      `${i + 1}. hedef · Başlık`,
-      "Hedefler",
-      `.goal-card:nth-child(${i + 1}) .goal-title`,
-      100,
-    );
-    home(
-      `goals.${i}.description`,
-      `${i + 1}. hedef · Açıklama`,
-      "Hedefler",
-      `.goal-card:nth-child(${i + 1}) .goal-description`,
-      500,
-    );
-  }
-  for (const [i, row] of rows("packages").entries()) {
-    const base = `.package-grid > div:nth-child(${i + 1})`;
-    home(
-      `packages.${i}.title`,
-      `${i + 1}. paket · Başlık`,
-      "Paketler",
-      `${base} h3`,
-    );
-    home(
-      `packages.${i}.subtitle`,
-      `${i + 1}. paket · Üst yazı`,
-      "Paketler",
-      `${base} .eyebrow`,
-      100,
-    );
-    if (Array.isArray(row.scope))
-      row.scope.forEach((_, j) =>
+    Array.isArray(doc[key]) ? (doc[key] as Record<string, unknown>[]) : [];
+  const maps: Record<
+    string,
+    { section: string; fields: Record<string, string> }
+  > = {
+    slides: {
+      section: "Açılış",
+      fields: { kicker: "", first: "", accent: "", description: "", label: "" },
+    },
+    services: {
+      section: "Hizmetler",
+      fields: {
+        tag: ".service-main > .eyebrow",
+        title: "h3",
+        description: ".service-main > p:not(.eyebrow)",
+        note: ".accordion-body > p",
+      },
+    },
+    audiences: {
+      section: "Kimler için",
+      fields: {
+        title: ".audience-title",
+        subtitle: ".audience-subtitle",
+        description: ".audience-description > p",
+      },
+    },
+    method: {
+      section: "Sistem",
+      fields: { label: ".eyebrow", word: "h3", description: "p" },
+    },
+    events: {
+      section: "Etkinlikler",
+      fields: { type: "> .eyebrow", title: "h3", date: ".event-date" },
+    },
+    recipes: {
+      section: "Tarifler",
+      fields: {
+        title: "h3",
+        description: ".recipe-copy > p",
+        category: ".recipe-copy > div > span:first-child",
+        time: ".recipe-copy > div > span:last-child",
+      },
+    },
+    socialTiles: {
+      section: "Sosyal içerikler",
+      fields: { title: "h3", topic: ".eyebrow" },
+    },
+    media: {
+      section: "Medya",
+      fields: {
+        type: ".eyebrow",
+        title: "h3",
+        description: "div > p:not(.eyebrow)",
+      },
+    },
+    testimonials: {
+      section: "Yorumlar",
+      fields: {
+        quote: "blockquote",
+        initials: ".testimonial-author > span",
+        label: ".testimonial-author small",
+      },
+    },
+    faqs: {
+      section: "Sorular",
+      fields: { question: "summary", answer: ".accordion-body > p" },
+    },
+  };
+  for (const [key, definition] of Object.entries(maps)) {
+    let visible = 0;
+    rows(key).forEach((row, i) => {
+      if (row.visible === false) return;
+      const publicIndex = visible++;
+      const root = '[data-sports-row="' + key + "." + publicIndex + '"]';
+      for (const [field, selector] of Object.entries(definition.fields)) {
+        const rowLimits: Record<string, number> = {
+          first: 120,
+          accent: 120,
+          kicker: 100,
+          label: 150,
+          tag: 100,
+          title: key === "events" || key === "media" ? 200 : 180,
+          description:
+            key === "slides" || key === "media"
+              ? 800
+              : key === "services"
+                ? 1200
+                : key === "method"
+                  ? 1500
+                  : 1000,
+          note: 1200,
+          subtitle: 150,
+          date: 150,
+          time: 100,
+          quote: 2000,
+          initials: 20,
+          question: 250,
+          answer: 3000,
+          word: 200,
+          topic: 120,
+        };
+        if (typeof row[field] !== "string") continue;
         home(
-          `packages.${i}.scope.${j}.text`,
-          `${i + 1}. paket · ${j + 1}. kapsam`,
-          "Paketler",
-          `${base} li:nth-child(${j + 1})`,
-          300,
+          key + "." + i + "." + field,
+          i +
+            1 +
+            ". " +
+            definition.section +
+            " · " +
+            (fieldLabels[field] ?? field),
+          definition.section,
+          key === "slides"
+            ? '[data-sports-field="slides.' + publicIndex + "." + field + '"]'
+            : field === "initials"
+              ? [
+                  root + " .testimonial-author > span",
+                  root + " .testimonial-author > p",
+                ]
+              : root + " " + selector,
+          rowLimits[field] ?? 150,
+        );
+      }
+      if (key === "services" && Array.isArray(row.scope))
+        row.scope.forEach((_, j) =>
+          home(
+            "services." + i + ".scope." + j + ".text",
+            i + 1 + ". hizmet · " + (j + 1) + ". kapsam",
+            "Hizmetler",
+            root + " .accordion-body li:nth-child(" + (j + 1) + ")",
+          ),
+        );
+      if (["slides", "recipes", "socialTiles"].includes(key))
+        add(
+          "sports-homepage",
+          key + "." + i + ".photo",
+          i + 1 + ". " + definition.section + " · Görsel",
+          definition.section,
+          '[data-sports-field="' + key + "." + publicIndex + '.photo"]',
+          "image",
+        );
+    });
+  }
+  for (const [key, label] of [
+    ["title", "Başlık"],
+    ["eyebrow", "Üst yazı"],
+    ["disclaimer", "Ölçüm açıklaması"],
+    ["timelineTitle", "Zaman çizelgesi başlığı"],
+  ])
+    home("dashboard." + key, label, "Performans panosu");
+  const dash = doc.dashboard as Record<string, unknown> | undefined;
+  for (const key of ["rings", "timeline", "chips"]) {
+    const list = dash?.[key];
+    if (Array.isArray(list))
+      list.forEach((_, i) =>
+        home(
+          "dashboard." + key + "." + i + ".label",
+          i + 1 + ". " + key,
+          "Performans panosu",
         ),
       );
   }
-  for (const [i] of rows("testimonials").entries()) {
-    for (const [key, label] of [
-      ["quote", "Yorum"],
-      ["initials", "Baş harfler"],
-      ["label", "Açıklama"],
-    ])
-      home(
-        `testimonials.${i}.${key}`,
-        `${i + 1}. yorum · ${label}`,
-        "Yorumlar",
-        key === "initials"
-          ? [
-              `[data-testimonial-index="${i}"] .testimonial-avatar`,
-              `[data-testimonial-index="${i}"] figcaption > span:last-child > span`,
-            ]
-          : `[data-testimonial-index="${i}"] [data-testimonial-field="${key}"]`,
-        key === "quote" ? 2000 : key === "initials" ? 20 : 150,
-      );
-  }
-  for (const [i] of rows("blog").entries())
-    for (const [key, label, selector, length] of [
-      ["title", "Başlık", "h3", 180],
-      ["category", "Kategori", ".blog-category", 80],
-      ["readingTime", "Okuma süresi", ".blog-category > span", 80],
-    ] as const)
-      home(
-        `blog.${i}.${key}`,
-        `${i + 1}. yazı · ${label}`,
-        "Blog",
-        `.blog-grid > div:nth-child(${i + 1}) .blog-card ${selector}`,
-        length,
-      );
-  for (const [i] of rows("faqs").entries()) {
-    home(
-      `faqs.${i}.question`,
-      `${i + 1}. soru`,
-      "Sorular",
-      `.faq-list > details:nth-child(${i + 1}) > summary`,
-      250,
-    );
-    home(
-      `faqs.${i}.answer`,
-      `${i + 1}. yanıt`,
-      "Sorular",
-      `.faq-list > details:nth-child(${i + 1}) .faq-answer p`,
-      3000,
-    );
-  }
-  for (const [key, label, selector] of [
-    ["phone", "Telefon", '[data-contact-field="phone"]'],
-    ["email", "E-posta", '[data-contact-field="email"]'],
-    ["address", "Adres", ".contact-meta > p:nth-child(1) > span"],
-    ["hours", "Çalışma saatleri", ".contact-meta > p:nth-child(2) > span"],
-  ])
-    site(
-      `contact.${key}`,
-      label,
-      "İletişim",
-      selector,
-      key === "phone"
-        ? 40
-        : key === "email"
-          ? 200
-          : key === "address"
-            ? 400
-            : 300,
-    );
-  for (const [key, label, selector] of [
-    ["socialEyebrow", "Sosyal alan üst yazısı", ".contact-social .eyebrow"],
-    ["socialTitle", "Sosyal alan başlığı", ".contact-social h3"],
-    ["socialAccent", "Sosyal alan vurgusu", ".contact-social h3 > em"],
-    [
-      "socialDescription",
-      "Sosyal alan açıklaması",
-      ".contact-social-intro > p",
-    ],
-  ])
-    home(`copy.contact.${key}`, label, "İletişim", selector);
-  site(
-    "brand.footerEyebrow",
-    "Alt bölüm üst yazısı",
-    "Alt bölüm",
-    ".footer-top > .eyebrow",
-    100,
+  rows("branches").forEach((_, i) =>
+    home("branches." + i + ".label", i + 1 + ". spor branşı", "Spor branşları"),
   );
-  site(
-    "brand.footerNote",
-    "Alt bölüm açıklaması",
-    "Alt bölüm",
-    ".footer-note",
-    500,
-  );
-  for (const [name, label] of [
-    ["salad", "Ana yemek görseli"],
-    ["fruit", "İkinci açılış görseli"],
-    ["portrait", "Günay Turan portresi"],
-    ["preparation", "Hazırlık ve süreç görseli"],
-    ["breakfast", "Sofra görseli"],
+  for (const [key, label, max] of [
+    ["phone", "Telefon", 40],
+    ["email", "E-posta", 200],
+    ["address", "Adres", 400],
+    ["hours", "Çalışma saatleri", 300],
+  ] as const)
+    site("contact." + key, label, "İletişim", max);
+  for (const [key, label] of [
+    ["portrait", "Portre"],
+    ["salad", "Ana yemek"],
+    ["preparation", "Hazırlık"],
+    ["fruit", "Meyve"],
+    ["breakfast", "Sofra"],
   ])
-    fields.push({
-      id: `site-settings:photos.${name}`,
-      global: "site-settings",
-      path: `photos.${name}`,
+    add(
+      "site-settings",
+      "photos." + key,
       label,
-      section: "Fotoğraflar",
-      selectors: [`[data-site-photo="${name}"]`],
-      type: "image",
-    });
+      "Fotoğraflar",
+      '[data-site-photo="' + key + '"]',
+      "image",
+    );
   return fields;
 }

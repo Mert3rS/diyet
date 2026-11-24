@@ -2,6 +2,7 @@ import salad from "../../public/images/salad.webp";
 import preparation from "../../public/images/preparation.webp";
 import fruit from "../../public/images/fruit.webp";
 import breakfast from "../../public/images/breakfast.webp";
+import running from "../../public/images/sport-running.webp";
 import type { StaticImageData } from "next/image";
 import type { ImageKey } from "@/types/content";
 
@@ -47,3 +48,15 @@ export const portraitImage = {
   alt: "Günay Turan'ın portresi",
   credit: "Günay Turan tarafından sağlanacak; kullanım izni doğrulanmalı",
 };
+
+export const sportsImages = {
+  running: {
+    src: running,
+    path: "/images/sport-running.webp",
+    alt: "Açık hava pistinde gün ışığında koşan sporcu",
+    credit: "Jorge Alberto Vega Barrera / Unsplash",
+    source:
+      "https://unsplash.com/photos/a-runner-sprints-on-a-track-in-the-golden-sunlight-1-nuy7fD3fw",
+    license: "https://unsplash.com/license",
+  },
+} as const;

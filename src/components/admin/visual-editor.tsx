@@ -29,9 +29,9 @@ import {
 } from "@/lib/visual-editor";
 
 type Changes = Record<string, VisualChange>;
-const initialSelection = "homepage:copy.hero.first";
+const initialSelection = "sports-homepage:hero.headline";
 const globalLabels = {
-  homepage: "Ana sayfa",
+  "sports-homepage": "Yeni ana sayfa",
   "site-settings": "Site ayarları",
 };
 function mediaValue(value: unknown): EditorMedia | null {
@@ -101,7 +101,7 @@ export function VisualEditor() {
         if (!controller.signal.aborted) setError(reason.message);
       });
     Promise.all(
-      (["homepage", "site-settings"] as const).map(
+      (["sports-homepage", "site-settings"] as const).map(
         async (slug) =>
           [
             slug,
@@ -240,7 +240,10 @@ export function VisualEditor() {
     setNotice("");
     const saved: string[] = [];
     try {
-      for (const global of ["homepage", "site-settings"] as EditorGlobal[]) {
+      for (const global of [
+        "sports-homepage",
+        "site-settings",
+      ] as EditorGlobal[]) {
         const pending = Object.values(changes).filter(
           (change) => change.field.global === global,
         );
@@ -285,7 +288,14 @@ export function VisualEditor() {
           await fetch(`/api/globals/${global}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
+            body: JSON.stringify(body, (key, value) =>
+              key === "photo" &&
+              value &&
+              typeof value === "object" &&
+              "id" in value
+                ? value.id
+                : value,
+            ),
           }),
         );
         const fresh = await responseData(
@@ -661,8 +671,15 @@ export function VisualEditor() {
             <div className="ve-inspector-footer">
               <Check size={15} aria-hidden="true" />
               <p>
-                Önizleme gerçek sitenin yerleşimini kullanır. Aynı görselin
-                kullanıldığı diğer alanlar da birlikte güncellenir.
+                Kart ekleme, sıralama ve bölüm gizleme işlemleri için{" "}
+                <Link href="/admin/globals/sports-homepage">
+                  yeni ana sayfa formunu
+                </Link>{" "}
+                açabilirsiniz. Ortak marka ve bağlantılar{" "}
+                <Link href="/admin/globals/site-settings">
+                  site ayarlarından
+                </Link>{" "}
+                yönetilir.
               </p>
             </div>
           </aside>

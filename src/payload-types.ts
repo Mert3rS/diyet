@@ -13,53 +13,53 @@
  * via the `definition` "supportedTimezones".
  */
 export type SupportedTimezones =
-  | "Pacific/Midway"
-  | "Pacific/Niue"
-  | "Pacific/Honolulu"
-  | "Pacific/Rarotonga"
-  | "America/Anchorage"
-  | "Pacific/Gambier"
-  | "America/Los_Angeles"
-  | "America/Tijuana"
-  | "America/Denver"
-  | "America/Phoenix"
-  | "America/Chicago"
-  | "America/Guatemala"
-  | "America/New_York"
-  | "America/Bogota"
-  | "America/Caracas"
-  | "America/Santiago"
-  | "America/Buenos_Aires"
-  | "America/Sao_Paulo"
-  | "Atlantic/South_Georgia"
-  | "Atlantic/Azores"
-  | "Atlantic/Cape_Verde"
-  | "Europe/London"
-  | "Europe/Berlin"
-  | "Africa/Lagos"
-  | "Europe/Athens"
-  | "Africa/Cairo"
-  | "Europe/Moscow"
-  | "Asia/Riyadh"
-  | "Asia/Dubai"
-  | "Asia/Baku"
-  | "Asia/Karachi"
-  | "Asia/Tashkent"
-  | "Asia/Calcutta"
-  | "Asia/Dhaka"
-  | "Asia/Almaty"
-  | "Asia/Jakarta"
-  | "Asia/Bangkok"
-  | "Asia/Shanghai"
-  | "Asia/Singapore"
-  | "Asia/Tokyo"
-  | "Asia/Seoul"
-  | "Australia/Brisbane"
-  | "Australia/Sydney"
-  | "Pacific/Guam"
-  | "Pacific/Noumea"
-  | "Pacific/Auckland"
-  | "Pacific/Fiji";
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Brisbane'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
 
 export interface Config {
   auth: {
@@ -69,37 +69,35 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    "payload-kv": PayloadKv;
-    "payload-locked-documents": PayloadLockedDocument;
-    "payload-preferences": PayloadPreference;
-    "payload-migrations": PayloadMigration;
+    'payload-kv': PayloadKv;
+    'payload-locked-documents': PayloadLockedDocument;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    "payload-kv": PayloadKvSelect<false> | PayloadKvSelect<true>;
-    "payload-locked-documents":
-      PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    "payload-preferences":
-      PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    "payload-migrations":
-      PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: number;
   };
   fallbackLocale: null;
   globals: {
-    "site-settings": SiteSetting;
+    'site-settings': SiteSetting;
+    'sports-homepage': SportsHomepage;
     homepage: Homepage;
-    "body-analysis-settings": BodyAnalysisSetting;
+    'body-analysis-settings': BodyAnalysisSetting;
   };
   globalsSelect: {
-    "site-settings": SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    'sports-homepage': SportsHomepageSelect<false> | SportsHomepageSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
-    "body-analysis-settings":
-      BodyAnalysisSettingsSelect<false> | BodyAnalysisSettingsSelect<true>;
+    'body-analysis-settings': BodyAnalysisSettingsSelect<false> | BodyAnalysisSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -136,7 +134,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   name?: string | null;
-  role: "admin";
+  role: 'admin';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -155,7 +153,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
-  collection: "users";
+  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -203,16 +201,16 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: "users";
+        relationTo: 'users';
         value: number | User;
       } | null)
     | ({
-        relationTo: "media";
+        relationTo: 'media';
         value: number | Media;
       } | null);
   globalSlug?: string | null;
   user: {
-    relationTo: "users";
+    relationTo: 'users';
     value: number | User;
   };
   updatedAt: string;
@@ -225,7 +223,7 @@ export interface PayloadLockedDocument {
 export interface PayloadPreference {
   id: number;
   user: {
-    relationTo: "users";
+    relationTo: 'users';
     value: number | User;
   };
   key?: string | null;
@@ -353,6 +351,13 @@ export interface SiteSetting {
     appointmentLabel?: string | null;
     footerEyebrow?: string | null;
     footerNote?: string | null;
+    title?: string | null;
+    titleStatus?: string | null;
+    descriptorStatus?: string | null;
+    /**
+     * İsteğe bağlı HTTPS adresi. Boşsa bağlantı gösterilmez.
+     */
+    bookingUrl?: string | null;
   };
   contact?: {
     /**
@@ -403,12 +408,278 @@ export interface SiteSetting {
   };
   navigation?:
     | {
-        anchor: "hakkimda" | "hizmetler" | "surec" | "sss" | "iletisim";
+        anchor: 'hakkimda' | 'hizmetler' | 'surec' | 'kimler-icin' | 'sistem' | 'tarifler' | 'sss' | 'iletisim';
         label: string;
         visible?: boolean | null;
         id?: string | null;
       }[]
     | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Değişiklikleri kaydettiğinizde site güncellenir. Örnek içerikleri yayın öncesinde onaylayın.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sports-homepage".
+ */
+export interface SportsHomepage {
+  id: number;
+  initialized?: boolean | null;
+  isMock?: boolean | null;
+  hero: {
+    headline: string;
+    primaryLabel: string;
+    secondaryLabel: string;
+    note?: string | null;
+    scrollLabel?: string | null;
+    visualCaption?: string | null;
+    autoplay?: boolean | null;
+  };
+  slides?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        service: string;
+        kicker: string;
+        first: string;
+        accent: string;
+        description: string;
+        label?: string | null;
+        visual: 'running' | 'food' | 'track' | 'kitchen';
+        /**
+         * İsteğe bağlı. Boş bırakılırsa seçili tasarım görseli kullanılır. Alt metni görsel kütüphanesinden düzenleyin.
+         */
+        photo?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  copy: {
+    audience: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      description?: string | null;
+    };
+    about: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      bio?: string | null;
+      philosophy?: string | null;
+      note?: string | null;
+      credential?: string | null;
+    };
+    services: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      description?: string | null;
+    };
+    events: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      description?: string | null;
+    };
+    recipes: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      description?: string | null;
+    };
+    social: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      description?: string | null;
+    };
+    faq: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      description?: string | null;
+    };
+    contact: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      description?: string | null;
+      note?: string | null;
+    };
+    method: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      description?: string | null;
+    };
+    testimonials: {
+      eyebrow: string;
+      title: string;
+      accent: string;
+      description?: string | null;
+    };
+  };
+  services?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        slug: string;
+        title: string;
+        tag?: string | null;
+        description: string;
+        icon: 'activity' | 'utensils' | 'users' | 'mic';
+        scope?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        note?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  audiences?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        title: string;
+        subtitle?: string | null;
+        description?: string | null;
+        service: string;
+        icon: 'trophy' | 'sprout' | 'footprints' | 'heart';
+        message?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  method?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        title: string;
+        label?: string | null;
+        word: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  events?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        type?: string | null;
+        title: string;
+        date?: string | null;
+        icon: 'mic' | 'messages' | 'users';
+        id?: string | null;
+      }[]
+    | null;
+  recipes?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        title: string;
+        description?: string | null;
+        category: 'Ana yemek' | 'Tatlı' | 'Tuzlu';
+        time?: string | null;
+        image: 'salad' | 'fruit' | 'preparation' | 'breakfast';
+        /**
+         * İsteğe bağlı. Boş bırakılırsa seçili tasarım görseli kullanılır. Alt metni görsel kütüphanesinden düzenleyin.
+         */
+        photo?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  socialTiles?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        title: string;
+        topic?: string | null;
+        image?: ('salad' | 'fruit' | 'preparation' | 'breakfast') | null;
+        /**
+         * İsteğe bağlı. Boş bırakılırsa seçili tasarım görseli kullanılır. Alt metni görsel kütüphanesinden düzenleyin.
+         */
+        photo?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  media?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        type: 'VİDEO' | 'PODCAST' | 'BLOG';
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  testimonials?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        initials: string;
+        label?: string | null;
+        quote: string;
+        id?: string | null;
+      }[]
+    | null;
+  faqs?:
+    | {
+        visible?: boolean | null;
+        isMock?: boolean | null;
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  dashboard: {
+    title: string;
+    eyebrow?: string | null;
+    /**
+     * Panonun gerçek bir ölçüm olmadığını belirten notu koruyun.
+     */
+    disclaimer: string;
+    timelineTitle?: string | null;
+    rings?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    timeline?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    chips?:
+      | {
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  branches?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  sections?: {
+    audience?: boolean | null;
+    about?: boolean | null;
+    services?: boolean | null;
+    method?: boolean | null;
+    events?: boolean | null;
+    recipes?: boolean | null;
+    social?: boolean | null;
+    testimonials?: boolean | null;
+    faq?: boolean | null;
+    contact?: boolean | null;
+    dashboard?: boolean | null;
+    branches?: boolean | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -511,7 +782,7 @@ export interface Homepage {
         title: string;
         description: string;
         tag?: string | null;
-        icon: "leaf" | "screen" | "activity" | "flower" | "sprout" | "heart";
+        icon: 'leaf' | 'screen' | 'activity' | 'flower' | 'sprout' | 'heart';
         id?: string | null;
       }[]
     | null;
@@ -520,7 +791,7 @@ export interface Homepage {
         title: string;
         description: string;
         detail: string;
-        image: "salad" | "fruit" | "preparation" | "breakfast";
+        image: 'salad' | 'fruit' | 'preparation' | 'breakfast';
         id?: string | null;
       }[]
     | null;
@@ -543,7 +814,7 @@ export interface Homepage {
         title: string;
         description: string;
         message: string;
-        image: "salad" | "fruit" | "preparation" | "breakfast";
+        image: 'salad' | 'fruit' | 'preparation' | 'breakfast';
         id?: string | null;
       }[]
     | null;
@@ -575,7 +846,7 @@ export interface Homepage {
         title: string;
         category?: string | null;
         readingTime?: string | null;
-        image: "salad" | "fruit" | "preparation" | "breakfast";
+        image: 'salad' | 'fruit' | 'preparation' | 'breakfast';
         id?: string | null;
       }[]
     | null;
@@ -648,6 +919,10 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         appointmentLabel?: T;
         footerEyebrow?: T;
         footerNote?: T;
+        title?: T;
+        titleStatus?: T;
+        descriptorStatus?: T;
+        bookingUrl?: T;
       };
   contact?:
     | T
@@ -685,6 +960,286 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         label?: T;
         visible?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sports-homepage_select".
+ */
+export interface SportsHomepageSelect<T extends boolean = true> {
+  initialized?: T;
+  isMock?: T;
+  hero?:
+    | T
+    | {
+        headline?: T;
+        primaryLabel?: T;
+        secondaryLabel?: T;
+        note?: T;
+        scrollLabel?: T;
+        visualCaption?: T;
+        autoplay?: T;
+      };
+  slides?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        service?: T;
+        kicker?: T;
+        first?: T;
+        accent?: T;
+        description?: T;
+        label?: T;
+        visual?: T;
+        photo?: T;
+        id?: T;
+      };
+  copy?:
+    | T
+    | {
+        audience?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              description?: T;
+            };
+        about?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              bio?: T;
+              philosophy?: T;
+              note?: T;
+              credential?: T;
+            };
+        services?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              description?: T;
+            };
+        events?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              description?: T;
+            };
+        recipes?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              description?: T;
+            };
+        social?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              description?: T;
+            };
+        faq?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              description?: T;
+            };
+        contact?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              description?: T;
+              note?: T;
+            };
+        method?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              description?: T;
+            };
+        testimonials?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              accent?: T;
+              description?: T;
+            };
+      };
+  services?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        slug?: T;
+        title?: T;
+        tag?: T;
+        description?: T;
+        icon?: T;
+        scope?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        note?: T;
+        id?: T;
+      };
+  audiences?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        title?: T;
+        subtitle?: T;
+        description?: T;
+        service?: T;
+        icon?: T;
+        message?: T;
+        id?: T;
+      };
+  method?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        title?: T;
+        label?: T;
+        word?: T;
+        description?: T;
+        id?: T;
+      };
+  events?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        type?: T;
+        title?: T;
+        date?: T;
+        icon?: T;
+        id?: T;
+      };
+  recipes?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        title?: T;
+        description?: T;
+        category?: T;
+        time?: T;
+        image?: T;
+        photo?: T;
+        id?: T;
+      };
+  socialTiles?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        title?: T;
+        topic?: T;
+        image?: T;
+        photo?: T;
+        id?: T;
+      };
+  media?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        type?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  testimonials?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        initials?: T;
+        label?: T;
+        quote?: T;
+        id?: T;
+      };
+  faqs?:
+    | T
+    | {
+        visible?: T;
+        isMock?: T;
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  dashboard?:
+    | T
+    | {
+        title?: T;
+        eyebrow?: T;
+        disclaimer?: T;
+        timelineTitle?: T;
+        rings?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        timeline?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        chips?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+      };
+  branches?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  sections?:
+    | T
+    | {
+        audience?: T;
+        about?: T;
+        services?: T;
+        method?: T;
+        events?: T;
+        recipes?: T;
+        social?: T;
+        testimonials?: T;
+        faq?: T;
+        contact?: T;
+        dashboard?: T;
+        branches?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -929,7 +1484,7 @@ export interface CollectionsWidget {
   data?: {
     [k: string]: unknown;
   };
-  width: "full";
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -939,6 +1494,7 @@ export interface Auth {
   [k: string]: unknown;
 }
 
-declare module "payload" {
+
+declare module 'payload' {
   export interface GeneratedTypes extends Config {}
 }

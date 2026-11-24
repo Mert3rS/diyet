@@ -5,10 +5,14 @@ export const defaultSiteSettings = {
   initialized: true,
   brand: {
     name: siteConfig.name,
-    tagline: "BESLENME & YAŞAM",
+    tagline: siteConfig.descriptor,
+    title: siteConfig.title,
+    titleStatus: siteConfig.titleStatus,
+    descriptorStatus: siteConfig.descriptorStatus,
+    bookingUrl: "",
     description: siteConfig.description,
     appointmentLabel: "Randevu Al",
-    footerEyebrow: "Kendine iyi gelmeye yer aç.",
+    footerEyebrow: "Beslenme. Hareket. Senin ritmin.",
     footerNote:
       "Bu site örnek içerikle hazırlanmıştır. Sosyal hesaplar ve iletişim bilgileri temsildir.",
   },

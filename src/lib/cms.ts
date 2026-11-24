@@ -10,7 +10,7 @@ export const getCms = cache(async () => {
 });
 export const readGlobal = cache(
   async (
-    slug: "site-settings" | "homepage" | "body-analysis-settings",
+    slug: "site-settings" | "homepage" | "body-analysis-settings" | "sports-homepage",
   ): Promise<Record<string, unknown> | null> => {
     if (!process.env.DATABASE_URI || !process.env.PAYLOAD_SECRET) return null;
     try {

@@ -1,4 +1,4 @@
-import { Globe2, Leaf, LockKeyhole, Sparkles } from "lucide-react";
+import { Globe2, Activity, LockKeyhole, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export function AdminLoginIntro() {
@@ -11,9 +11,9 @@ export function AdminLoginIntro() {
         <div className="admin-story-copy">
           <span className="admin-kicker">GÜNAY TURAN · YÖNETİM MERKEZİ</span>
           <h2>
-            İyi bir yaşam.
+            Kendi ritminde.
             <br />
-            <em>Güzel bir başlangıç.</em>
+            <em>Senin yönetiminde.</em>
           </h2>
           <p>
             İlham veren içeriklerin, uzmanlığın ve sana ait tüm detaylar.
@@ -21,7 +21,7 @@ export function AdminLoginIntro() {
           </p>
         </div>
         <div className="admin-story-orbit" aria-hidden="true">
-          <Leaf size={104} strokeWidth={1} />
+          <Activity size={104} strokeWidth={1} />
           <span />
         </div>
         <span className="admin-story-footer">Kendi ritminde, birlikte.</span>

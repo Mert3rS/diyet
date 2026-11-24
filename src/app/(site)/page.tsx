@@ -1,57 +1,60 @@
-import { HeroSection } from "@/components/home/hero-section";
-import { getHomepageContent } from "@/content/home";
-import { HomeSections, PackagesSection } from "@/components/home/home-sections";
-import { ProcessSection } from "@/components/home/process-section";
-import { GoalPicker } from "@/components/home/goal-picker";
-import { TestimonialsSection } from "@/components/home/testimonials-section";
-import { BlogSection } from "@/components/home/closing-sections";
-import { BodyAnalysisSection } from "@/components/home/body-analysis-section";
-import { BodyAnalysisJourney } from "@/components/home/body-analysis-journey";
-import { FaqSection } from "@/components/home/faq-section";
-import { ContactSection } from "@/components/home/contact-section";
-import { getBodyAnalysisSettings, getContactLinks } from "@/lib/site-settings";
-
-export default async function HomePage() {
-  const content = await getHomepageContent();
-  const contactLinks = await getContactLinks();
-  const analysisSettings = await getBodyAnalysisSettings();
+﻿import { SportsHero } from "@/components/home/sports-hero";
+import {
+  AudienceSection,
+  SportsAbout,
+  SportsServices,
+  EventsSection,
+  RecipesSection,
+  SportsSocial,
+  FaqBlock,
+  SportsContact,
+} from "@/components/home/sports-sections";
+import {
+  StickyStory,
+  SportsTestimonials,
+} from "@/components/home/sports-interactions";
+import { getSportsHome } from "@/content/sports-home";
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ editor?: string }>;
+}) {
+  const [content, query] = await Promise.all([getSportsHome(), searchParams]);
   if (!content)
     return (
-      <div className="container section">
+      <section className="container section">
         <h1>İçerik hazırlanıyor.</h1>
-        <p id="iletisim">Günay Turan · Yayın hazırlığı devam ediyor.</p>
-      </div>
+        <p id="iletisim">Ana sayfa içeriği hazırlanıyor.</p>
+      </section>
     );
+  const shown = content.sections;
+  const heroContent = {
+    hero: content.hero,
+    slides: content.slides,
+    dashboard: content.dashboard,
+    sections: content.sections,
+    branches: content.branches,
+  };
   return (
     <>
-      <HeroSection
-        copy={content.copy.hero}
-        trust={content.trust}
-        showBodyAnalysis={analysisSettings.enabled}
-      />
-      <HomeSections content={content} />
-      <ProcessSection copy={content.copy.process} steps={content.process} />
-      <BodyAnalysisJourney
-        initialService={content.goals[0]?.service ?? "fiyat"}
-      >
-        <GoalPicker
-          copy={content.copy.goals}
-          goals={content.goals}
-          whatsappBase={contactLinks.whatsappBase}
+      <SportsHero content={heroContent} editorMode={query.editor === "1"} />
+      {shown.audience && <AudienceSection content={content} />}
+      {shown.about && <SportsAbout content={content} />}
+      {shown.services && <SportsServices content={content} />}
+      {shown.method && (
+        <StickyStory items={content.method} copy={content.copy.method} />
+      )}
+      {shown.events && <EventsSection content={content} />}
+      {shown.recipes && <RecipesSection content={content} />}
+      {shown.social && <SportsSocial content={content} />}
+      {shown.testimonials && (
+        <SportsTestimonials
+          items={content.testimonials}
+          copy={content.copy.testimonials}
         />
-        <BodyAnalysisSection settings={analysisSettings} />
-      </BodyAnalysisJourney>
-      <PackagesSection
-        copy={content.copy.packages}
-        packages={content.packages}
-      />
-      <TestimonialsSection
-        copy={content.copy.testimonials}
-        items={content.testimonials}
-      />
-      <BlogSection copy={content.copy.blog} items={content.blog} />
-      <FaqSection copy={content.copy.faq} items={content.faqs} />
-      <ContactSection copy={content.copy.contact} />
+      )}
+      {shown.faq && <FaqBlock content={content} />}
+      {shown.contact && <SportsContact content={content} />}
     </>
   );
 }

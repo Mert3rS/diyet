@@ -1,3 +1,45 @@
+﻿# Yeni tasarım ve admin revizyonu — doğrulama
+
+24 Kasım 2026. Yerel geliştirme ortamında uygulandı. Canlı yayın yapılmadı.
+
+## Son kabul sonucu
+
+- Yeni admin ve ana sayfa için **20 Playwright testi geçti**: 7 admin/CMS akışı ve 13 ön yüz kabul testi. Son birleşik koşu 1,6 dakika sürdü.
+- Sabit Node 24.22.3 Docker ortamında npm run check başarılı: ESLint sıfır hata/uyarı, Next typegen ve TypeScript geçti.
+- npm run build, `docker build --target builder --tag diyet-admin:verified .` içinde başarılı. Yeni uygulama paketi kurulmadı.
+- Site 320, 390, 768 ve 1440 px; panel 390 ve 1440 px genişlikte kontrol edildi. Yatay taşma ve WCAG A/AA taramalarında ihlal yok. Site kontrolleri WCAG 2.1 A/AA kurallarını da kapsar.
+- Native panel formundan kaydedilen h1, halka açık sayfaya yansıdı.
+- Slayt, pano, hedef kitle başlığı, biyografi, hizmet kapsamı, sistem adımı, etkinlik, tarif sırası/kategorisi/görseli, sosyal kart, medya başlığı, yorum, SSS ve iletişim başlığı CMS kaydından doğrulandı.
+- Kart gizleme ve bölüm/pano kapatma test edildi; kayıtlar korunurken görünümden kaldırıldı.
+- Görsel editörde slayt seçimi, taslak değişikliği, geri alma, fotoğraf yükleme, mobil/masaüstü önizleme ve Kaydet sonrası yayın test edildi.
+- Gizli ilk slayttan sonraki kayıt doğru seçilip düzenlendi. Başka sekmede güncellenen belge, görsel editörün kaydetme öncesi kontrolünü tetikledi ve taslak diğer içeriği ezmedi.
+- Anonim yazma, HTML metni, yinelenen hizmet kimliği ve tüm slaytları kapatma reddedildi. Admin girişi ve mevcut erişim kuralları korunur.
+- Ana sayfa testleri tek h1, zoom, klavye, swipe, otomatik slayt duraklatma/durdurma, reduced-motion, tarif filtresi, mobil menü ve üçüncü taraf script/iframe olmamasını doğrular. noindex korunur.
+
+## Veri geçişi ve kalıcılık
+
+Önce PostgreSQL custom dump ve medya tar yedeği Git dışındaki `.reports/diyet-before-sports-admin.dump` ve `.reports/diyet-before-sports-admin-media.tar` dosyalarına alındı. Binary dosyalar PowerShell metin yönlendirmesiyle yazılmadı; konteyner içinde oluşturulup kopyalandı.
+
+`20261124_083825_sports_homepage` migration'ının UP bölümü incelendi: eski tablo veya sütun silme yok. 16 yeni tablo, ek marka alanları ve ek menü değerleri oluşturuldu. Tüm yeni tablolarda RLS açık; eksik foreign key indeksi sorgusu sıfır satır verdi. Yönetici sayısı 1, eski homepage kayıt sayısı 1 olarak korundu.
+
+Bir test metni ve yüklenen test fotoğrafı kaydedildi. Geliştirme web/tooling imajları güncel kaynaklardan yeniden oluşturuldu; cms-init migration ve idempotent seed tekrar çalıştı. Sonrasında test metni, medya kaydı/dosyası ve yönetici girişi korunmuştu. Test içeriği eski haline getirildi ve yalnız teste ait fotoğraf silindi. Kalıcılık sonucu `.reports/sports-persistence-result.json` dosyasındadır. Bu kontrol ayrı bir boş hedefe tam yedek restore provası değildir.
+
+## Kullanım ve kapsam
+
+Yeni form `/admin/globals/sports-homepage`, görsel editör `/admin/visual-editor`, ortak ayarlar `/admin/globals/site-settings` adresindedir. [Türkçe kullanım kılavuzu](admin-guide-tr.md).
+
+Yeni ana sayfa CMS kaynağını kullanır; eski homepage kayıtları Arşiv altında tutulur. `USE_MOCK_CONTENT` kod anahtarı kaldırılmıştır; örnek durumları paneldedir. Eski tasarımın tüm testlerinin geçtiği iddia edilmez. Mevcut analiz altyapısı korunur; yeni tasarıma analiz bölümü eklenmedi.
+
+Görsel editörün updatedAt kontrolü, iki Global arasında atomik sunucu transaction'ı değildir. Metin/görsel taslağı yalnız tarayıcıda tutulur; native panel formunun Kaydet işlemi doğrudan yayınlar. Görünürlük anahtarları özel belge erişim kontrolü değildir.
+
+Yeni içerikler gerçek portre/iletişim ve onaylı metinlerle değiştirilmelidir. Randevu kaydı, ödeme, çalışan iletişim formu ve ayrıntı sayfaları bu revizyonun kapsamında değildir. Kaynak sürümler, görseller ve önceki Lighthouse ölçümü tasarım belgelerinde kayıtlıdır.
+
+## Önceki statik tasarım ölçümü
+
+Admin bağlanmadan önceki yerel standalone sürümde Lighthouse 13.6.0 mobil sonucu: performans 85, erişilebilirlik 100, en iyi uygulamalar 100, SEO 63; FCP 1,1 sn, LCP 3,2 sn, TBT 340 ms, CLS 0. Bu önceki koşuda 90+ performans hedefi karşılanmamıştı. Admin revizyonu için yeni Lighthouse sayısı üretilmedi; eski sonuç güncel CMS sürümünün ölçümü olarak sunulmaz. SEO puanı noindex nedeniyle düşüktür.
+
+---
+
 # Doğrulama raporu
 
 ## Render ve Supabase yayın hazırlığı — 23 Kasım 2026

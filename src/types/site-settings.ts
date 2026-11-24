@@ -19,6 +19,10 @@ export type SiteSettings = {
     appointmentLabel: string;
     footerEyebrow: string;
     footerNote: string;
+    title: string;
+    titleStatus: string;
+    descriptorStatus: string;
+    bookingUrl: string;
   };
   contact: ContactSettings;
   socials: SocialLink[];

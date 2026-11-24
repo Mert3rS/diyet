@@ -1,12 +1,8 @@
 import type { ReactNode } from "react";
-import { SiteFooter } from "@/components/site/site-footer";
-import { SiteHeader } from "@/components/site/site-header";
-import { FloatingControls } from "@/components/site/floating-controls";
-import {
-  getSiteSettings,
-  getSocialLinks,
-  getContactLinks,
-} from "@/lib/site-settings";
+import { SportsFooter, SportsHeader } from "@/components/site/sports-shell";
+import { SportsFloating } from "@/components/site/sports-controls";
+import { getSocialLinks } from "@/lib/site-settings";
+import { getSiteSettings, getContactLinks } from "@/lib/site-settings";
 import { PublicRoot } from "@/components/site/public-root";
 import { siteConfig } from "@/config/site";
 import type { Metadata } from "next";
@@ -19,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(getSiteUrl()),
     title: {
-      default: `${site?.brand.name ?? siteConfig.name} — Beslenme, hareket, denge`,
+      default: `${site?.brand.name ?? siteConfig.name} — Beslenme ve hareket`,
       template: `%s | ${site?.brand.name ?? siteConfig.name}`,
     },
     description: site?.brand.description ?? siteConfig.description,
@@ -32,10 +28,10 @@ export default async function SiteLayout({
 }: {
   children: ReactNode;
 }) {
-  const [site, socials, links] = await Promise.all([
+  const [site, links, socials] = await Promise.all([
     getSiteSettings(),
-    getSocialLinks(),
     getContactLinks(),
+    getSocialLinks(),
   ]);
   return (
     <PublicRoot photos={site?.photos ?? {}}>
@@ -46,22 +42,15 @@ export default async function SiteLayout({
           __html: `if (!location.hash && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') { history.scrollRestoration = 'manual'; window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); window.addEventListener('pageshow', function (event) { if (!event.persisted && !location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }, { once: true }); }`,
         }}
       />
-      <SiteHeader />
+      <SportsHeader />
       <main id="ana-icerik" tabIndex={-1}>
         {children}
       </main>
-      <SiteFooter />
-      <FloatingControls
+      <SportsFooter />
+      <SportsFloating
         whatsapp={links.whatsapp}
-        whatsappVisible={socials.some((link) => link.platform === "whatsapp")}
-        instagram={
-          socials.find((link) => link.platform === "instagram")?.url ?? null
-        }
-        instagramIsMock={
-          socials.find((link) => link.platform === "instagram")?.isMock ?? false
-        }
-        brandName={site?.brand.name ?? siteConfig.name}
-        appointmentLabel={site?.brand.appointmentLabel ?? "Randevu Al"}
+        whatsappVisible={socials.some((item) => item.platform === "whatsapp")}
+        label={site?.brand.appointmentLabel}
       />
     </PublicRoot>
   );
