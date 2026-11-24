@@ -4,6 +4,10 @@
 
 ## Son kabul sonucu
 
+Render otomatik yayını için CI test kümesi yeni tasarıma uyarlandı. Artık ana sayfada bulunmayan eski hedef seçimi, analiz formu, sosyal yerleşim ve eski görsel editör senaryoları kaldırıldı; bunların yerine `sports-home.spec.ts` ve `sports-admin.spec.ts` çalışır. Analiz hesaplama/mesaj birim testleri, sosyal bağlantı filtreleri, anonim erişim, son yönetici koruması, medya yükleme/optimizasyon ve arşiv analiz ayarları testleri korunur. Önizlemenin SAMEORIGIN/CSP ve normal sayfanın DENY kontrolleri yeni editör testine taşındı. CI kontrolü veya Render'ın `checksPass` koşulu devre dışı bırakılmadı.
+
+Güncel tam Playwright koşusunda 34/34 test geçti (1,8 dakika, Docker geliştirme sunucusu). Docker Node 24 ortamında ESLint/Next typegen/TypeScript ve 6 operasyon testi de başarılı. Windows host üzerindeki `npm run check`, yerel `@payloadcms/next/withPayload` bağımlılığı eksik olduğundan tip üretimini tamamlayamadı; başarılı tip kontrolü Docker ortamındadır.
+
 - Yeni admin ve ana sayfa için **20 Playwright testi geçti**: 7 admin/CMS akışı ve 13 ön yüz kabul testi. Son birleşik koşu 1,6 dakika sürdü.
 - Sabit Node 24.22.3 Docker ortamında npm run check başarılı: ESLint sıfır hata/uyarı, Next typegen ve TypeScript geçti.
 - npm run build, `docker build --target builder --tag diyet-admin:verified .` içinde başarılı. Yeni uygulama paketi kurulmadı.

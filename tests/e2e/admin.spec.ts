@@ -34,7 +34,7 @@ test("CMS: anonim ziyaretçi yönetici ve içerik yazma erişimi alamaz", async 
   ).toBe(403);
 });
 
-test("CMS: panelden kaydetme, görsel yükleme, doğrulama ve sosyal görünürlük siteye yansır", async ({
+test("CMS: medya, sosyal doğrulama, son yönetici ve arşiv analiz ayarları korunur", async ({
   page,
   baseURL,
 }) => {
@@ -58,22 +58,6 @@ test("CMS: panelden kaydetme, görsel yükleme, doğrulama ve sosyal görünürl
   ).json();
   let mediaId: number | undefined;
   try {
-    await page.goto("/admin/globals/homepage");
-    await page
-      .locator('input[name="copy.hero.first"]')
-      .fill("Yönetimden gelen başlık.");
-    const saved = page.waitForResponse(
-      (r) =>
-        r.url().includes("/api/globals/homepage") &&
-        r.request().method() === "POST",
-    );
-    await page.getByRole("button", { name: "Kaydet", exact: true }).click();
-    expect((await saved).ok()).toBe(true);
-    await page.goto("/");
-    await expect(page.locator("h1")).toContainText("Yönetimden gelen başlık.");
-    await expect(page.locator(".social-edge")).toHaveCount(0);
-    await expect(page.locator(".floating-socials a")).toHaveCount(2);
-
     const invalid = await request.post("/api/globals/site-settings", {
       headers,
       data: {
@@ -125,12 +109,12 @@ test("CMS: panelden kaydetme, görsel yükleme, doğrulama ve sosyal görünürl
         })
       ).ok(),
     ).toBe(true);
-    await page.goto("/");
-    await expect(page.locator(".social-links")).toHaveCount(0);
-    await expect(page.locator(".floating-socials")).toHaveCount(0);
-    await expect(
-      page.locator('img[alt="CMS görsel kontrolü"]').first(),
-    ).toHaveAttribute("src", /api%2Fmedia%2Ffile/);
+    const updatedSite = await (
+      await request.get("/api/globals/site-settings?depth=0")
+    ).json();
+    expect(updatedSite.social.instagramVisible).toBe(false);
+    expect(updatedSite.social.whatsappVisible).toBe(false);
+    expect(updatedSite.photos.fruit).toBe(mediaId);
     expect((await request.get(media.url)).status()).toBe(200);
     expect(
       (

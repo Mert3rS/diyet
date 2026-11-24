@@ -55,6 +55,12 @@ test("yeni CMS: anonim yazma, HTML ve yinelenen hizmet kimliği engellenir", asy
   ).toBe(403);
   await page.goto("/admin/visual-editor");
   await expect(page).toHaveURL(/\/admin\/login/);
+  expect((await request.get("/")).headers()["x-frame-options"]).toBe("DENY");
+  const preview = await request.get("/?editor=1");
+  expect(preview.headers()["x-frame-options"]).toBe("SAMEORIGIN");
+  expect(preview.headers()["content-security-policy"]).toContain(
+    "frame-ancestors 'self'",
+  );
   await login(page);
   const api = page.context().request;
   const original = await read(api);
